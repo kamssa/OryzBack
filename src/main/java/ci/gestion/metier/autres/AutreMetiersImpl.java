@@ -139,6 +139,7 @@ public boolean supprimerDetailAutre(Long idAutre, Long idDetail) {
 	double montantAutre = 0;
 	double montant = 0;
 	double reste=0;
+	double montant1 = 0;
 	 detailAutreRepository.deleteById(idDetail);
 	 Autres autre = findById(idAutre);
 	 montantAutre = autre.getMontant();
@@ -164,7 +165,12 @@ public boolean supprimerDetailAutre(Long idAutre, Long idDetail) {
 	reste = (tr.getBudget())-(tr.getTotal());
 	       tr.setReste(reste);
 	       travauxRepository.save(tr);
-	 return true;
+	       Autres autre2= autreRepository.findById(autre1.getId()).get();
+			  montant1 = autre2.getMontant();
+			  if (montant1 == 0) {
+				autreRepository.deleteById(autre2.getId());
+			}
+			 return true;
 }
 
 }

@@ -11,6 +11,7 @@ import ci.gestion.dao.detail.DetailLoyerRepository;
 import ci.gestion.entites.Travaux;
 import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.autres.DetailAutres;
+import ci.gestion.entites.location.LocationTravaux;
 import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
 import ci.gestion.entites.operation.AchatTravaux;
@@ -138,6 +139,7 @@ TravauxRepository travauxRepository;
 		double montantLoyer = 0;
 		double montant = 0;
 		double reste=0;
+		double montant1 = 0;
 		 detailLoyerRepository.deleteById(idDetail);
 		 Loyer loyer = findById(idLoyer);
 		 montantLoyer = loyer.getMontant();
@@ -163,7 +165,12 @@ TravauxRepository travauxRepository;
 		reste = (tr.getBudget())-(tr.getTotal());
 		       tr.setReste(reste);
 		       travauxRepository.save(tr);
-		 return true;
+		       Loyer loyer2= loyerRepository.findById(loyer1.getId()).get();
+				  montant1 = loyer2.getMontant();
+				  if (montant1 == 0) {
+					loyerRepository.deleteById(loyer2.getId());
+				}
+				 return true;
 	}
 
 }

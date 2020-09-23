@@ -1,6 +1,7 @@
 package ci.gestion.metier;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,15 @@ public class TravauxMetierImpl implements ITravauxMetier{
 private TravauxRepository travauxRepository;
 	@Override
 	public Travaux creer(Travaux entity) throws InvalideOryzException {
-	
+		if ((entity.getNumeroBon().equals(null)) || (entity.getNumeroBon() == "")) {
+			throw new InvalideOryzException("Le numéro de bon ne peut etre null");
+		}
+		Optional<Travaux> travaux = null;
+
+		travaux = travauxRepository.findById(entity.getId());
+		if (travaux.isPresent()) {
+			throw new InvalideOryzException("Ce numéro de bon est deja utilise");
+		}
 		return travauxRepository.save(entity);
 	}
 

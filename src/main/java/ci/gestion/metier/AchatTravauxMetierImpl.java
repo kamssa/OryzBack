@@ -135,7 +135,8 @@ private TravauxRepository travauxRepository;
 		double sommeMontant = 0;
 		double montantAchat = 0;
 		double montant = 0;
-		double reste=0;
+		double reste = 0;
+		double montant1 = 0;
 		detailAchatTravauxRepository.deleteById(idDetail);
 		 AchatTravaux achat = findById(idAchat);
 		 montantAchat = achat.getMontant();
@@ -161,6 +162,11 @@ private TravauxRepository travauxRepository;
 		reste = (tr.getBudget())-(tr.getTotal());
 		       tr.setReste(reste);
 		       travauxRepository.save(tr);
+		  AchatTravaux achat2= achatTravauxRepository.findById(achat1.getId()).get();
+		  montant1 = achat2.getMontant();
+		  if (montant1 == 0) {
+			achatTravauxRepository.deleteById(achat2.getId());
+		}
 		 return true;
 	}
 

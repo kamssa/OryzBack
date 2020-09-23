@@ -1,8 +1,10 @@
 package ci.gestion.metier;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.OperationBanqueRepository;
@@ -27,7 +29,7 @@ private OperationBanqueRepository operationBanqueRepository;
 	@Override
 	public List<Operation> findAll() {
 		// TODO Auto-generated method stub
-		return operationBanqueRepository.findAll();
+		return operationBanqueRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
 	}
 
 	@Override
@@ -38,8 +40,8 @@ private OperationBanqueRepository operationBanqueRepository;
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		operationBanqueRepository.deleteById(id);
+		return true;
 	}
 
 	@Override
@@ -54,4 +56,9 @@ private OperationBanqueRepository operationBanqueRepository;
 		return false;
 	}
 
+	@Override
+	public List<Operation> findOperationByParam(Date startDay, Date endDay, String libelle, String nom) {
+		return operationBanqueRepository.findOperationByParam(startDay, endDay, libelle, nom);
+	}
+	
 }

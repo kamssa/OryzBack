@@ -98,6 +98,7 @@ public boolean supprimerDetailLocation(Long idLocation, Long idDetail) {
 	double montantLocationTravaux = 0;
 	double montant = 0;
 	double reste=0;
+	double montant1 = 0;
 	 detailLcationRepository.deleteById(idDetail);
 	 LocationTravaux locationTravaux = findById(idLocation);
 	 montantLocationTravaux = locationTravaux.getMontant();
@@ -123,7 +124,12 @@ public boolean supprimerDetailLocation(Long idLocation, Long idDetail) {
 	reste = (tr.getBudget())-(tr.getTotal());
 	       tr.setReste(reste);
 	       travauxRepository.save(tr);
-	 return true;
+	       LocationTravaux location1= locationRepository.findById(location.getId()).get();
+			  montant1 = location1.getMontant();
+			  if (montant1 == 0) {
+				locationRepository.deleteById(location1.getId());
+			}
+			 return true;
 }
 
 

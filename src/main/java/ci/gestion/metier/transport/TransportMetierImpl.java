@@ -136,6 +136,7 @@ public boolean supprimerDetailTransport(Long idTransport, Long idDetail) {
 	double montantTransport = 0;
 	double montant = 0;
 	double reste=0;
+	double montant1 = 0;
 	 detailTransportRepository.deleteById(idDetail);
 	 Transport transport = findById(idTransport);
 	 montantTransport = transport.getMontant();
@@ -161,7 +162,12 @@ public boolean supprimerDetailTransport(Long idTransport, Long idDetail) {
 	reste = (tr.getBudget())-(tr.getTotal());
 	       tr.setReste(reste);
 	       travauxRepository.save(tr);
-	 return true;
+	       Transport transport2= transportRepository.findById(transport1.getId()).get();
+			  montant1 = transport2.getMontant();
+			  if (montant1 == 0) {
+				transportRepository.deleteById(transport2.getId());
+			}
+			 return true;
 }
 	
 }

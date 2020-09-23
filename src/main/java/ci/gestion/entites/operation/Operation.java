@@ -1,6 +1,7 @@
 package ci.gestion.entites.operation;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -21,25 +22,23 @@ import ci.gestion.metier.model.DateAudit;
 
 @Entity
 public class Operation extends DateAudit {
-	
+
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@Version
 	private Long version;
-	private LocalDateTime date;
+	private Date date;
 	private String libelle;
 	private Double montant;
-		private String motif;
-	@ManyToOne(fetch = FetchType.EAGER, cascade= CascadeType.ALL)
+	private String motif;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_Banque")
 	private Banque banque;
-	
 
-
-   public Double getMontant() {
+	public Double getMontant() {
 		return montant;
 	}
 
@@ -63,11 +62,11 @@ public class Operation extends DateAudit {
 		return version;
 	}
 
-	public LocalDateTime getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -87,5 +86,10 @@ public class Operation extends DateAudit {
 		this.banque = banque;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "Operation [id=" + id + ", version=" + version + ", date=" + date + ", libelle=" + libelle + ", montant="
+				+ montant + ", motif=" + motif + ", banque=" + banque + "]";
+	}
+
 }

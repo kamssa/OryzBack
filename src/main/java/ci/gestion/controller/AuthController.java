@@ -75,7 +75,7 @@ public String creaeUser(@RequestBody User signUpRequest) throws Exception {
 	User user = null;
 	try {
 
-		Role userRole = roleMetier.findByName(RoleName.ROLE_ADMIN).get();
+		Role userRole = roleMetier.findByName(RoleName.ROLE_USER).get();
 		signUpRequest.setRoles(Collections.singleton(userRole));
 	
 		user = userMetier.creer(signUpRequest);
