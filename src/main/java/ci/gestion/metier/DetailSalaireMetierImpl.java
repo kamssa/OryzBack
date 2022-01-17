@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.DetailSalaireRepository;
-import ci.gestion.dao.EmployeRepository;
 import ci.gestion.dao.MontantVerseSalaireRepository;
-import ci.gestion.entites.operation.Employe;
+import ci.gestion.dao.personne.EmployeRepository;
+import ci.gestion.entites.personne.Employe;
 import ci.gestion.entites.salaire.DetailSalaire;
 import ci.gestion.entites.salaire.VersementSalaire;
 import ci.gestion.metier.exception.InvalideOryzException;

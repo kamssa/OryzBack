@@ -1,12 +1,14 @@
-package ci.gestion.dao;
+package ci.gestion.dao.personne;
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import ci.gestion.entites.Role;
-import ci.gestion.entites.RoleName;
+import ci.gestion.entites.personne.Role;
+import ci.gestion.entites.personne.RoleName;
+
+
 
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {

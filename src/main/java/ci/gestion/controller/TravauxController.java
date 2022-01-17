@@ -29,8 +29,8 @@ import org.apache.commons.io.IOUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.Photo;
-import ci.gestion.entites.Travaux;
+import ci.gestion.entites.site.Photo;
+import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.IPhotoMetier;
 import ci.gestion.metier.ITravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
@@ -81,7 +81,7 @@ public class TravauxController {
 
 			Travaux t1 = travauxMetier.creer(travaux);
 			List<String> messages = new ArrayList<>();
-			messages.add(String.format("%s  à été créer avec succes", t1.getNomChantier()));
+			messages.add(String.format("%s  à été créer avec succes", t1.getId()));
 			reponse = new Reponse<Travaux>(0, messages, t1);
 
 		} catch (InvalideOryzException e) {
@@ -106,7 +106,7 @@ public class TravauxController {
 			try {
 				Travaux t2 = travauxMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s a modifier avec succes", t2.getNomChantier()));
+				messages.add(String.format("%s a modifier avec succes", t2.getId()));
 				reponse = new Reponse<Travaux>(0, messages, t2);
 			} catch (InvalideOryzException e) {
 

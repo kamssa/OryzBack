@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.SiteRepository;
-import ci.gestion.entites.Site;
+import ci.gestion.entites.site.Site;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service

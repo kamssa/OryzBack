@@ -1,17 +1,16 @@
 package ci.gestion.metier;
 
 import java.util.List;
-import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import ci.gestion.dao.OperationTravauxRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailAchatTravauxRepository;
-import ci.gestion.entites.Travaux;
 import ci.gestion.entites.operation.AchatTravaux;
 import ci.gestion.entites.operation.DetailAchatTravaux;
+import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.BanqueRepository;
-import ci.gestion.entites.Banque;
+import ci.gestion.entites.site.Banque;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service

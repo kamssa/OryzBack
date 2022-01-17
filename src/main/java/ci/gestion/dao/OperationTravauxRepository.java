@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import ci.gestion.entites.User;
 import ci.gestion.entites.operation.AchatTravaux;
 
 public interface OperationTravauxRepository extends JpaRepository<AchatTravaux, Long> {

@@ -13,13 +13,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
 import ci.gestion.entites.operation.AchatTravaux;
 import ci.gestion.metier.IAchatTravauxMetier;
-import ci.gestion.metier.IPhotoMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;
@@ -167,7 +166,7 @@ public class AchatTravauxController {
 			} catch (RuntimeException e1) {
 				reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
 			}
-
+ 
 			return jsonMapper.writeValueAsString(reponse);
 		}
 }

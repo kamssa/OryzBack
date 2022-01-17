@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import ci.gestion.dao.LoyerRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailLoyerRepository;
-import ci.gestion.entites.Travaux;
 import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.location.LocationTravaux;
@@ -16,6 +15,7 @@ import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
 import ci.gestion.entites.operation.AchatTravaux;
 import ci.gestion.entites.operation.DetailAchatTravaux;
+import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service

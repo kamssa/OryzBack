@@ -1,4 +1,4 @@
-package ci.gestion.entites;
+package ci.gestion.entites.site;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

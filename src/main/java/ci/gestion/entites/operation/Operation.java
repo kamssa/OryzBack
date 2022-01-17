@@ -17,7 +17,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
-import ci.gestion.entites.Banque;
+import ci.gestion.entites.site.Banque;
 import ci.gestion.metier.model.DateAudit;
 
 @Entity

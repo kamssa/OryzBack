@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.TravauxRepository;
-import ci.gestion.entites.Travaux;
+import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service
@@ -19,12 +19,13 @@ private TravauxRepository travauxRepository;
 		if ((entity.getNumeroBon().equals(null)) || (entity.getNumeroBon() == "")) {
 			throw new InvalideOryzException("Le numéro de bon ne peut etre null");
 		}
-		Optional<Travaux> travaux = null;
+		//Optional<Travaux> travaux = null;
 
-		travaux = travauxRepository.findById(entity.getId());
-		if (travaux.isPresent()) {
-			throw new InvalideOryzException("Ce numéro de bon est deja utilise");
-		}
+		/*
+		 * travaux = travauxRepository.findById(entity.getId()); if
+		 * (travaux.isPresent()) { throw new
+		 * InvalideOryzException("Ce numéro de bon est deja utilise"); }
+		 */
 		return travauxRepository.save(entity);
 	}
 

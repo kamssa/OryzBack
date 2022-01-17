@@ -20,8 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.Site;
-import ci.gestion.entites.Travaux;
+import ci.gestion.entites.site.Site;
+import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.ISiteMetier;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;

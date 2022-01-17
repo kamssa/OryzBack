@@ -1,4 +1,4 @@
-package ci.gestion.entites;
+package ci.gestion.entites.site;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

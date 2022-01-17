@@ -4,27 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.Banque;
-import ci.gestion.entites.Photo;
-import ci.gestion.entites.Travaux;
+import ci.gestion.entites.site.Banque;
 import ci.gestion.metier.IBanqueMetier;
-import ci.gestion.metier.IPhotoMetier;
-import ci.gestion.metier.ITravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;
@@ -68,8 +61,7 @@ public class BanqueController {
 			Reponse<Banque> reponse;
 
 			try {
-
-				Banque t1 = banqueMetier.creer(banque);
+                Banque t1 = banqueMetier.creer(banque);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s  à été créer avec succes", t1.getNom()));
 				reponse = new Reponse<Banque>(0, messages, t1);
@@ -152,5 +144,4 @@ public class BanqueController {
 
 		}
 
-	
 }

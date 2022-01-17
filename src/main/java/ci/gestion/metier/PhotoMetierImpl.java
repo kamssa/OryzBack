@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.PhotoRepository;
-import ci.gestion.entites.Photo;
+import ci.gestion.entites.site.Photo;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service
