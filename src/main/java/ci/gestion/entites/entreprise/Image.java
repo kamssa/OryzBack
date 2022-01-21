@@ -1,6 +1,8 @@
-package ci.gestion.entites.personne;
+package ci.gestion.entites.entreprise;
 
 import javax.persistence.Entity;
+
+import ci.gestion.entites.personne.AbstractEntity;
 
 @Entity
 public class Image extends AbstractEntity{

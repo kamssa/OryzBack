@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.personne.EmployeRepository;
-import ci.gestion.entites.personne.Employe;
+import ci.gestion.entites.entreprise.Employe;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 
@@ -50,6 +50,11 @@ public class EmployeMetierImpl implements IEmployeMetier{
 		@Override
 		public boolean existe(Long id) {
 			return false;
+		}
+
+		@Override
+		public List<Employe> getDepByIdEntreprise(Long id) {
+			return employeRepository.getEmployeByIdEntreprise(id);
 		}
 
 }

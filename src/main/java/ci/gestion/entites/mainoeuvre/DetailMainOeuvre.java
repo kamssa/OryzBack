@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
-import ci.gestion.entites.personne.Employe;
+import ci.gestion.entites.entreprise.Employe;
 import ci.gestion.metier.model.DateAudit;
 
 @Entity

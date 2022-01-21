@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ci.gestion.entites.personne.Entreprise;
+import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

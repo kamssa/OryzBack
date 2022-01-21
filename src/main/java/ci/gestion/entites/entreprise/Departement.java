@@ -1,4 +1,4 @@
-package ci.gestion.entites.personne;
+package ci.gestion.entites.entreprise;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
+import ci.gestion.entites.personne.AbstractEntity;
 import ci.gestion.metier.model.DateAudit;
 import lombok.AllArgsConstructor;
 import lombok.Data;

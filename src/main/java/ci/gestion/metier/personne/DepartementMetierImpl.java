@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.personne.DepartementRepository;
 import ci.gestion.dao.personne.EntrepriseRepository;
-import ci.gestion.entites.personne.Departement;
-import ci.gestion.entites.personne.Entreprise;
+import ci.gestion.entites.entreprise.Departement;
+import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

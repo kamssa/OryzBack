@@ -7,16 +7,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import ci.gestion.entites.personne.Personne;
 
-public interface PersonneRepository extends JpaRepository<Personne, Long>{
-	 Optional<Personne> findByEmail(String email);
+public interface PersonneRepository extends JpaRepository<Personne, Long> {
+	Optional<Personne> findByEmail(String email);
 
-	    Optional<Personne> findByUsernameOrEmail(String username, String email);
+	Optional<Personne> findByEmailOrTelephone(String email, String telephone);
 
-	    List<Personne> findByIdIn(List<Long> userIds);
+	List<Personne> findByIdIn(List<Long> userIds);
 
-	    Optional<Personne> findByUsername(String username);
-
-	    Boolean existsByUsername(String username);
-
-	    Boolean existsByEmail(String email);
+	Boolean existsByEmail(String email);
 }

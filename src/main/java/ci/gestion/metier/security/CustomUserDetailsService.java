@@ -19,10 +19,10 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		
-		Personne user = userRepository.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
-				.orElseThrow(() -> new UsernameNotFoundException("Aucun utilisateur trouve : " + usernameOrEmail));
+		Personne user = userRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException("Aucun utilisateur trouve : " + email));
 
 		return UserPrincipal.create(user);
 	}
