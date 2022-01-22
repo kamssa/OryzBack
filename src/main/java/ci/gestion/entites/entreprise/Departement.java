@@ -29,7 +29,7 @@ public class Departement extends AbstractEntity{
 	
 	private String libelle;
 	private String description;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_Entreprise")
 	private Entreprise entreprise;
 	

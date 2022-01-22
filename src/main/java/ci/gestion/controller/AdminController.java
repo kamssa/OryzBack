@@ -20,6 +20,8 @@ import ci.gestion.metier.utilitaire.Static;
 
 
 
+
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
