@@ -62,7 +62,6 @@ public class AuthController {
 
 	
 	  @PostMapping("/signup")
-	  
 	  @ResponseStatus(code = HttpStatus.CREATED) public String
 	  creaeUser(@RequestBody Personne signUpRequest) throws Exception {
 	  
