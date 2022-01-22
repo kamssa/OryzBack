@@ -21,7 +21,7 @@ public class DepartementMetierImpl implements IDepartementMetier{
 		@Override
 		public Departement creer(Departement entity) throws InvalideOryzException {
 			
-	        Entreprise entreprise = entrepriseRepository.findByNom("GSTORE PLUS SARL").get();
+	        Entreprise entreprise = entrepriseRepository.findByNom("NEF-CI").get();
 	        System.out.println("Voir entreprise"+entreprise);
 	        entity.setEntreprise(entreprise);
 			System.out.println("Voir departement"+entity);
@@ -33,7 +33,7 @@ public class DepartementMetierImpl implements IDepartementMetier{
 		public Departement modifier(Departement entity) throws InvalideOryzException {
 			// TODO Auto-generated method stub
 			
-			 Entreprise entreprise = entrepriseRepository.findByNom("GSTORE PLUS SARL").get();
+			 Entreprise entreprise = entrepriseRepository.findByNom("NEF-CI").get();
 		        System.out.println("Voir entreprise:"+entreprise);
 		        entity.setEntreprise(entreprise);
 		        System.out.println("Voir departement modif:"+entity);

@@ -150,10 +150,10 @@ public class EmployeController {
 	// obtenir un employe par son id
 	@GetMapping("/employe/{id}")
 	public String getById(@PathVariable Long id) throws JsonProcessingException {
-		Reponse<Personne> reponse;
+		Reponse<Employe> reponse;
 		try {
-			Personne db = employeMetier.findById(id);
-			reponse = new Reponse<Personne>(0, null, db);
+			Employe db = employeMetier.findById(id);
+			reponse = new Reponse<Employe>(0, null, db);
 		} catch (Exception e) {
 			reponse = new Reponse<>(1, Static.getErreursForException(e), null);
 		}
