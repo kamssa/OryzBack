@@ -52,11 +52,11 @@ public class AuthController {
 	private ObjectMapper jsonMapper;
 
 	@PostMapping("/signin")
-	public String authenticateUser(@Valid @RequestBody LoginRequest  loginRequest) throws JsonProcessingException {
+	public String authenticateUser(@Valid @RequestBody Personne  loginRequest) throws JsonProcessingException {
 		Reponse<ResponseEntity<?>> reponse;
 		Authentication authentication = authenticationManager.authenticate(
 
-				new UsernamePasswordAuthenticationToken(loginRequest.getEmailOrTelephone(), loginRequest.getPassword()));
+				new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		String jwt = tokenProvider.generateToken(authentication);

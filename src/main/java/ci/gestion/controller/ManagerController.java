@@ -143,7 +143,7 @@ public class ManagerController {
 
 		}
 		// obtenir un manager par son email
-				@GetMapping("/personne/{email}")
+				@GetMapping("/personneByEmail/{email}")
 				public String getById(@PathVariable String email) throws JsonProcessingException {
 					Reponse<Personne> reponse;
 					try {
