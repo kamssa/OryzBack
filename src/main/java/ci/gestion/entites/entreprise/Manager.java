@@ -7,17 +7,16 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import ci.gestion.entites.personne.Personne;
+import ci.gestion.entites.shared.Personne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
 @Entity
+@DiscriminatorValue("MANAGER")
 @NoArgsConstructor @AllArgsConstructor
 @Data
-@DiscriminatorValue("MANAGER")
-
 public class Manager extends Personne {
 
 	
@@ -25,7 +24,7 @@ public class Manager extends Personne {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_Entreprise")
 	private Entreprise entreprise;
-	
+	private Boolean actevated;
 	
 	
 }

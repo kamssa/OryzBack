@@ -101,7 +101,7 @@ public class AutreController {
 
 	}
 	// recuperer Autres par id travaux
-		@GetMapping("/Autres/{idTravaux}")
+		@GetMapping("/autres/{idTravaux}")
 		public String getAchatByIdTravaux(@PathVariable("idTravaux") long idTravaux) throws JsonProcessingException {
 			Reponse<List<Autres>> reponse;
 

@@ -2,50 +2,41 @@ package ci.gestion.metier.personne;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.personne.ManagerRepository;
-import ci.gestion.dao.personne.PersonneRepository;
+import ci.gestion.dao.personne.PersonneReposiory;
 import ci.gestion.dao.personne.RoleRepository;
 import ci.gestion.entites.entreprise.Manager;
-import ci.gestion.entites.personne.Personne;
-import ci.gestion.entites.personne.Role;
-import ci.gestion.entites.personne.RoleName;
+import ci.gestion.entites.shared.Role;
+import ci.gestion.entites.shared.RoleName;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 
 @Service
-public class ManagerMetierImpl implements IManagerMetier { 
+public class ManagerMetierImpl implements IManagerMetier {
 @Autowired
 private ManagerRepository managerRepository; 
 @Autowired
-private PersonneRepository personneReposiory; 
+private PersonneReposiory personneReposiory; 
 @Autowired
 private RoleRepository roleRepository;
 @Autowired
 PasswordEncoder passwordEncoder;
 	@Override
-	public Manager creer(Manager p) throws InvalideOryzException {
-		System.out.println("personne a enregistrer" + ":" + p);
-		if ((p.getEmail().equals(null)) || (p.getEmail() == "")) {
-			throw new  InvalideOryzException("Le email ne peut etre null");
-		}
+	public Manager creer(Manager entity) throws InvalideOryzException {
 		
-        p.setPassword(passwordEncoder.encode(p.getPassword()));
-		
-		return managerRepository.save(p);
+		return managerRepository.save(entity);
 	}
 
 	@Override
 	public Manager modifier(Manager modif) throws InvalideOryzException {
 		 String nomComplet = modif.getNom() + " " + modif.getPrenom();
 		 modif.setNomComplet(nomComplet); 
-		 modif.setPassword(passwordEncoder.encode(modif.getPassword()));
+		modif.setPassword(passwordEncoder.encode(modif.getPassword()));
          Role userRole = roleRepository.findByName(RoleName.ROLE_MANAGER).get();
          modif.setRoles(Collections.singleton(userRole));
          return managerRepository.save(modif);
@@ -85,8 +76,4 @@ PasswordEncoder passwordEncoder;
 			Manager manage = managerRepository.getManageByEmail(login);
 			return encoder.matches(oldPassword, manage.getPassword());
 		}
-
-		
-
-	
 }

@@ -7,9 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.personne.RoleRepository;
-import ci.gestion.entites.personne.Role;
-import ci.gestion.entites.personne.RoleName;
-import lombok.AllArgsConstructor;
+import ci.gestion.entites.shared.Role;
+import ci.gestion.entites.shared.RoleName;
 
 
 
@@ -17,8 +16,8 @@ import lombok.AllArgsConstructor;
 
 
 @Service
-@AllArgsConstructor
 public class RoleMetierImpl implements IRoleMetier{
+@Autowired
 private RoleRepository roleRepository;
 
 @Override
@@ -30,7 +29,7 @@ public Role creer(Role entity) {
 @Override
 public Role modifier(Role entity) {
 	// TODO Auto-generated method stub
-	return null;
+	return roleRepository.save(entity);
 }
 
 @Override
@@ -63,10 +62,11 @@ public boolean existe(Long id) {
 	return false;
 }
 
+
 @Override
 public Optional<Role> findByName(RoleName roleName) {
 	// TODO Auto-generated method stub
 	return roleRepository.findByName(roleName);
 }
-
+	
 }

@@ -7,22 +7,24 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ci.gestion.dao.personne.PersonneRepository;
-import ci.gestion.entites.personne.Personne;
+import ci.gestion.dao.personne.PersonneReposiory;
+import ci.gestion.entites.shared.Personne;
+
+
 
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
 	@Autowired
-	PersonneRepository userRepository;
+	PersonneReposiory userRepository;
 
 	@Override
 	@Transactional
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String emailOrTelephone) throws UsernameNotFoundException {
 		
-		Personne user = userRepository.findByEmail(email)
-				.orElseThrow(() -> new UsernameNotFoundException("Aucun utilisateur trouve : " + email));
+		Personne user = userRepository.findByEmailOrTelephone(emailOrTelephone, emailOrTelephone)
+				.orElseThrow(() -> new UsernameNotFoundException("Aucun utilisateur trouve : " + emailOrTelephone));
 
 		return UserPrincipal.create(user);
 	}

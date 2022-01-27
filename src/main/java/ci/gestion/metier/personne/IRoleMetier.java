@@ -2,9 +2,10 @@ package ci.gestion.metier.personne;
 
 import java.util.Optional;
 
-import ci.gestion.entites.personne.Role;
-import ci.gestion.entites.personne.RoleName;
+import ci.gestion.entites.shared.Role;
+import ci.gestion.entites.shared.RoleName;
 import ci.gestion.metier.Imetier;
+
 
 
 

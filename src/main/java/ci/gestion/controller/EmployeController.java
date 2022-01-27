@@ -28,9 +28,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.entreprise.Employe;
-import ci.gestion.entites.personne.Personne;
-import ci.gestion.entites.personne.Role;
-import ci.gestion.entites.personne.RoleName;
+import ci.gestion.entites.shared.Personne;
+import ci.gestion.entites.shared.Role;
+import ci.gestion.entites.shared.RoleName;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.JwtAuthenticationResponse;
 import ci.gestion.metier.model.Reponse;
@@ -39,26 +39,26 @@ import ci.gestion.metier.personne.IPersonneMetier;
 import ci.gestion.metier.personne.IRoleMetier;
 import ci.gestion.metier.security.JwtTokenProvider;
 import ci.gestion.metier.utilitaire.Static;
-import lombok.AllArgsConstructor;
+
+
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin
-@AllArgsConstructor
 public class EmployeController {
-	
+	@Autowired
 	AuthenticationManager authenticationManager;
 
-	
+	@Autowired
 	IPersonneMetier personneMetier;
 
-	
+	@Autowired
 	IRoleMetier roleMetier;
-	
+	@Autowired
 	IEmployeMetier employeMetier;
-	
+	@Autowired
 	JwtTokenProvider tokenProvider;
-	
+	@Autowired
 	private ObjectMapper jsonMapper;
 
 	// recuper employe par identifiant
@@ -98,7 +98,7 @@ public class EmployeController {
 	@PostMapping("/signupEmpl")
 	@ResponseStatus(code = HttpStatus.CREATED)
 	public String createUser(@RequestBody Employe signUpRequest) throws Exception {
-		System.out.println("Voir le type de la personne recuperée:" + signUpRequest.getNomComplet());
+		System.out.println("Voir le type de la personne recuperée:" + signUpRequest.getType());
 
 		Reponse<Employe> reponse = null;
 		Employe employe = null;
@@ -150,10 +150,10 @@ public class EmployeController {
 	// obtenir un employe par son id
 	@GetMapping("/employe/{id}")
 	public String getById(@PathVariable Long id) throws JsonProcessingException {
-		Reponse<Employe> reponse;
+		Reponse<Personne> reponse;
 		try {
-			Employe db = employeMetier.findById(id);
-			reponse = new Reponse<Employe>(0, null, db);
+			Personne db = employeMetier.findById(id);
+			reponse = new Reponse<Personne>(0, null, db);
 		} catch (Exception e) {
 			reponse = new Reponse<>(1, Static.getErreursForException(e), null);
 		}

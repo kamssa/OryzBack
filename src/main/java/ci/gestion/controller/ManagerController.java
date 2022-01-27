@@ -21,15 +21,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import ci.gestion.entites.entreprise.Manager;
-import ci.gestion.entites.personne.Personne;
-import ci.gestion.entites.personne.Role;
-import ci.gestion.entites.personne.RoleName;
+import ci.gestion.entites.shared.Personne;
+import ci.gestion.entites.shared.Role;
+import ci.gestion.entites.shared.RoleName;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.JwtAuthenticationResponse;
 import ci.gestion.metier.model.Reponse;
@@ -77,41 +79,24 @@ public class ManagerController {
 
 	@PostMapping("/signupManage")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public String creatUser(@RequestBody Manager signUpRequest) throws Exception {
-		System.out.println("Voir le type de la personne recuperée:" + signUpRequest.getEmail());
+	public String creaeUser(@RequestBody Personne signUpRequest) throws Exception {
+		System.out.println("Voir le type de la personne recuperée:" + signUpRequest.getType());
 
-		Reponse<Manager> reponse = null;
-		Manager manager = null;
+		Reponse<Personne> reponse = null;
+		Personne personne = null;
 		try {
 
 			Role userRole = roleMetier.findByName(RoleName.ROLE_MANAGER).get();
 			signUpRequest.setRoles(Collections.singleton(userRole));
 
-			manager = managerMetier.creer(signUpRequest);
+			personne = personneMetier.creer(signUpRequest);
 
 			List<String> messages = new ArrayList<>();
-			messages.add(String.format("%s  a été créé avec succès", manager.getId()));
-			reponse = new Reponse<Manager>(0, messages, manager);
+			messages.add(String.format("%s  a été créé avec succès", personne.getId()));
+			reponse = new Reponse<Personne>(0, messages, personne);
 
 		} catch (InvalideOryzException e) {
-			reponse = new Reponse<Manager>(1, Static.getErreursForException(e), null);
-		}
-		return jsonMapper.writeValueAsString(reponse);
-	}
-	@PostMapping("/manager")
-	public String creer(@RequestBody Manager manager) throws JsonProcessingException {
-		Reponse<Manager> reponse;
-		System.out.println(manager);
-		try {
-
-			Manager t1 = managerMetier.creer(manager);
-			List<String> messages = new ArrayList<>();
-			messages.add(String.format("%s  à été créer avec succes", t1.getId()));
-			reponse = new Reponse<Manager>(0, messages, t1);
-
-		} catch (InvalideOryzException e) {
-
-			reponse = new Reponse<Manager>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Personne>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
@@ -163,6 +148,21 @@ public class ManagerController {
 					Reponse<Personne> reponse;
 					try {
 						Personne personne = personneMetier.findByEmail(email).get();
+						reponse = new Reponse<Personne>(0, null, personne);
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
+				// obtenir une personne par son email ou son telephone
+				@GetMapping("/getPersonneByEmailOrTelephone")
+				public String getPersonneByEmailOuTelephone(
+						@RequestParam(value = "email") String email,
+						@RequestParam(value = "telephone") String telephone) throws JsonProcessingException {
+					Reponse<Personne> reponse;
+					try {
+						Personne personne = personneMetier.findByEmailOrTelephone(email, telephone).get();
 						reponse = new Reponse<Personne>(0, null, personne);
 					} catch (Exception e) {
 						reponse = new Reponse<>(1, Static.getErreursForException(e), null);

@@ -2,38 +2,41 @@ package ci.gestion.metier.personne;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ci.gestion.dao.personne.EntrepriseRepository;
 import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.metier.exception.InvalideOryzException;
-import lombok.AllArgsConstructor;
+
+
 
 @Service
-@AllArgsConstructor
 public class EntrepriseMetierImpl implements IEntrepriseMetier{
-
+@Autowired
+private EntrepriseRepository entrepriseRepository;
 	@Override
 	public Entreprise creer(Entreprise entity) throws InvalideOryzException {
 		// TODO Auto-generated method stub
-		return null;
+		return entrepriseRepository.save(entity);
 	}
 
 	@Override
 	public Entreprise modifier(Entreprise entity) throws InvalideOryzException {
 		// TODO Auto-generated method stub
-		return null;
+		return entrepriseRepository.save(entity);
 	}
 
 	@Override
 	public List<Entreprise> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return entrepriseRepository.findAll();
 	}
 
 	@Override
 	public Entreprise findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return entrepriseRepository.findById(id).get();
 	}
 
 	@Override
@@ -54,4 +57,5 @@ public class EntrepriseMetierImpl implements IEntrepriseMetier{
 		return false;
 	}
 
+	
 }

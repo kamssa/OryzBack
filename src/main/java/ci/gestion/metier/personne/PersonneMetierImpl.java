@@ -3,35 +3,35 @@ package ci.gestion.metier.personne;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import ci.gestion.dao.personne.PersonneRepository;
-import ci.gestion.entites.personne.Personne;
+import ci.gestion.dao.personne.PersonneReposiory;
+import ci.gestion.entites.shared.Personne;
 import ci.gestion.metier.exception.InvalideOryzException;
-import lombok.AllArgsConstructor;
+
 
 
 @Service
-@AllArgsConstructor
 public class PersonneMetierImpl implements IPersonneMetier{
-
-	private PersonneRepository personneReposiory;
-	
+	@Autowired
+	private PersonneReposiory personneReposiory;
+	@Autowired
 	PasswordEncoder passwordEncoder;
 
 	@Override
-	public Personne creer(Personne p) throws  InvalideOryzException {
+	public Personne creer(Personne p) throws InvalideOryzException {
 		System.out.println("personne a enregistrer" + ":" + p);
 		if ((p.getEmail().equals(null)) || (p.getEmail() == "")) {
-			throw new  InvalideOryzException("Le email ne peut etre null");
+			throw new InvalideOryzException("Le email ne peut etre null");
 		}
 		
 		Optional<Personne> pers = null;
 
 		pers = personneReposiory.findByEmail(p.getEmail());
 		if (pers.isPresent()) {
-			throw new  InvalideOryzException("Ce mail est deja utilise");
+			throw new InvalideOryzException("Ce mail est deja utilise");
 		}
 
 	p.setPassword(passwordEncoder.encode(p.getPassword()));
@@ -41,7 +41,7 @@ public class PersonneMetierImpl implements IPersonneMetier{
 	}
 
 	@Override
-	public Personne modifier(Personne modif) throws  InvalideOryzException{
+	public Personne modifier(Personne modif) throws InvalideOryzException {
 		modif.setPassword(passwordEncoder.encode(modif.getPassword()));
 		return personneReposiory.save(modif);
 
@@ -78,13 +78,17 @@ public class PersonneMetierImpl implements IPersonneMetier{
 	}
 
 	
-	
+
 	@Override
 	public Optional<Personne> findByEmail(String login) {
 		// TODO Auto-generated method stub
 		return personneReposiory.findByEmail(login);
 	}
 
-	
+	@Override
+	public Optional<Personne> findByEmailOrTelephone(String email, String telephone) {
+		// TODO Auto-generated method stub
+		return personneReposiory.findByEmailOrTelephone(email, telephone);
+	}
 
 }
