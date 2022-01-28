@@ -19,7 +19,9 @@ public class Materiel extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
 	private String  libelle;
 	private String description;
+	private Double quntite;
 	@ManyToOne
     @JoinColumn(name="categorie_id", nullable=false)
     private Categorie categorie;
+	
 }
