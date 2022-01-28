@@ -17,45 +17,63 @@ public class Photo extends DateAudit{
 	@Version
 	private Long version;
 	private Long idTravaux;
-    private String path;
+	private String imageUrl;
+	private String imageId;
 
 
 public Photo() {
 	super();
 }
 
-public Photo(String path) {
+
+public Photo(Long id, Long version, Long idTravaux, String imageUrl, String imageId) {
 	super();
-	this.path = path;
-}
-
-public Long getIdTravaux() {
-	return idTravaux;
-}
-
-public void setIdTravaux(Long idTravaux) {
+	this.id = id;
+	this.version = version;
 	this.idTravaux = idTravaux;
+	this.imageUrl = imageUrl;
+	this.imageId = imageId;
 }
 
-public String getPath() {
-	return path;
-}
-
-public void setPath(String path) {
-	this.path = path;
-}
-
-public Long getId() {
-	return id;
-}
 
 public Long getVersion() {
 	return version;
 }
 
-@Override
-public String toString() {
-	return "Photo [id=" + id + ", version=" + version + ", path=" + path + ", idTravaux=" + idTravaux + "]";
+
+public void setVersion(Long version) {
+	this.version = version;
 }
+
+
+public Long getIdTravaux() {
+	return idTravaux;
+}
+
+
+public void setIdTravaux(Long idTravaux) {
+	this.idTravaux = idTravaux;
+}
+
+
+public String getImageUrl() {
+	return imageUrl;
+}
+
+
+public void setImageUrl(String imageUrl) {
+	this.imageUrl = imageUrl;
+}
+
+
+public String getImageId() {
+	return imageId;
+}
+
+
+public void setImageId(String imageId) {
+	this.imageId = imageId;
+}
+
 
 }

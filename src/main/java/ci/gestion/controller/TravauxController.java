@@ -204,7 +204,7 @@ public class TravauxController {
 		return jsonMapper.writeValueAsString(reponse);
 	}
 ////////////get photo par id d'une travaux
-@GetMapping("/photo/{idTravaux}")
+@GetMapping("/getPhoto/{idTravaux}")
 public String getAbonnementByIdPersonne(@PathVariable("idTravaux") long idTravaux)
 	throws JsonProcessingException, InvalideOryzException {
 Reponse<List<Photo>> reponse;
@@ -224,53 +224,43 @@ try {
 return jsonMapper.writeValueAsString(reponse);
 
 }
-	// uploader plusieurs images
-	@PostMapping("/travauxPhoto")
-	@Transactional
-	public String creerPhotos(@RequestParam(name = "image_photo") MultipartFile file, @RequestParam Long id)
-			throws Exception {
-		Reponse<Photo> reponse = null;
-		Reponse<Photo> reponseParLibelle;
-		// recuperer le libelle à partir du nom de la photo
-		String libelle = file.getOriginalFilename();
-		Travaux tr = getTravauxById(id).getBody();
-		Photo p1 = new Photo();
-		p1.setIdTravaux(id);
-		Photo p = photoMetier.creer(p1);
 
-		System.out.println(p1);
-		
-
-		String path = "http://localhost:8080/api/getPhoto" + "/" + p.getVersion() + "/" + id + "/"+libelle;
-		System.out.println(path);
-
-		String dossier = oryzPhotos + "/" + "photos" + "/"+ id +"/";
-		File rep = new File(dossier);
-
-		if (!file.isEmpty()) {
-			if (!rep.exists() && !rep.isDirectory()) {
-				rep.mkdir();
-			}
-		}
-		try {
-			// enregistrer le chemin dans la photo
-			p.setPath(path);
-			System.out.println(path);
-			file.transferTo(new File(dossier + file.getOriginalFilename()));
-			List<String> messages = new ArrayList<>();
-			messages.add(String.format("%s (photo ajouter avec succes)", p.getIdTravaux()));
-			reponse = new Reponse<Photo>(0, messages, photoMetier.modifier(p));
-
-		} catch (Exception e) {
-
-			reponse = new Reponse<Photo>(1, Static.getErreursForException(e), null);
-		}
-
-		return jsonMapper.writeValueAsString(reponse);	
-		}
-
+/*
+ * // uploader plusieurs images
+ * 
+ * @PostMapping("/travauxPhoto")
+ * 
+ * @Transactional public String creerPhotos(@RequestParam(name = "image_photo")
+ * MultipartFile file, @RequestParam Long id) throws Exception { Reponse<Photo>
+ * reponse = null; Reponse<Photo> reponseParLibelle; // recuperer le libelle à
+ * partir du nom de la photo String libelle = file.getOriginalFilename();
+ * Travaux tr = getTravauxById(id).getBody(); Photo p1 = new Photo();
+ * p1.setIdTravaux(id); Photo p = photoMetier.creer(p1);
+ * 
+ * System.out.println(p1);
+ * 
+ * 
+ * String path = "http://localhost:8080/api/getPhoto" + "/" + p.getVersion() +
+ * "/" + id + "/"+libelle; System.out.println(path);
+ * 
+ * String dossier = oryzPhotos + "/" + "photos" + "/"+ id +"/"; File rep = new
+ * File(dossier);
+ * 
+ * if (!file.isEmpty()) { if (!rep.exists() && !rep.isDirectory()) {
+ * rep.mkdir(); } } try { // enregistrer le chemin dans la photo
+ * p.setPath(path); System.out.println(path); file.transferTo(new File(dossier +
+ * file.getOriginalFilename())); List<String> messages = new ArrayList<>();
+ * messages.add(String.format("%s (photo ajouter avec succes)",
+ * p.getIdTravaux())); reponse = new Reponse<Photo>(0, messages,
+ * photoMetier.modifier(p));
+ * 
+ * } catch (Exception e) {
+ * 
+ * reponse = new Reponse<Photo>(1, Static.getErreursForException(e), null); }
+ * 
+ * return jsonMapper.writeValueAsString(reponse); }
+ */
 	// recuperer les images du site
-	@GetMapping(value = "/getPhoto/{version}/{id}/{libelle}", produces = MediaType.IMAGE_JPEG_VALUE)
 	@Transactional
 	public byte[] getPhotosTravaux(@PathVariable Long version,
 			@PathVariable Long id, @PathVariable String libelle) throws FileNotFoundException, IOException {
