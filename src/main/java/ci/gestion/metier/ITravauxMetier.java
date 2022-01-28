@@ -8,5 +8,7 @@ import ci.gestion.entites.site.Travaux;
 
 public interface ITravauxMetier extends Imetier<Travaux, Long>{
 	List<Travaux> chercherTravauxParMc(String mc);
+	List<Travaux> findTravauxByIdSite(long id);
+
 
 }

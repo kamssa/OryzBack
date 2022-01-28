@@ -70,4 +70,10 @@ private TravauxRepository travauxRepository;
 		return travauxRepository.chercherTravauxParMc(mc);
 	}
 
+	@Override
+	public List<Travaux> findTravauxByIdSite(long id) {
+		// TODO Auto-generated method stub
+		return travauxRepository.findTravauxByIdSite(id);
+	}
+
 }

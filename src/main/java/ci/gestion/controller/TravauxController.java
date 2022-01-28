@@ -7,9 +7,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -162,6 +159,28 @@ public class TravauxController {
 
 	}
 
+////////recuperer travail  par son id
+	@GetMapping("/travauxByIdSite/{id}")
+	public String travauxByIdSite(@PathVariable Long id) throws JsonProcessingException {
+		Reponse<List<Travaux>> reponse;
+		try {
+			List<Travaux> travaux = travauxMetier.findTravauxByIdSite(id);
+
+			if (!travaux.isEmpty()) {
+				reponse = new Reponse<List<Travaux>>(0, null, travaux);
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add("Pas de travail info enregistrés");
+				reponse = new Reponse<List<Travaux>>(2, messages, new ArrayList<>());
+			}
+
+		} catch (Exception e) {
+			reponse = new Reponse<List<Travaux>>(1, Static.getErreursForException(e), new ArrayList<>());
+		}
+		return jsonMapper.writeValueAsString(reponse);
+
+	}
+
 ////////rechercher un travail par mot cle
 	@GetMapping("/rechemc")
 	public String chercherTravauxByMc(@RequestParam(value = "mc") String mc) throws JsonProcessingException {
@@ -203,75 +222,76 @@ public class TravauxController {
 
 		return jsonMapper.writeValueAsString(reponse);
 	}
+
 ////////////get photo par id d'une travaux
-@GetMapping("/getPhoto/{idTravaux}")
-public String getAbonnementByIdPersonne(@PathVariable("idTravaux") long idTravaux)
-	throws JsonProcessingException, InvalideOryzException {
-Reponse<List<Photo>> reponse;
-try {
-	List<Photo> photos = photoMetier.findPhotoByIdTravaux(idTravaux);
-	if (!photos.isEmpty()) {
-		reponse = new Reponse<List<Photo>>(0, null, photos);
-	} else {
-		List<String> messages = new ArrayList<>();
-		messages.add("Pas de photos enregistrées");
-		reponse = new Reponse<List<Photo>>(1, messages, new ArrayList<>());
+	@GetMapping("/getPhoto/{idTravaux}")
+	public String getAbonnementByIdPersonne(@PathVariable("idTravaux") long idTravaux)
+			throws JsonProcessingException, InvalideOryzException {
+		Reponse<List<Photo>> reponse;
+		try {
+			List<Photo> photos = photoMetier.findPhotoByIdTravaux(idTravaux);
+			if (!photos.isEmpty()) {
+				reponse = new Reponse<List<Photo>>(0, null, photos);
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add("Pas de photos enregistrées");
+				reponse = new Reponse<List<Photo>>(1, messages, new ArrayList<>());
+			}
+
+		} catch (Exception e) {
+			reponse = new Reponse<List<Photo>>(1, Static.getErreursForException(e), new ArrayList<>());
+		}
+		return jsonMapper.writeValueAsString(reponse);
+
 	}
 
-} catch (Exception e) {
-	reponse = new Reponse<List<Photo>>(1, Static.getErreursForException(e), new ArrayList<>());
-}
-return jsonMapper.writeValueAsString(reponse);
-
-}
-
-/*
- * // uploader plusieurs images
- * 
- * @PostMapping("/travauxPhoto")
- * 
- * @Transactional public String creerPhotos(@RequestParam(name = "image_photo")
- * MultipartFile file, @RequestParam Long id) throws Exception { Reponse<Photo>
- * reponse = null; Reponse<Photo> reponseParLibelle; // recuperer le libelle à
- * partir du nom de la photo String libelle = file.getOriginalFilename();
- * Travaux tr = getTravauxById(id).getBody(); Photo p1 = new Photo();
- * p1.setIdTravaux(id); Photo p = photoMetier.creer(p1);
- * 
- * System.out.println(p1);
- * 
- * 
- * String path = "http://localhost:8080/api/getPhoto" + "/" + p.getVersion() +
- * "/" + id + "/"+libelle; System.out.println(path);
- * 
- * String dossier = oryzPhotos + "/" + "photos" + "/"+ id +"/"; File rep = new
- * File(dossier);
- * 
- * if (!file.isEmpty()) { if (!rep.exists() && !rep.isDirectory()) {
- * rep.mkdir(); } } try { // enregistrer le chemin dans la photo
- * p.setPath(path); System.out.println(path); file.transferTo(new File(dossier +
- * file.getOriginalFilename())); List<String> messages = new ArrayList<>();
- * messages.add(String.format("%s (photo ajouter avec succes)",
- * p.getIdTravaux())); reponse = new Reponse<Photo>(0, messages,
- * photoMetier.modifier(p));
- * 
- * } catch (Exception e) {
- * 
- * reponse = new Reponse<Photo>(1, Static.getErreursForException(e), null); }
- * 
- * return jsonMapper.writeValueAsString(reponse); }
- */
+	/*
+	 * // uploader plusieurs images
+	 * 
+	 * @PostMapping("/travauxPhoto")
+	 * 
+	 * @Transactional public String creerPhotos(@RequestParam(name = "image_photo")
+	 * MultipartFile file, @RequestParam Long id) throws Exception { Reponse<Photo>
+	 * reponse = null; Reponse<Photo> reponseParLibelle; // recuperer le libelle à
+	 * partir du nom de la photo String libelle = file.getOriginalFilename();
+	 * Travaux tr = getTravauxById(id).getBody(); Photo p1 = new Photo();
+	 * p1.setIdTravaux(id); Photo p = photoMetier.creer(p1);
+	 * 
+	 * System.out.println(p1);
+	 * 
+	 * 
+	 * String path = "http://localhost:8080/api/getPhoto" + "/" + p.getVersion() +
+	 * "/" + id + "/"+libelle; System.out.println(path);
+	 * 
+	 * String dossier = oryzPhotos + "/" + "photos" + "/"+ id +"/"; File rep = new
+	 * File(dossier);
+	 * 
+	 * if (!file.isEmpty()) { if (!rep.exists() && !rep.isDirectory()) {
+	 * rep.mkdir(); } } try { // enregistrer le chemin dans la photo
+	 * p.setPath(path); System.out.println(path); file.transferTo(new File(dossier +
+	 * file.getOriginalFilename())); List<String> messages = new ArrayList<>();
+	 * messages.add(String.format("%s (photo ajouter avec succes)",
+	 * p.getIdTravaux())); reponse = new Reponse<Photo>(0, messages,
+	 * photoMetier.modifier(p));
+	 * 
+	 * } catch (Exception e) {
+	 * 
+	 * reponse = new Reponse<Photo>(1, Static.getErreursForException(e), null); }
+	 * 
+	 * return jsonMapper.writeValueAsString(reponse); }
+	 */
 	// recuperer les images du site
 	@Transactional
-	public byte[] getPhotosTravaux(@PathVariable Long version,
-			@PathVariable Long id, @PathVariable String libelle) throws FileNotFoundException, IOException {
-		String dossier = oryzPhotos + "/" + "photos" + "/"+ id +"/" + libelle;
+	public byte[] getPhotosTravaux(@PathVariable Long version, @PathVariable Long id, @PathVariable String libelle)
+			throws FileNotFoundException, IOException {
+		String dossier = oryzPhotos + "/" + "photos" + "/" + id + "/" + libelle;
 		File f = new File(dossier);
-		
+
 		byte[] img = IOUtils.toByteArray(new FileInputStream(f));
 		System.out.println(img);
 		System.out.println(f);
 
-        return img;
+		return img;
 	}
 
 }

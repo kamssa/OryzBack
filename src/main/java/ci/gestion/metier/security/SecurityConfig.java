@@ -70,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/achat/**","/api/achats/**"
             		,"/api/DeleteDetail/**",
             		"/api/autres/**","/api/autre/**","/api/DeleteDetailAutre/**",
-            		"/api/upload/**"
+            		"/api/upload/**","/api/travauxByIdSite/**"
             		).permitAll()
 	       .anyRequest().authenticated();
 	       
