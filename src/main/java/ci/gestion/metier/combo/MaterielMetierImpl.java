@@ -4,47 +4,48 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import ci.gestion.dao.CategorieRepository;
+import ci.gestion.dao.MaterielRepository;
 import ci.gestion.entites.combo.Categorie;
+import ci.gestion.entites.combo.Materiel;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class CategorieMetierImpl implements CategorieMetier{
- CategorieRepository categorieRepository;
+public class MaterielMetierImpl implements MaterielMetier{
+private MaterielRepository materielRepository;
 	@Override
-	public Categorie creer(Categorie entity) throws InvalideOryzException {
+	public Materiel creer(Materiel entity) throws InvalideOryzException {
 		// TODO Auto-generated method stub
-		return categorieRepository.save(entity);
+		return materielRepository.save(entity);
 	}
 
 	@Override
-	public Categorie modifier(Categorie entity) throws InvalideOryzException {
+	public Materiel modifier(Materiel entity) throws InvalideOryzException {
 		// TODO Auto-generated method stub
-		return categorieRepository.save(entity);
+		return materielRepository.save(entity);
 	}
 
 	@Override
-	public List<Categorie> findAll() {
+	public List<Materiel> findAll() {
 		// TODO Auto-generated method stub
-		return categorieRepository.findAll();
+		return materielRepository.findAll();
 	}
 
 	@Override
-	public Categorie findById(Long id) {
+	public Materiel findById(Long id) {
 		// TODO Auto-generated method stub
-		return categorieRepository.findById(id).get();
+		return materielRepository.findById(id).get();
 	}
 
 	@Override
 	public boolean supprimer(Long id) {
-		categorieRepository.deleteById(id);
+		materielRepository.deleteById(id);
 		return true;
 	}
 
 	@Override
-	public boolean supprimer(List<Categorie> entites) {
+	public boolean supprimer(List<Materiel> entites) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -56,9 +57,9 @@ public class CategorieMetierImpl implements CategorieMetier{
 	}
 
 	@Override
-	public List<Categorie> getCategorieByIdEntreprise(long id) {
+	public List<Materiel> getMaterielByIdCategorie(long id) {
 		// TODO Auto-generated method stub
-		return categorieRepository.getCategorieByIdEntreprise(id);
+		return materielRepository.getMaterielByIdCategorie(id);
 	}
 
 }

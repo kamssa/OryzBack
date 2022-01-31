@@ -18,8 +18,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.combo.Categorie;
-import ci.gestion.entites.entreprise.Departement;
+import ci.gestion.entites.combo.Materiel;
 import ci.gestion.metier.combo.CategorieMetier;
+import ci.gestion.metier.combo.MaterielMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;
@@ -27,78 +28,78 @@ import ci.gestion.metier.utilitaire.Static;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class CategorieController {
+public class MaterielController {
 	@Autowired
-	private CategorieMetier categorieMetier;
+	private MaterielMetier materielMetier;
 
 	@Autowired
 	private ObjectMapper jsonMapper;
 
 // recuper categorie par identifiant
-	private Reponse<Categorie> getCategoriesById(Long id) {
-		Categorie categories = null;
+	private Reponse<Materiel> getMaterielById(Long id) {
+		Materiel materiel = null;
 
 		try {
-			categories = categorieMetier.findById(id);
-			if (categories == null) {
+			materiel = materielMetier.findById(id);
+			if (materiel == null) {
 				List<String> messages = new ArrayList<>();
-				messages.add(String.format("La catégorie n'existe pas", id));
-				new Reponse<Categorie>(2, messages, null);
+				messages.add(String.format("Le materiel n'existe pas", id));
+				new Reponse<Materiel>(2, messages, null);
 
 			}
 		} catch (RuntimeException e) {
-			new Reponse<Categorie>(1, Static.getErreursForException(e), null);
+			new Reponse<Materiel>(1, Static.getErreursForException(e), null);
 		}
 
-		return new Reponse<Categorie>(0, null, categories);
+		return new Reponse<Materiel>(0, null, materiel);
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////// enregistrer une categories  dans la base de donnee
 ////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 
-	@PostMapping("/categorie")
-	public String creer(@RequestBody Categorie categorie) throws JsonProcessingException {
-		Reponse<Categorie> reponse;
-		System.out.println(categorie);
+	@PostMapping("/materiel")
+	public String creer(@RequestBody Materiel materiel) throws JsonProcessingException {
+		Reponse<Materiel> reponse;
+		System.out.println(materiel);
 		try {
 
-			Categorie cat = categorieMetier.creer(categorie);
+			Materiel mat = materielMetier.creer(materiel);
 			List<String> messages = new ArrayList<>();
-			messages.add(String.format("%s  à été créer avec succes", cat.getLibelle()));
-			reponse = new Reponse<Categorie>(0, messages, cat);
+			messages.add(String.format("%s  à été créer avec succes", mat.getLibelle()));
+			reponse = new Reponse<Materiel>(0, messages, mat);
 
 		} catch (InvalideOryzException e) {
 
-			reponse = new Reponse<Categorie>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Materiel>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
 
-	@PutMapping("/categorie")
-	public String update(@RequestBody Categorie modif) throws JsonProcessingException {
+	@PutMapping("/materiel")
+	public String update(@RequestBody Materiel modif) throws JsonProcessingException {
 
-		Reponse<Categorie> reponse = null;
-		Reponse<Categorie> reponsePersModif = null;
+		Reponse<Materiel> reponse = null;
+		Reponse<Materiel> reponsePersModif = null;
 		// on recupere abonnement a modifier
 		System.out.println("modif recupere1:" + modif);
-		reponsePersModif = getCategoriesById(modif.getId());
+		reponsePersModif = getMaterielById(modif.getId());
 		if (reponsePersModif.getBody() != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
-				Categorie categories = categorieMetier.modifier(modif);
+				Materiel materiels = materielMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s a modifier avec succes", categories.getId()));
-				reponse = new Reponse<Categorie>(0, messages, categories);
+				messages.add(String.format("%s a modifier avec succes", materiels.getId()));
+				reponse = new Reponse<Materiel>(0, messages, materiels);
 			} catch (InvalideOryzException e) {
 
-				reponse = new Reponse<Categorie>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<Materiel>(1, Static.getErreursForException(e), null);
 			}
 
 		} else {
 			List<String> messages = new ArrayList<>();
-			messages.add(String.format("La catégories n'existe pas"));
-			reponse = new Reponse<Categorie>(0, messages, null);
+			messages.add(String.format("L materiel n'existe pas"));
+			reponse = new Reponse<Materiel>(0, messages, null);
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
@@ -106,14 +107,14 @@ public class CategorieController {
 	}
 
 	//////// recuperer une categorie par son id
-	@GetMapping("/categorie/{id}")
+	@GetMapping("/materiel/{id}")
 	public String getById(@PathVariable Long id) throws JsonProcessingException {
 		// Annotation @PathVariable permet de recuperer le paremettre dans URI
-		Reponse<Categorie> reponse = null;
+		Reponse<Materiel> reponse = null;
 
-		reponse = getCategoriesById(id);
+		reponse = getMaterielById(id);
 		if (reponse.getBody() == null) {
-			throw new RuntimeException("pas d'enregistrement pour cette catégorie");
+			throw new RuntimeException("pas d'enregistrement pour ce materiel");
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
@@ -121,17 +122,17 @@ public class CategorieController {
 	}
 
 	// get all categories
-	@GetMapping("/categorie")
+	@GetMapping("/materiel")
 	public String findAll() throws JsonProcessingException {
-		Reponse<List<Categorie>> reponse;
+		Reponse<List<Materiel>> reponse;
 		try {
-			List<Categorie> categories = categorieMetier.findAll();
-			if (!categories.isEmpty()) {
-				reponse = new Reponse<List<Categorie>>(0, null, categories);
+			List<Materiel> materiels = materielMetier.findAll();
+			if (!materiels.isEmpty()) {
+				reponse = new Reponse<List<Materiel>>(0, null, materiels);
 			} else {
 				List<String> messages = new ArrayList<>();
-				messages.add("Pas d'abonnés enregistrées");
-				reponse = new Reponse<List<Categorie>>(1, messages, new ArrayList<>());
+				messages.add("Pas de materiels enregistrées");
+				reponse = new Reponse<List<Materiel>>(1, messages, new ArrayList<>());
 			}
 
 		} catch (Exception e) {
@@ -142,14 +143,14 @@ public class CategorieController {
 	}
 
 	// supprimer une categorie
-	@DeleteMapping("/categorie/{id}")
+	@DeleteMapping("/materiel/{id}")
 	public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
 
 		Reponse<Boolean> reponse = null;
 
 		try {
 
-			reponse = new Reponse<Boolean>(0, null, categorieMetier.supprimer(id));
+			reponse = new Reponse<Boolean>(0, null, materielMetier.supprimer(id));
 
 		} catch (RuntimeException e1) {
 			reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
@@ -157,17 +158,17 @@ public class CategorieController {
 
 		return jsonMapper.writeValueAsString(reponse);
 	}
-	@GetMapping("/getCategorieByidEntreprise/{id}")
-	public String getDepByEntreprise(@PathVariable Long id) throws JsonProcessingException {
-		Reponse<List<Categorie>> reponse;
+	@GetMapping("/getMaterielByidCategorie/{id}")
+	public String getMatByCategorie(@PathVariable Long id) throws JsonProcessingException {
+		Reponse<List<Materiel>> reponse;
 		try {
-			List<Categorie> pers = categorieMetier.getCategorieByIdEntreprise(id);
+			List<Materiel> pers = materielMetier.getMaterielByIdCategorie(id);
 			if (!pers.isEmpty()) {
-				reponse = new Reponse<List<Categorie>>(0, null, pers);
+				reponse = new Reponse<List<Materiel>>(0, null, pers);
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add("Pas de departement enregistrés");
-				reponse = new Reponse<List<Categorie>>(1, messages, new ArrayList<>());
+				reponse = new Reponse<List<Materiel>>(1, messages, new ArrayList<>());
 			}
 
 		} catch (Exception e) {
@@ -176,4 +177,5 @@ public class CategorieController {
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
+
 }

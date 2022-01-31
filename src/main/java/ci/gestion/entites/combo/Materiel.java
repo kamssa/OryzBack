@@ -1,6 +1,8 @@
 package ci.gestion.entites.combo;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -19,9 +21,10 @@ public class Materiel extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
 	private String  libelle;
 	private String description;
-	private Double quntite;
-	@ManyToOne
-    @JoinColumn(name="categorie_id", nullable=false)
+	private Double quantite;
+	private String unite;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name="categorie_id")
     private Categorie categorie;
 	
 }

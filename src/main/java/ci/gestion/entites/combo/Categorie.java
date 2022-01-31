@@ -28,8 +28,6 @@ public class Categorie extends AbstractEntity{
 	private static final long serialVersionUID = 1L;
 	private String  libelle;
 	private String description;
-	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
-	@JoinColumn(name = "fk_Categorie")
-	private List<Materiel> materiel = new ArrayList<>();
-
+	private Long idEntreprise;
+	
 }
