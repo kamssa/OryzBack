@@ -1,5 +1,7 @@
 package ci.gestion.entites.combo;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,6 +25,7 @@ public class Materiel extends AbstractEntity{
 	private String description;
 	private Double quantite;
 	private String unite;
+	private BigDecimal prixUnitaire;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name="categorie_id")
     private Categorie categorie;
