@@ -28,7 +28,7 @@ public class StockMetierImpl implements StockMetier{
 		Stock stock = null;
 		   MontantStock mt = null;
 		 double montantD = 0d;
-		 Optional<MontantStock> montantStocks;
+		
 			double montantT = 0d;
 			double sommeMontant = 0d;
 			double reste=0;
@@ -55,14 +55,7 @@ public class StockMetierImpl implements StockMetier{
 						entity.setMontant(sommeMontant);
 						stock = stockRepository.save(entity);
 						
-						  montantStocks=
-						  montantSockRepository.getMontantStockByIdEntreprise(stock.getEntreprise().
-						  getId()); System.out.println("MontantStocks =>"+montantStocks);
-						  if(montantStocks.isEmpty()) { MontantStock mts = new MontantStock();
-						  mts.setEntreprise(stock.getEntreprise()); montantSockRepository.save(mts); }
-						 
-				
-				}
+						 }
 				
 			}else {
 				montantD = (detail.getPrixUnitaire()*detail.getQuantite());
@@ -71,17 +64,18 @@ public class StockMetierImpl implements StockMetier{
 				System.out.println("Voir le montant calculer" + detail);
 				entity.setMontant(sommeMontant);
 				stock = stockRepository.save(entity);
-				 montantStocks= montantSockRepository.getMontantStockByIdEntreprise(stock.getEntreprise().getId());
-				    System.out.println("MontantStocks =>"+montantStocks);
-				   if(montantStocks.isEmpty()) {
-				    MontantStock mts = new MontantStock();
-				    mts.setEntreprise(stock.getEntreprise());
-				    montantSockRepository.save(mts);	
-			}
-			 
+				
 					
 		    }
 	}
+			 Optional<MontantStock> montantStocks= montantSockRepository.getMontantStockByIdEntreprise(entity.getEntreprise().getId());
+			    System.out.println("MontantStocks =>"+montantStocks);
+			   if(montantStocks.isEmpty()) {
+			    MontantStock mts = new MontantStock();
+			    mts.setEntreprise(stock.getEntreprise());
+			    montantSockRepository.save(mts);	
+		}
+		 
 			return stock;	
 	}
 
