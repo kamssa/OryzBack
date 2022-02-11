@@ -10,4 +10,7 @@ import ci.gestion.entites.entreprise.Stock;
 public interface StockRepository extends JpaRepository<Stock, Long>{
 	@Query("select stock from Stock stock where stock.entreprise.id=?1")
 	List<Stock> getStockByIdEntreprise(long id);
+	
+	
+
 }

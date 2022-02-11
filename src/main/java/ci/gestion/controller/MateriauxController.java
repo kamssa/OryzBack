@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.combo.Categorie;
-import ci.gestion.entites.combo.Materiel;
-import ci.gestion.metier.combo.CategorieMetier;
-import ci.gestion.metier.combo.MaterielMetier;
+import ci.gestion.entites.operation.Materiaux;
+import ci.gestion.metier.combo.MateriauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;
@@ -28,30 +26,30 @@ import ci.gestion.metier.utilitaire.Static;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class MaterielController {
+public class MateriauxController {
 	@Autowired
-	private MaterielMetier materielMetier;
+	private MateriauxMetier materielMetier;
 
 	@Autowired
 	private ObjectMapper jsonMapper;
 
 // recuper categorie par identifiant
-	private Reponse<Materiel> getMaterielById(Long id) {
-		Materiel materiel = null;
+	private Reponse<Materiaux> getMaterielById(Long id) {
+		Materiaux materiel = null;
 
 		try {
 			materiel = materielMetier.findById(id);
 			if (materiel == null) {
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("Le materiel n'existe pas", id));
-				new Reponse<Materiel>(2, messages, null);
+				new Reponse<Materiaux>(2, messages, null);
 
 			}
 		} catch (RuntimeException e) {
-			new Reponse<Materiel>(1, Static.getErreursForException(e), null);
+			new Reponse<Materiaux>(1, Static.getErreursForException(e), null);
 		}
 
-		return new Reponse<Materiel>(0, null, materiel);
+		return new Reponse<Materiaux>(0, null, materiel);
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,47 +57,47 @@ public class MaterielController {
 ////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 
 	@PostMapping("/materiel")
-	public String creer(@RequestBody Materiel materiel) throws JsonProcessingException {
-		Reponse<Materiel> reponse;
+	public String creer(@RequestBody Materiaux materiel) throws JsonProcessingException {
+		Reponse<Materiaux> reponse;
 		System.out.println(materiel);
 		try {
 
-			Materiel mat = materielMetier.creer(materiel);
+			Materiaux mat = materielMetier.creer(materiel);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  à été créer avec succes", mat.getLibelle()));
-			reponse = new Reponse<Materiel>(0, messages, mat);
+			reponse = new Reponse<Materiaux>(0, messages, mat);
 
 		} catch (InvalideOryzException e) {
 
-			reponse = new Reponse<Materiel>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<Materiaux>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
 
 	@PutMapping("/materiel")
-	public String update(@RequestBody Materiel modif) throws JsonProcessingException {
+	public String update(@RequestBody Materiaux modif) throws JsonProcessingException {
 
-		Reponse<Materiel> reponse = null;
-		Reponse<Materiel> reponsePersModif = null;
+		Reponse<Materiaux> reponse = null;
+		Reponse<Materiaux> reponsePersModif = null;
 		// on recupere abonnement a modifier
 		System.out.println("modif recupere1:" + modif);
 		reponsePersModif = getMaterielById(modif.getId());
 		if (reponsePersModif.getBody() != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
-				Materiel materiels = materielMetier.modifier(modif);
+				Materiaux materiels = materielMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", materiels.getId()));
-				reponse = new Reponse<Materiel>(0, messages, materiels);
+				reponse = new Reponse<Materiaux>(0, messages, materiels);
 			} catch (InvalideOryzException e) {
 
-				reponse = new Reponse<Materiel>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<Materiaux>(1, Static.getErreursForException(e), null);
 			}
 
 		} else {
 			List<String> messages = new ArrayList<>();
-			messages.add(String.format("L materiel n'existe pas"));
-			reponse = new Reponse<Materiel>(0, messages, null);
+			messages.add(String.format("Le materiel n'existe pas"));
+			reponse = new Reponse<Materiaux>(0, messages, null);
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
@@ -110,7 +108,7 @@ public class MaterielController {
 	@GetMapping("/materiel/{id}")
 	public String getById(@PathVariable Long id) throws JsonProcessingException {
 		// Annotation @PathVariable permet de recuperer le paremettre dans URI
-		Reponse<Materiel> reponse = null;
+		Reponse<Materiaux> reponse = null;
 
 		reponse = getMaterielById(id);
 		if (reponse.getBody() == null) {
@@ -124,15 +122,15 @@ public class MaterielController {
 	// get all categories
 	@GetMapping("/materiel")
 	public String findAll() throws JsonProcessingException {
-		Reponse<List<Materiel>> reponse;
+		Reponse<List<Materiaux>> reponse;
 		try {
-			List<Materiel> materiels = materielMetier.findAll();
+			List<Materiaux> materiels = materielMetier.findAll();
 			if (!materiels.isEmpty()) {
-				reponse = new Reponse<List<Materiel>>(0, null, materiels);
+				reponse = new Reponse<List<Materiaux>>(0, null, materiels);
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add("Pas de materiels enregistrées");
-				reponse = new Reponse<List<Materiel>>(1, messages, new ArrayList<>());
+				reponse = new Reponse<List<Materiaux>>(1, messages, new ArrayList<>());
 			}
 
 		} catch (Exception e) {
@@ -160,15 +158,15 @@ public class MaterielController {
 	}
 	@GetMapping("/getMaterielByidCategorie/{id}")
 	public String getMatByCategorie(@PathVariable Long id) throws JsonProcessingException {
-		Reponse<List<Materiel>> reponse;
+		Reponse<List<Materiaux>> reponse;
 		try {
-			List<Materiel> pers = materielMetier.getMaterielByIdCategorie(id);
+			List<Materiaux> pers = materielMetier.getMaterielByIdCategorie(id);
 			if (!pers.isEmpty()) {
-				reponse = new Reponse<List<Materiel>>(0, null, pers);
+				reponse = new Reponse<List<Materiaux>>(0, null, pers);
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add("Pas de departement enregistrés");
-				reponse = new Reponse<List<Materiel>>(1, messages, new ArrayList<>());
+				reponse = new Reponse<List<Materiaux>>(1, messages, new ArrayList<>());
 			}
 
 		} catch (Exception e) {

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.combo.Categorie;
 import ci.gestion.entites.entreprise.Departement;
+import ci.gestion.entites.operation.Categorie;
 import ci.gestion.metier.combo.CategorieMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;

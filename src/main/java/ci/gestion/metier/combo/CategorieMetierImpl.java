@@ -1,11 +1,13 @@
 package ci.gestion.metier.combo;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.CategorieRepository;
-import ci.gestion.entites.combo.Categorie;
+import ci.gestion.entites.operation.Categorie;
+import ci.gestion.entites.shared.Personne;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 
@@ -15,7 +17,17 @@ public class CategorieMetierImpl implements CategorieMetier{
  CategorieRepository categorieRepository;
 	@Override
 	public Categorie creer(Categorie entity) throws InvalideOryzException {
-		// TODO Auto-generated method stub
+	
+		if ((entity.getLibelle().equals(null)) || (entity.getLibelle() == "")) {
+			throw new InvalideOryzException("Le libelle ne peut etre null");
+		}
+		
+		Optional<Categorie> cat = null;
+
+		cat = categorieRepository.findByLibelle(entity.getLibelle());
+		if (cat.isPresent()) {
+			throw new InvalideOryzException("Ce libelle est deja utilise");
+		}
 		return categorieRepository.save(entity);
 	}
 
@@ -59,6 +71,12 @@ public class CategorieMetierImpl implements CategorieMetier{
 	public List<Categorie> getCategorieByIdEntreprise(long id) {
 		// TODO Auto-generated method stub
 		return categorieRepository.getCategorieByIdEntreprise(id);
+	}
+
+	@Override
+	public Optional<Categorie> findByLibelle(String libelle) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

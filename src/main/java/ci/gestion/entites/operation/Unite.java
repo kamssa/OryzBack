@@ -1,4 +1,4 @@
-package ci.gestion.entites.combo;
+package ci.gestion.entites.operation;
 
 import javax.persistence.Entity;
 

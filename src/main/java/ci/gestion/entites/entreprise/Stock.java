@@ -1,16 +1,17 @@
 package ci.gestion.entites.entreprise;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import ci.gestion.entites.combo.Materiel;
+import ci.gestion.entites.operation.Categorie;
 import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,19 +21,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor
 @Data
 public class Stock extends AbstractEntity{
-	
-	private static final long serialVersionUID = 1L;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "id_materiel")
-	private Materiel materiel;
+	private String libelle;
+	private LocalDateTime date;
+	private double montant=0d;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_entreprise")
 	private Entreprise entreprise;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "id_montantStock")
-	private MontantStock montantStock;
-	private BigDecimal quantite;
-	private BigDecimal prix;
-    private BigDecimal prixTotal;
+	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
+	@JoinColumn(name = "fk_detailStock")
+	private List<DetailStock> detailStock = new ArrayList<>();
+	
+	
+	
 
 }

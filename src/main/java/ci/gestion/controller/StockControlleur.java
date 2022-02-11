@@ -157,16 +157,10 @@ public class StockControlleur {
 		}
 		@GetMapping("/getStockByidEntreprise/{id}")
 		public String getStockByEntreprise(@PathVariable Long id) throws JsonProcessingException {
-			Reponse<List<Stock>> reponse;
+			Reponse<List<Stock>> reponse = null;
 			try {
 				List<Stock> pers = stockMetier.getStockByIdEntreprise(id);
-				if (!pers.isEmpty()) {
-					reponse = new Reponse<List<Stock>>(0, null, pers);
-				} else {
-					List<String> messages = new ArrayList<>();
-					messages.add("Pas de stock enregistrés");
-					reponse = new Reponse<List<Stock>>(1, messages, new ArrayList<>());
-				}
+				reponse = new Reponse<List<Stock>>(0, null, pers);
 
 			} catch (Exception e) {
 				reponse = new Reponse<>(1, Static.getErreursForException(e), null);
@@ -174,4 +168,5 @@ public class StockControlleur {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
+		
 }
