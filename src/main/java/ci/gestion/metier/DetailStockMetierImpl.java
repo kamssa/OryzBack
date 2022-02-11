@@ -32,13 +32,13 @@ public class DetailStockMetierImpl implements DetailStockMetier{
 	@Override
 	public DetailStock modifier(DetailStock entity) throws InvalideOryzException {
 		// TODO Auto-generated method stub
-		return null;
+		return detailStockRepository.save(entity);
 	}
 
 	@Override
 	public List<DetailStock> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return detailStockRepository.findAll();
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class DetailStockMetierImpl implements DetailStockMetier{
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		detailStockRepository.deleteById(id);
+		return true;
 	}
 
 	@Override

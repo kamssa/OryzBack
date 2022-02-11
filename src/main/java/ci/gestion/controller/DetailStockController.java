@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -101,4 +102,21 @@ public class DetailStockController {
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
+	// get all detailStock
+		@GetMapping("/detailStock")
+		public String findAll() throws JsonProcessingException {
+			Reponse<List<DetailStock>> reponse;
+			try {
+				List<DetailStock> dtailStocks = detailStockMetier.findAll();
+			
+					reponse = new Reponse<List<DetailStock>>(0, null, dtailStocks);
+				 
+
+			} catch (Exception e) {
+				reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+			}
+			return jsonMapper.writeValueAsString(reponse);
+
+		}
+
 }

@@ -19,8 +19,8 @@ import lombok.NoArgsConstructor;
 public class MontantStock extends AbstractEntity{
 
 	private static final long serialVersionUID = 1L;
-    private BigDecimal montant;
+    private Double montant =0d;
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "id_stock")
-	private Stock stock;
+	@JoinColumn(name = "id_entreprise")
+	private Entreprise entreprise;
 }
