@@ -55,12 +55,7 @@ public class StockMetierImpl implements StockMetier{
 						entity.setMontant(sommeMontant);
 						stock = stockRepository.save(entity);
 						
-						  montantStocks=
-						  montantSockRepository.getMontantStockByIdEntreprise(stock.getEntreprise().
-						  getId()); System.out.println("MontantStocks =>"+montantStocks);
-						  if(montantStocks.isEmpty()) { MontantStock mts = new MontantStock();
-						  mts.setEntreprise(stock.getEntreprise()); montantSockRepository.save(mts); }
-						 
+						
 				
 				}
 				
