@@ -77,7 +77,7 @@ public class StockMetierImpl implements StockMetier{
 	}
 			 montantStocks= montantSockRepository.getMontantStockByIdEntreprise(stock.getEntreprise().getId());
 			    System.out.println("MontantStocks =>"+montantStocks);
-			   if(montantStocks.isEmpty()) {
+			   if(!montantStocks.isPresent()) {
 			    MontantStock mts = new MontantStock();
 			    mts.setEntreprise(stock.getEntreprise());
 			    montantSockRepository.save(mts);	
