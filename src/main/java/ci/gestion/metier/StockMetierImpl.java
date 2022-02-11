@@ -52,7 +52,7 @@ public class StockMetierImpl implements StockMetier{
 						List<DetailStock> detailStocks = new ArrayList<>();
 						detailStocks.add(d.get());
 						entity.setDetailStock(detailStocks);
-						entity.setMontant(sommeMontant);
+						entity.setMontant(montantD);
 						stock = stockRepository.save(entity);
 						
 						
@@ -101,9 +101,15 @@ public class StockMetierImpl implements StockMetier{
 
 	@Override
 	public boolean supprimer(Long id) {
-		montantSockRepository.deleteAll();
+		Stock stoc;
+		MontantStock mt;
+		
+		stoc = stockRepository.findById(id).get();
+	    mt = montantSockRepository.getMontantStockByIdEntreprise(stoc.getEntreprise().getId()).get();
+	    double montantMt =	mt.getMontant();
+		montantMt-= stoc.getMontant();
 		stockRepository.deleteById(id);
-		return true;
+	    return true;
 	}
 
 	@Override
