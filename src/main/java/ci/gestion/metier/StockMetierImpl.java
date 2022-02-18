@@ -39,7 +39,7 @@ public class StockMetierImpl implements StockMetier{
 					System.out.println("Voir detail retour:"+d);
 					if(d.get().getLibelleMateriaux().equals(detail.getLibelleMateriaux()) ) {
 						System.out.println("Voir si je rentre:");
-						montantD = (detail.getPrixUnitaire()*detail.getQuantite());
+						montantD = ((detail.getPrixUnitaire()*detail.getQuantite())+ detail.getFrais());
 						
 						double montantDetail = d.get().getMontant();
 						double quantite = d.get().getQuantite();
@@ -53,6 +53,9 @@ public class StockMetierImpl implements StockMetier{
 						detailStocks.add(d.get());
 						entity.setDetailStock(detailStocks);
 						entity.setMontant(montantD);
+						entity.setLibelle(d.get().getLibelleMateriaux());
+						entity.setPrixUnitaire(detail.getPrixUnitaire());
+						entity.setQuantite(detail.getQuantite());
 						stock = stockRepository.save(entity);
 						
 						
@@ -60,12 +63,18 @@ public class StockMetierImpl implements StockMetier{
 				}
 				
 			}else {
-				montantD = (detail.getPrixUnitaire()*detail.getQuantite());
+				montantD = ((detail.getPrixUnitaire()*detail.getQuantite() )+ detail.getFrais());
 				detail.setMontant(montantD);
-				sommeMontant += montantD;
+				sommeMontant += montantD;   
 				System.out.println("Voir le montant calculer" + detail);
 				entity.setMontant(sommeMontant);
-				stock = stockRepository.save(entity);
+				entity.setLibelle(detail.getLibelleMateriaux());
+				entity.setPrixUnitaire(detail.getPrixUnitaire());
+				entity.setQuantite(detail.getQuantite());
+				entity.setFrais(detail.getFrais());
+				System.out.println("Voir le stock:" + entity);
+
+                stock = stockRepository.save(entity);
 				
 					
 		    }

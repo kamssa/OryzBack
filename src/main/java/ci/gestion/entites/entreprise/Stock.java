@@ -21,17 +21,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor
 @Data
 public class Stock extends AbstractEntity{
+	
+	private static final long serialVersionUID = 1L;
 	private String libelle;
-	private LocalDateTime date;
+	private Double prixUnitaire;
+	private Double quantite;
+	private Double frais;
+    private LocalDateTime date;
 	private double montant=0d;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_entreprise")
 	private Entreprise entreprise;
 	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
-	@JoinColumn(name = "fk_detailStock")
+	@JoinColumn(name = "fk_stock")
 	private List<DetailStock> detailStock = new ArrayList<>();
 	
-	
-	
-
 }

@@ -1,7 +1,5 @@
 package ci.gestion.entites.entreprise;
 
-import java.math.BigDecimal;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

@@ -85,7 +85,7 @@ public class CategorieController {
 		reponsePersModif = getCategoriesById(modif.getId());
 		if (reponsePersModif.getBody() != null) {
 			try {
-				System.out.println("modif recupere2:" + modif);
+			    System.out.println("modif recupere2:" + modif);
 				Categorie categories = categorieMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", categories.getId()));

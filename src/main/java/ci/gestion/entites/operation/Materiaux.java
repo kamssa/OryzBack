@@ -19,11 +19,10 @@ public class Materiaux extends AbstractEntity{
 	
 
 	private static final long serialVersionUID = 1L;
-	
+	private String codeMateriaux;
 	private String libelle;
 	private String description;
 	private String unite;
-	private Double prix;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(name="categorie_id")
     private Categorie categorie;
