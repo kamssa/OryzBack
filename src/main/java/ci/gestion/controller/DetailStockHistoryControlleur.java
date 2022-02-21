@@ -17,10 +17,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.entreprise.DetailStock;
+import ci.gestion.entites.entreprise.DetailStockHistory;
 import ci.gestion.entites.entreprise.Stock;
-import ci.gestion.entites.operation.Categorie;
+import ci.gestion.metier.DetailStockHistoryMetier;
 import ci.gestion.metier.DetailStockMetier;
-import ci.gestion.metier.combo.CategorieMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;
@@ -28,19 +28,19 @@ import ci.gestion.metier.utilitaire.Static;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class DetailStockController {
+public class DetailStockHistoryControlleur {
 	@Autowired
-	private DetailStockMetier detailStockMetier;
+	private DetailStockHistoryMetier detailStockHistoryMetier;
 
 	@Autowired
 	private ObjectMapper jsonMapper;
 
 // recuper categorie par identifiant
-	private Reponse<DetailStock> getDetailStockById(Long id) {
-		DetailStock detailStock = null;
+	private Reponse<DetailStockHistory> getDetailStockById(Long id) {
+		DetailStockHistory detailStock = null;
 
 		try {
-			detailStock = detailStockMetier.findById(id);
+			detailStock = detailStockHistoryMetier.findById(id);
 			if (detailStock == null) {
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("Le detailStock n'existe pas", id));
@@ -48,70 +48,70 @@ public class DetailStockController {
 
 			}
 		} catch (RuntimeException e) {
-			new Reponse<DetailStock>(1, Static.getErreursForException(e), null);
+			new Reponse<DetailStockHistory>(1, Static.getErreursForException(e), null);
 		}
 
-		return new Reponse<DetailStock>(0, null, detailStock);
+		return new Reponse<DetailStockHistory>(0, null, detailStock);
 	}
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////// enregistrer une categories  dans la base de donnee
 ////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 
-	@PostMapping("/detailStock")
-	public String creer(@RequestBody DetailStock detailStock) throws JsonProcessingException {
-		Reponse<DetailStock> reponse;
+	@PostMapping("/detailStockHistory")
+	public String creer(@RequestBody DetailStockHistory detailStock) throws JsonProcessingException {
+		Reponse<DetailStockHistory> reponse;
 		System.out.println(detailStock);
 		try {
 
-			DetailStock cat = detailStockMetier.creer(detailStock);
+			DetailStockHistory cat = detailStockHistoryMetier.creer(detailStock);
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("%s  à été créer avec succes", cat.getId()));
-			reponse = new Reponse<DetailStock>(0, messages, cat);
+			reponse = new Reponse<DetailStockHistory>(0, messages, cat);
 
 		} catch (InvalideOryzException e) {
 
-			reponse = new Reponse<DetailStock>(1, Static.getErreursForException(e), null);
+			reponse = new Reponse<DetailStockHistory>(1, Static.getErreursForException(e), null);
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
-	@PutMapping("/detailStock")
-	public String update(@RequestBody DetailStock modif) throws JsonProcessingException {
+	@PutMapping("/detailStockHistory")
+	public String update(@RequestBody DetailStockHistory modif) throws JsonProcessingException {
 
-		Reponse<DetailStock> reponse = null;
-		Reponse<DetailStock> reponsePersModif = null;
+		Reponse<DetailStockHistory> reponse = null;
+		Reponse<DetailStockHistory> reponsePersModif = null;
 		// on recupere abonnement a modifier
 		System.out.println("modif recupere1:" + modif);
 		reponsePersModif = getDetailStockById(modif.getId());
 		if (reponsePersModif.getBody() != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
-				DetailStock detailStock = detailStockMetier.modifier(modif);
+				DetailStockHistory detailStock = detailStockHistoryMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", detailStock.getId()));
-				reponse = new Reponse<DetailStock>(0, messages, detailStock);
+				reponse = new Reponse<DetailStockHistory>(0, messages, detailStock);
 			} catch (InvalideOryzException e) {
 
-				reponse = new Reponse<DetailStock>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<DetailStockHistory>(1, Static.getErreursForException(e), null);
 			}
 
 		} else {
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("Le DetailStock n'existe pas"));
-			reponse = new Reponse<DetailStock>(0, messages, null);
+			reponse = new Reponse<DetailStockHistory>(0, messages, null);
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
 	// get all detailStock
-		@GetMapping("/detailStock")
+		@GetMapping("/detailStockHistory")
 		public String findAll() throws JsonProcessingException {
-			Reponse<List<DetailStock>> reponse;
+			Reponse<List<DetailStockHistory>> reponse;
 			try {
-				List<DetailStock> dtailStocks = detailStockMetier.findAll();
+				List<DetailStockHistory> dtailStocks = detailStockHistoryMetier.findAll();
 			
-					reponse = new Reponse<List<DetailStock>>(0, null, dtailStocks);
+					reponse = new Reponse<List<DetailStockHistory>>(0, null, dtailStocks);
 				 
 
 			} catch (Exception e) {
@@ -120,19 +120,17 @@ public class DetailStockController {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
-		// obtenir un DetailStock par son identifiant
-				@GetMapping("/detailStock/{id}")
-				public String getEntrepriseById(@PathVariable Long id) throws JsonProcessingException {
-					Reponse<DetailStock> reponse;
+		// obtenir un departement par son identifiant
+				@GetMapping("/detailStockHistory/{libelle}")
+				public String getEntrepriseById(@PathVariable String  libelle) throws JsonProcessingException {
+					Reponse<List<DetailStockHistory>> reponse;
 					try {
-						DetailStock db = detailStockMetier.findById(id);
-						reponse = new Reponse<DetailStock>(0, null, db);
+						List<DetailStockHistory> db = detailStockHistoryMetier.findByLibelleMateriaux(libelle);
+						reponse = new Reponse<List<DetailStockHistory>>(0, null, db);
 					} catch (Exception e) {
 						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
 					}
 					return jsonMapper.writeValueAsString(reponse);
 
 				}
-				
-
 }

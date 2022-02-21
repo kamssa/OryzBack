@@ -23,9 +23,9 @@ public class DetailStockHistory extends AbstractEntity {
 	private static final long serialVersionUID = 1L;
 	private String libelleMateriaux;
 	private Double prixUnitaire;
+	private String unite;
 	private Double quantite;
 	private Double montant;
-	private String unite;
 	private Double frais;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_categorie")

@@ -77,7 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/getCategorieByidEntreprise/**","/api/stock/**",
             		"/api/getStockByidEntreprise/**","/api/detailStock/**",
             		"/api/materiel/**","/api/getMaterielByidCategorie/**",
-            		"/api/montantStock/**","/api/getMontantStockByidEntreprise/**"
+            		"/api/montantStock/**","/api/detailStockHistory/**",
+            		"/api/getMontantStockByidEntreprise/**"
             		).permitAll()
 	       .anyRequest().authenticated();
 	       
