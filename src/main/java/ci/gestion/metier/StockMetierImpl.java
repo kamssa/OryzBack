@@ -4,14 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.stereotype.Service;
+import javax.persistence.CascadeType;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ci.gestion.dao.DetailStockHistoryRepository;
 import ci.gestion.dao.MontantSockRepository;
 import ci.gestion.dao.StockRepository;
 import ci.gestion.dao.detail.DetailStockRepository;
 import ci.gestion.entites.entreprise.DetailStock;
+import ci.gestion.entites.entreprise.DetailStockHistory;
 import ci.gestion.entites.entreprise.MontantStock;
 import ci.gestion.entites.entreprise.Stock;
+import ci.gestion.entites.operation.Categorie;
+import ci.gestion.entites.operation.Fournisseur;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 
@@ -22,7 +32,9 @@ public class StockMetierImpl implements StockMetier{
 	private StockRepository stockRepository;
 	private MontantSockRepository montantSockRepository;
 	private DetailStockRepository detailStockRepository;
+	private DetailStockHistoryRepository detailStockHistoryRepository;
 	@Override
+	@Transactional
 	public Stock creer(Stock entity) throws InvalideOryzException {
 		
 		Stock stock = null;
@@ -59,6 +71,7 @@ public class StockMetierImpl implements StockMetier{
 						stock = stockRepository.save(entity);
 						
 						
+						
 				
 				}
 				
@@ -78,6 +91,19 @@ public class StockMetierImpl implements StockMetier{
 				
 					
 		    }
+				// detailStock history
+				double montantDH = ((detail.getPrixUnitaire()*detail.getQuantite())+ detail.getFrais());
+
+				DetailStockHistory dsh =new DetailStockHistory();
+				dsh.setCategorie(detail.getCategorie());
+				 dsh.setLibelleMateriaux(detail.getLibelleMateriaux());
+				 dsh.setPrixUnitaire(detail.getPrixUnitaire());
+				 dsh.setQuantite(detail.getQuantite());
+				 dsh.setMontant(montantDH); 
+				  dsh.setUnite(detail.getUnite());
+				  dsh.setFrais(detail.getFrais());
+				  dsh.setFournisseur(detail.getFournisseur());
+				  detailStockHistoryRepository.save(dsh);
 	}
 			 montantStocks= montantSockRepository.getMontantStockByIdEntreprise(stock.getEntreprise().getId());
 			    System.out.println("MontantStocks =>"+montantStocks);
@@ -110,13 +136,13 @@ public class StockMetierImpl implements StockMetier{
 
 	@Override
 	public boolean supprimer(Long id) {
-		Stock stoc;
+		Stock stock;
+		DetailStock ds;
 		MontantStock mt;
-		
-		stoc = stockRepository.findById(id).get();
-	    mt = montantSockRepository.getMontantStockByIdEntreprise(stoc.getEntreprise().getId()).get();
-	    double montantMt =	mt.getMontant();
-		montantMt-= stoc.getMontant();
+		ds = detailStockRepository.findById(id).get();
+		List<Stock> sts = stockRepository.getStockBylibelle(ds.getLibelleMateriaux());
+		detailStockRepository.deleteById(id);
+		stockRepository.deleteAll(sts);
 		stockRepository.deleteById(id);
 	    return true;
 	}

@@ -1,0 +1,32 @@
+package ci.gestion.entites.caisse;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+
+import ci.gestion.entites.entreprise.Departement;
+import ci.gestion.entites.entreprise.Entreprise;
+import ci.gestion.entites.shared.AbstractEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@NoArgsConstructor @AllArgsConstructor
+@Data
+public class Caisse extends AbstractEntity{
+	
+	private String libelle;
+	private LocalDateTime date;
+	private double montant=0d;
+    private Long travauxId;
+	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
+	@JoinColumn(name = "fk_Location")
+	private List<CaisseDetail> caisseDetail = new ArrayList<>();
+}

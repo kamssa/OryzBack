@@ -32,6 +32,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import ci.gestion.entites.admin.Admin;
+import ci.gestion.entites.entreprise.Client;
 import ci.gestion.entites.entreprise.Employe;
 import ci.gestion.entites.entreprise.Manager;
 import lombok.AllArgsConstructor;
@@ -47,7 +48,8 @@ import lombok.NoArgsConstructor;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @Type(name = "ADMIN", value = Admin.class), 
 	         @Type(name = "MANAGER", value = Manager.class),
-		    @Type(name = "EMPLOYE", value = Employe.class)
+		    @Type(name = "EMPLOYE", value = Employe.class),
+		    @Type(name = "CLIENT", value = Client.class)
            })
 @NoArgsConstructor @AllArgsConstructor
 @Data
