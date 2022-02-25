@@ -1,4 +1,4 @@
-package ci.gestion.entites.entreprise;
+package ci.gestion.entites.site;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -10,4 +10,7 @@ import lombok.Data;
 @DiscriminatorValue("CLIENT")
 @Data
 public class Client extends Personne{
+	
+	private static final long serialVersionUID = 1L;
+
 }

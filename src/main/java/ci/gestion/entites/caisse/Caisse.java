@@ -22,11 +22,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class Caisse extends AbstractEntity{
 	
-	private String libelle;
 	private LocalDateTime date;
 	private double montant=0d;
-    private Long travauxId;
+	private boolean actived;
 	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
-	@JoinColumn(name = "fk_Location")
+	@JoinColumn(name = "fk_Caisse")
 	private List<CaisseDetail> caisseDetail = new ArrayList<>();
 }

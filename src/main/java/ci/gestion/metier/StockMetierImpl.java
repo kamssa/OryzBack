@@ -12,10 +12,12 @@ import javax.persistence.ManyToOne;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import ci.gestion.dao.DetailArticleStockGeneralRepository;
 import ci.gestion.dao.DetailStockHistoryRepository;
 import ci.gestion.dao.MontantSockRepository;
 import ci.gestion.dao.StockRepository;
 import ci.gestion.dao.detail.DetailStockRepository;
+import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
 import ci.gestion.entites.entreprise.DetailStock;
 import ci.gestion.entites.entreprise.DetailStockHistory;
 import ci.gestion.entites.entreprise.MontantStock;
@@ -33,6 +35,7 @@ public class StockMetierImpl implements StockMetier{
 	private MontantSockRepository montantSockRepository;
 	private DetailStockRepository detailStockRepository;
 	private DetailStockHistoryRepository detailStockHistoryRepository;
+	private DetailArticleStockGeneralRepository detailArticleStockGeneralRepository;
 	@Override
 	@Transactional
 	public Stock creer(Stock entity) throws InvalideOryzException {
@@ -70,9 +73,21 @@ public class StockMetierImpl implements StockMetier{
 						entity.setQuantite(detail.getQuantite());
 						stock = stockRepository.save(entity);
 						
-						
-						
-				
+						 // detailArticleStockGeneral
+					List<DetailAticleStockGeneral>	dasg = detailArticleStockGeneralRepository.getDetailArticleStockGeneralByIdEntreprise(stock.getEntreprise().getId());
+				     if (!dasg.isEmpty()) {
+						for (DetailAticleStockGeneral detailSG : dasg) {
+							if (detailSG.getLibelleMateriaux().equals(d.get().getLibelleMateriaux())) {
+								double valaur = Math.round((d.get().getMontant())/(d.get().getQuantite()));
+								detailSG.setPrixUnitaire(valaur);
+								detailSG.setQuantite(d.get().getQuantite());
+								detailSG.setMontant(d.get().getMontant());
+								detailArticleStockGeneralRepository.save(detailSG);
+							}
+						}
+					
+					}
+				  // fin detailArticleStockGeneral
 				}
 				
 			}else {
@@ -88,7 +103,21 @@ public class StockMetierImpl implements StockMetier{
 				System.out.println("Voir le stock:" + entity);
 
                 stock = stockRepository.save(entity);
+                // detailArticleStockGeneral
+			    
+				DetailAticleStockGeneral detailSG = new DetailAticleStockGeneral();
+				            detailSG.setLibelleMateriaux(detail.getLibelleMateriaux());
+				            detailSG.setPrixUnitaire((sommeMontant)/(detail.getQuantite()));
+				            detailSG.setQuantite(detail.getQuantite());
+							detailSG.setMontant(sommeMontant);
+							detailSG.setEntreprise(stock.getEntreprise());
+							detailArticleStockGeneralRepository.save(detailSG);
+						
+							System.out.println("Voir le detail S G:====>" + detailSG);
+	                // fin detailArticleStockGeneral
 				
+   			
+		   
 					
 		    }
 				// detailStock history
@@ -141,9 +170,14 @@ public class StockMetierImpl implements StockMetier{
 		MontantStock mt;
 		ds = detailStockRepository.findById(id).get();
 		List<Stock> sts = stockRepository.getStockBylibelle(ds.getLibelleMateriaux());
+		List<DetailStockHistory> dh = detailStockHistoryRepository.findByLibelleMateriaux(ds.getLibelleMateriaux());
+		DetailAticleStockGeneral dsg = detailArticleStockGeneralRepository.findByLibelleMateriaux(ds.getLibelleMateriaux()).get();
+		detailArticleStockGeneralRepository.deleteById(dsg.getId());
+		detailStockHistoryRepository.deleteAll(dh);
 		detailStockRepository.deleteById(id);
 		stockRepository.deleteAll(sts);
 		stockRepository.deleteById(id);
+		
 	    return true;
 	}
 

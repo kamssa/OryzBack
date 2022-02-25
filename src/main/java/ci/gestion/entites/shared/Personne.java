@@ -32,9 +32,9 @@ import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import ci.gestion.entites.admin.Admin;
-import ci.gestion.entites.entreprise.Client;
 import ci.gestion.entites.entreprise.Employe;
 import ci.gestion.entites.entreprise.Manager;
+import ci.gestion.entites.site.Client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
