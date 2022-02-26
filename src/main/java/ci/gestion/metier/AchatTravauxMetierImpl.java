@@ -39,8 +39,8 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		double reste = 0;
 		List<DetailAchatTravaux> detailAchats = entity.getDetailAchatTravaux();
 		for (DetailAchatTravaux detail : detailAchats) {
-			Optional<DetailAchatTravaux> d = detailAchatTravauxRepository
-					.findByLibelleMateriaux(detail.getLibelleMateriaux());
+			Optional<DetailAchatTravaux> d = detailAchatTravauxRepository.findByLibelleMateriaux(detail.getLibelleMateriaux());
+			System.out.println("Voir DetailAchatTravauxr" + d);
 			if (d.isPresent()) {
 				montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
 
@@ -51,56 +51,39 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 				d.get().setQuantite(quantite);
 				d.get().setMontant(montantDetail);
 				sommeMontant += montantDetail;
-				System.out.println("Voir le montant calculer" + detail);
+				System.out.println("Voir le montant calculer:" + detail);
 				List<DetailAchatTravaux> detailAchatTravaux = new ArrayList<>();
 				detailAchatTravaux.add(d.get());
 				entity.setDetailAchatTravaux(detailAchatTravaux);
 				entity.setMontant(montantD);
 				entity.setLibelle(d.get().getLibelleMateriaux());
-				achatTravaux = achatTravauxRepository.save(entity);
-				entity.setMontant(sommeMontant);
-				achat = achatTravauxRepository.save(entity);
-				Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
-				DetailAticleStockGeneral detailSG	= detailArticleStockGeneralRepository.findByLibelleMateriaux(detail.getLibelleMateriaux()).get();
-				detailSG.setMontant(null);
-				detailSG.setQuantite(null);
-				montantTravaux = travaux.getTotal();
-				montantT = montantTravaux + detailSG.getMontant();
-				travaux.setTotal(montantT);
-				Travaux tr = travauxRepository.save(travaux);
-				reste = (tr.getBudget()) - (tr.getTotal());
-				tr.setReste(reste);
-				travauxRepository.save(tr);
+				/*
+				 * achatTravaux = achatTravauxRepository.save(entity);
+				 * entity.setMontant(sommeMontant); achat = achatTravauxRepository.save(entity);
+				 * Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
+				 */
+				/*
+				 * DetailAticleStockGeneral detailSG =
+				 * detailArticleStockGeneralRepository.findByLibelleMateriaux(detail.
+				 * getLibelleMateriaux()).get(); detailSG.setMontant(null);
+				 * detailSG.setQuantite(null);
+				 */
+				/*
+				 * montantTravaux = travaux.getTotal(); //montantT = montantTravaux +
+				 * detailSG.getMontant(); travaux.setTotal(sommeMontant); Travaux tr =
+				 * travauxRepository.save(travaux); reste = (tr.getBudget()) - (tr.getTotal());
+				 * tr.setReste(reste); travauxRepository.save(tr);
+				 */
 				
-			} else {
-				montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
-				detail.setMontant(montantD);
-				sommeMontant += montantD;   
-				System.out.println("Voir le montant calculer" + detail);
-				entity.setMontant(sommeMontant);
-				entity.setLibelle(detail.getLibelleMateriaux());
-				
-				System.out.println("Voir le achat Travaux:" + entity);
-
-			
-			    /////////////ancien ///////////////////////
-				DetailAticleStockGeneral detailSG	= detailArticleStockGeneralRepository.findByLibelleMateriaux(entity.getLibelle()).get();
-				
-				System.out.println("Voir detailSG:" + detailSG);
-				detailSG.setMontant(detailSG.getMontant()- sommeMontant);
-				detailSG.setQuantite(detailSG.getQuantite()- detail.getQuantite());
-				detailArticleStockGeneralRepository.save(detailSG);
-				achat = achatTravauxRepository.save(entity);
-				Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
-				montantTravaux = travaux.getTotal();
-				montantT = montantTravaux + detailSG.getMontant();
-				travaux.setTotal(montantT);
-				Travaux tr = travauxRepository.save(travaux);
-				reste = (tr.getBudget()) - (tr.getTotal());
-				tr.setReste(reste);
-				travauxRepository.save(tr);
 			}
-
+			montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
+			detail.setMontant(montantD);
+			sommeMontant += montantD;   
+			System.out.println("Voir le montant calculer" + detail);
+			entity.setMontant(sommeMontant);
+			entity.setLibelle(detail.getLibelleMateriaux());
+			
+			System.out.println("Voir le achat Travaux:" + entity);
 		}
 
 		return achat;

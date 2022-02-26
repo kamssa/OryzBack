@@ -78,7 +78,8 @@ public class StockMetierImpl implements StockMetier{
 				     if (!dasg.isEmpty()) {
 						for (DetailAticleStockGeneral detailSG : dasg) {
 							if (detailSG.getLibelleMateriaux().equals(d.get().getLibelleMateriaux())) {
-								double valaur = Math.round((d.get().getMontant())/(d.get().getQuantite()));
+								double m =(d.get().getMontant())/(d.get().getQuantite());
+								double valaur = Math.round(m);
 								detailSG.setPrixUnitaire(valaur);
 								detailSG.setQuantite(d.get().getQuantite());
 								detailSG.setMontant(d.get().getMontant());
@@ -107,7 +108,9 @@ public class StockMetierImpl implements StockMetier{
 			    
 				DetailAticleStockGeneral detailSG = new DetailAticleStockGeneral();
 				            detailSG.setLibelleMateriaux(detail.getLibelleMateriaux());
-				            detailSG.setPrixUnitaire((sommeMontant)/(detail.getQuantite()));
+				            double m =((sommeMontant)/(detail.getQuantite()));
+				            double valaur = Math.round(m);
+				            detailSG.setPrixUnitaire(valaur);
 				            detailSG.setQuantite(detail.getQuantite());
 							detailSG.setMontant(sommeMontant);
 							detailSG.setEntreprise(stock.getEntreprise());
