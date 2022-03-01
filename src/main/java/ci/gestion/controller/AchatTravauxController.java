@@ -59,7 +59,7 @@ public class AchatTravauxController {
 	@PostMapping("/achat")
 	public String creer(@RequestBody AchatTravaux achat) throws JsonProcessingException {
 		Reponse<AchatTravaux> reponse;
-        System.out.println(achat);
+       
 		try {
 
 			AchatTravaux t1 = achatTravauxMetier.creer(achat);

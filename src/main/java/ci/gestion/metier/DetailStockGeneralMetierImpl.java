@@ -55,4 +55,10 @@ private DetailArticleStockGeneralRepository articleStockGeneralRepository;
 		return false;
 	}
 
+	@Override
+	public List<DetailAticleStockGeneral> getDetailArticleStockGeneralByIdEntreprise(long id) {
+		// TODO Auto-generated method stub
+		return articleStockGeneralRepository.getDetailArticleStockGeneralByIdEntreprise(id);
+	}
+
 }

@@ -66,7 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/getPhoto/**","/api/travaux/**", "/api/rechemc/**",
             		"/api/getOperationByParam/**","/api/departement/**",
             		"/api/getDepartementByidEntreprise/**",
-            		"/api/banque/**",
+            		"/api/banque/**","/api/getStockGenralByidEntreprise/**",
             		"/api/achat/**","/api/achats/**"
             		,"/api/DeleteDetail/**","/api/listStockParEntreprise/**",
             		"/api/autres/**","/api/autre/**","/api/DeleteDetailAutre/**",

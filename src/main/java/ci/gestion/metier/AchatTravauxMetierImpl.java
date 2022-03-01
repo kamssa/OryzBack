@@ -8,13 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.DetailArticleStockGeneralRepository;
+import ci.gestion.dao.DetailStockHistoryRepository;
 import ci.gestion.dao.OperationTravauxRepository;
 import ci.gestion.dao.StockRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.AchatTravauxRepository;
 import ci.gestion.dao.detail.DetailAchatTravauxRepository;
+import ci.gestion.dao.detail.DetailStockRepository;
 import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
 import ci.gestion.entites.entreprise.DetailStock;
+import ci.gestion.entites.entreprise.DetailStockHistory;
 import ci.gestion.entites.entreprise.Stock;
 import ci.gestion.entites.operation.AchatTravaux;
 import ci.gestion.entites.operation.DetailAchatTravaux;
@@ -26,6 +29,8 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	@Autowired
 	private OperationTravauxRepository achatTravauxRepository;
 	@Autowired
+	private DetailStockRepository detailStockRepository;
+	@Autowired
 	private StockRepository stockRepository;
 	@Autowired
 	private AchatTravauxRepository achaTravauxRepository;
@@ -35,10 +40,15 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	private TravauxRepository travauxRepository;
 	@Autowired
 	private DetailArticleStockGeneralRepository detailArticleStockGeneralRepository;
+	@Autowired
+	private DetailStockHistoryRepository detailStockHistoryRepository;
+
 	@Override
 	public AchatTravaux creer(AchatTravaux entity) throws InvalideOryzException {
+		System.out.println("entre  Achat Travaux:>>>>>>>" + entity);
 		AchatTravaux achatTravaux = null;
 		AchatTravaux achat = null;
+		Travaux travau = null;
 		double montantD = 0;
 		double montantTravaux = 0;
 		double montantT = 0;
@@ -46,74 +56,198 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		double reste = 0;
 		List<DetailAchatTravaux> detailAchats = entity.getDetailAchatTravaux();
 		for (DetailAchatTravaux detail : detailAchats) {
-			Optional<DetailAchatTravaux> d = detailAchatTravauxRepository.findByLibelleMateriaux(detail.getLibelleMateriaux());
-			System.out.println("Voir DetailAchatTravauxr" + d);
+			Optional<DetailAchatTravaux> d = detailAchatTravauxRepository
+					.findByLibelleMateriaux(detail.getLibelleMateriaux());
+			System.out.println("Voir Detail Achat Travauxr: &&&&&&&&&&" + d);
 			if (d.isPresent()) {
-				montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
-				AchatTravaux acht = achaTravauxRepository.getAchatTravauxBylibelle(detail.getLibelleMateriaux());
-
+				double quantity = d.get().getQuantite();
+				quantity += detail.getQuantite();
+				montantD = ((detail.getPrixUnitaire() * quantity));
+				AchatTravaux stc = achaTravauxRepository.getAchatTravauxBylibelle(detail.getLibelleMateriaux());
 				double montantDetail = d.get().getMontant();
-				double quantite = d.get().getQuantite();
-				quantite += detail.getQuantite();
-				montantDetail += montantD;
-				d.get().setQuantite(quantite);
-				d.get().setMontant(montantDetail);
+
+				d.get().setQuantite(quantity);
+				d.get().setMontant(montantD);
+				d.get().setPrixUnitaire(detail.getPrixUnitaire());
 				List<DetailAchatTravaux> detailAchatTravaux = new ArrayList<>();
 				detailAchatTravaux.add(d.get());
-				double montants = acht.getMontant();
-				double quantites = acht.getQuantite();
-				
-				quantites+= d.get().getQuantite();
-				montants += montantD;
-				acht.setQuantite(quantites);
-				acht.setMontant(montants);
-				achat = achaTravauxRepository.save(acht);
-				  Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
-				  montantTravaux = travaux.getTotal();
-					montantT = montantTravaux + montants;
-					travaux.setTotal(montantT);
-					Travaux tr =travauxRepository.save(travaux);
-					reste = (tr.getBudget())-(tr.getTotal());
-					       tr.setReste(reste);
-					       travauxRepository.save(tr);
-				  // stock general
-				
-					/*
-					 * DetailAticleStockGeneral detailSG =
-					 * detailArticleStockGeneralRepository.findByLibelleMateriaux(detail.
-					 * getLibelleMateriaux()).get();
-					 * 
-					 * double montantdsg =detailSG.getMontant(); double quantitedsg=
-					 * detailSG.getQuantite(); detailSG.setQuantite(quantitedsg); quantitedsg-=
-					 * d.get().getQuantite(); montantdsg = quantitedsg * detailSG.getPrixUnitaire();
-					 * detailSG.setMontant(montantdsg);
-					 * 
-					 * detailArticleStockGeneralRepository.save(detailSG);
-					 */
-				  //stock 
+				entity.setDetailAchatTravaux(detailAchatTravaux);
 
-				  
-					
-			}else {
-				montantD = ((detail.getPrixUnitaire()*detail.getQuantite() ));
+				stc.setLibelle(detail.getLibelleMateriaux());
+				stc.setQuantite(quantity);
+				stc.setMontant(montantD);
+
+				achat = achaTravauxRepository.save(stc);
+				System.out.println("Voir achat: ####################" + achat);
+				Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
+				montantTravaux = travaux.getTotal();
+				montantT = montantTravaux + montantDetail;
+				travaux.setTotal(montantT);
+				Travaux tr = travauxRepository.save(travaux);
+				reste = (tr.getBudget()) - (tr.getTotal());
+				tr.setReste(reste);
+				travau = travauxRepository.save(tr);
+				
+				// stock
+				List<Stock> ts = stockRepository.getStockByIdEntreprise(tr.getSite().getEntreprise().getId());
+				for (Stock stoc : ts) {
+					if (stoc.getLibelle().equals(entity.getLibelle())) {
+						// detail stock
+						List<DetailStock> dst = stoc.getDetailStock();
+						for (DetailStock details : dst) {
+							DetailStock de = detailStockRepository.findByLibelleMateriaux(detail.getLibelleMateriaux()).get();
+							double quantite = de.getQuantite();
+							quantite -= detail.getQuantite();
+							double prixUnitaire = detail.getPrixUnitaire();
+							montantD = ((quantite * prixUnitaire) );
+							de.setFrais(0d);
+							de.setQuantite(quantite);
+							de.setPrixUnitaire(detail.getPrixUnitaire());
+							de.setMontant(montantD);
+							// detail stock
+							
+							stoc.setMontant(montantD);
+							stoc.setQuantite(quantite);
+							List<DetailStock> detailStocks = new ArrayList<>();
+							detailStocks.add(de);
+							stoc.setDetailStock(detailStocks);
+							stockRepository.save(stoc);
+							// stock general
+							// detailArticleStockGeneral
+							List<DetailAticleStockGeneral> dasg = detailArticleStockGeneralRepository
+									.getDetailArticleStockGeneralByIdEntreprise(
+											travau.getSite().getEntreprise().getId());
+							if (!dasg.isEmpty()) {
+								for (DetailAticleStockGeneral detailSG : dasg) {
+									if (detailSG.getLibelleMateriaux().equals(detail.getLibelleMateriaux())) {
+										//double m = (de.getMontant()) / (de.getQuantite());
+										//double valaur = Math.round(m);
+										//detailSG.setPrixUnitaire(valaur);
+										detailSG.setQuantite(de.getQuantite());
+										detailSG.setMontant(de.getMontant());
+										detailArticleStockGeneralRepository.save(detailSG);
+									}
+								}
+
+							}
+							// fin detailArticleStockGeneral
+
+							/*
+							 * // detailStock history List<DetailStockHistory> dhs =
+							 * detailStockHistoryRepository
+							 * .getDetailStockHistorykByIdEntreprise(travau.getSite().getEntreprise().getId(
+							 * )); for (DetailStockHistory detailStockHistory : dhs) { if
+							 * (detailStockHistory.getLibelleMateriaux().equals(de.getLibelleMateriaux())) {
+							 * //double montantDH = ((de.getPrixUnitaire() * de.getQuantite()) );
+							 * 
+							 * detailStockHistory.setCategorie(de.getCategorie());
+							 * detailStockHistory.setLibelleMateriaux(de.getLibelleMateriaux());
+							 * detailStockHistory.setPrixUnitaire(de.getPrixUnitaire());
+							 * detailStockHistory.setQuantite(de.getQuantite());
+							 * detailStockHistory.setMontant(de.getMontant());
+							 * detailStockHistory.setUnite(de.getUnite()); detailStockHistory.setFrais(0d);
+							 * detailStockHistory.setLibellefournisseur(de.getFournisseur().getLibelle());
+							 * detailStockHistory.setEntreprise(travau.getSite().getEntreprise());
+							 * detailStockHistoryRepository.save(detailStockHistory); // fin history stock }
+							 * 
+							 * }
+							 */
+						}
+
+					}
+
+				}
+
+
+			} else {
+				montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
 				detail.setMontant(montantD);
-				sommeMontant += montantD;   
+				sommeMontant += montantD;
 				entity.setMontant(sommeMontant);
 				entity.setLibelle(detail.getLibelleMateriaux());
 				entity.setQuantite(detail.getQuantite());
 
 				achat = achaTravauxRepository.save(entity);
 				Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
-				  montantTravaux = travaux.getTotal();
-					montantT = montantTravaux + sommeMontant;
-					travaux.setTotal(montantT);
-					Travaux tr =travauxRepository.save(travaux);
-					reste = (tr.getBudget())-(tr.getTotal());
-					       tr.setReste(reste);
-					       travauxRepository.save(tr);
-				
+				montantTravaux = travaux.getTotal();
+				montantT = montantTravaux + sommeMontant;
+				travaux.setTotal(montantT);
+				Travaux tr = travauxRepository.save(travaux);
+				reste = (tr.getBudget()) - (tr.getTotal());
+				tr.setReste(reste);
+				travau = travauxRepository.save(tr);
+				// stock
+				List<Stock> ts = stockRepository.getStockByIdEntreprise(tr.getSite().getEntreprise().getId());
+				for (Stock stoc : ts) {
+					if (stoc.getLibelle().equals(entity.getLibelle())) {
+						// detail stock
+						List<DetailStock> dst = stoc.getDetailStock();
+						for (DetailStock details : dst) {
+							DetailStock de = detailStockRepository.findByLibelleMateriaux(detail.getLibelleMateriaux()).get();
+							double quantite = de.getQuantite();
+							quantite -= detail.getQuantite();
+							double prixUnitaire = detail.getPrixUnitaire();
+							montantD = ((quantite * prixUnitaire) );
+							de.setFrais(0d);
+							de.setQuantite(quantite);
+							de.setPrixUnitaire(detail.getPrixUnitaire());
+							de.setMontant(montantD);
+							// detail stock
+							
+							stoc.setMontant(montantD);
+							stoc.setQuantite(quantite);
+							List<DetailStock> detailStocks = new ArrayList<>();
+							detailStocks.add(de);
+							stoc.setDetailStock(detailStocks);
+							stockRepository.save(stoc);
+							// stock general
+							// detailArticleStockGeneral
+							List<DetailAticleStockGeneral> dasg = detailArticleStockGeneralRepository
+									.getDetailArticleStockGeneralByIdEntreprise(
+											travau.getSite().getEntreprise().getId());
+							if (!dasg.isEmpty()) {
+								for (DetailAticleStockGeneral detailSG : dasg) {
+									if (detailSG.getLibelleMateriaux().equals(de.getLibelleMateriaux())) {
+										//double m = (de.getMontant()) / (de.getQuantite());
+										//double valaur = Math.round(m);
+										detailSG.setPrixUnitaire(detail.getPrixUnitaire());
+										detailSG.setQuantite(de.getQuantite());
+										detailSG.setMontant(de.getMontant());
+										detailArticleStockGeneralRepository.save(detailSG);
+									}
+								}
+
+							}
+							// fin detailArticleStockGeneral
+
+							/*
+							 * // detailStock history List<DetailStockHistory> dhs =
+							 * detailStockHistoryRepository
+							 * .getDetailStockHistorykByIdEntreprise(travau.getSite().getEntreprise().getId(
+							 * )); for (DetailStockHistory detailStockHistory : dhs) { if
+							 * (detailStockHistory.getLibelleMateriaux().equals(de.getLibelleMateriaux())) {
+							 * //double montantDH = ((de.getPrixUnitaire() * de.getQuantite()));
+							 * 
+							 * detailStockHistory.setCategorie(de.getCategorie());
+							 * detailStockHistory.setLibelleMateriaux(de.getLibelleMateriaux());
+							 * detailStockHistory.setPrixUnitaire(de.getPrixUnitaire());
+							 * detailStockHistory.setQuantite(de.getQuantite());
+							 * detailStockHistory.setMontant(de.getMontant());
+							 * detailStockHistory.setUnite(de.getUnite()); detailStockHistory.setFrais(0d);
+							 * detailStockHistory.setLibellefournisseur(de.getFournisseur().getLibelle());
+							 * detailStockHistory.setEntreprise(travau.getSite().getEntreprise());
+							 * detailStockHistoryRepository.save(detailStockHistory); // fin history stock }
+							 */
+							//}
+
+						}
+
+					}
+
+				}
+
 			}
-			
+
 		}
 
 		return achat;

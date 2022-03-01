@@ -136,6 +136,10 @@ public class StockMetierImpl implements StockMetier{
 			    MontantStock mts = new MontantStock();
 			    mts.setEntreprise(stock.getEntreprise());
 			    montantSockRepository.save(mts);	
+		}else {
+			 montantStocks= montantSockRepository.getMontantStockByIdEntreprise(stock.getEntreprise().getId());
+			 montantStocks.get().setEntreprise(stock.getEntreprise());
+			    montantSockRepository.save(montantStocks.get());	
 		}
 		 
 			return stock;	
@@ -234,11 +238,14 @@ public class StockMetierImpl implements StockMetier{
 		Stock stock = stockRepository.findById(id).get();
 		
 		
-		 List<DetailStockHistory> dsh = detailStockHistoryRepository.getDetailStockHistorykByIdEntreprise(stock.getId());
-			for (DetailStockHistory detailAticleStockGeneral : dsh) {
-				List<DetailStockHistory> dhs = detailStockHistoryRepository.findByLibelleMateriaux(stock.getLibelle());
-				detailStockHistoryRepository.deleteAll(dhs);
-			}
+		/*
+		 * List<DetailStockHistory> dsh =
+		 * detailStockHistoryRepository.getDetailStockHistorykByIdEntreprise(stock.getId
+		 * ()); for (DetailStockHistory detailAticleStockGeneral : dsh) {
+		 * List<DetailStockHistory> dhs =
+		 * detailStockHistoryRepository.findByLibelleMateriaux(stock.getLibelle());
+		 * detailStockHistoryRepository.deleteAll(dhs); }
+		 */
 	    List<DetailAticleStockGeneral> dsg =	 detailArticleStockGeneralRepository.getDetailArticleStockGeneralByIdEntreprise(stock.getEntreprise().getId());
 		for (DetailAticleStockGeneral detailAticleStockGeneral : dsg) {
 		  DetailAticleStockGeneral ds = detailArticleStockGeneralRepository.findByLibelleMateriaux(stock.getLibelle()).get();
@@ -263,11 +270,13 @@ public class StockMetierImpl implements StockMetier{
 		 double montant = 0d;
 		 List<Stock> stocks ;
 		 MontantStock mt = null;
+		 Stock st = null;
 		 stocks = stockRepository.getStockByIdEntreprise(id);
 		for (Stock stock : stocks) {
 		 montant += stock.getMontant();
 		 
 		 }
+		
 		mt = montantSockRepository.getMontantStockByIdEntreprise(id).get();
 		mt.setMontant(montant);
 		MontantStock mts = montantSockRepository.save(mt);

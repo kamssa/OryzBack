@@ -19,6 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
 import ci.gestion.entites.entreprise.DetailStock;
+import ci.gestion.entites.entreprise.Stock;
 import ci.gestion.metier.DetailStockGeneralMetier;
 import ci.gestion.metier.DetailStockMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
@@ -150,6 +151,19 @@ public class DetailArticleStockGeneralControlleur {
 					}
 
 					return jsonMapper.writeValueAsString(reponse);
+				}
+				@GetMapping("/getStockGenralByidEntreprise/{id}")
+				public String getStockGeneralByEntreprise(@PathVariable Long id) throws JsonProcessingException {
+					Reponse<List<DetailAticleStockGeneral>> reponse = null;
+					try {
+						List<DetailAticleStockGeneral> pers = detailStockGeneralMetier.getDetailArticleStockGeneralByIdEntreprise(id);
+						reponse = new Reponse<List<DetailAticleStockGeneral>>(0, null, pers);
+
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
 				}
 
 }
