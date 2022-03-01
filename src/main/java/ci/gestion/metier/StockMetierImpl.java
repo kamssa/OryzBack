@@ -49,11 +49,13 @@ public class StockMetierImpl implements StockMetier{
 						Stock stc = stockRepository.getStockBylibelle(detail.getLibelleMateriaux());
 						double montantDetail = d.get().getMontant();
 						double quantite = d.get().getQuantite();
+						double frais = d.get().getFrais();
 						quantite += detail.getQuantite();
 						montantDetail+= montantD;
+						frais += detail.getFrais();
 						d.get().setQuantite(quantite);
 						d.get().setMontant(montantDetail);
-						
+						d.get().setFrais(frais);
 						List<DetailStock> detailStocks = new ArrayList<>();
 						detailStocks.add(d.get());
 						stc.setDetailStock(detailStocks);
