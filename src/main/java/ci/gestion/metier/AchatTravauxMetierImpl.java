@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.DetailArticleStockGeneralRepository;
 import ci.gestion.dao.OperationTravauxRepository;
+import ci.gestion.dao.StockRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.AchatTravauxRepository;
 import ci.gestion.dao.detail.DetailAchatTravauxRepository;
@@ -24,6 +25,8 @@ import ci.gestion.metier.exception.InvalideOryzException;
 public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	@Autowired
 	private OperationTravauxRepository achatTravauxRepository;
+	@Autowired
+	private StockRepository stockRepository;
 	@Autowired
 	private AchatTravauxRepository achaTravauxRepository;
 	@Autowired
@@ -75,17 +78,22 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 					       travauxRepository.save(tr);
 				  // stock general
 				
-				  DetailAticleStockGeneral detailSG = detailArticleStockGeneralRepository.findByLibelleMateriaux(detail.getLibelleMateriaux()).get();
+					/*
+					 * DetailAticleStockGeneral detailSG =
+					 * detailArticleStockGeneralRepository.findByLibelleMateriaux(detail.
+					 * getLibelleMateriaux()).get();
+					 * 
+					 * double montantdsg =detailSG.getMontant(); double quantitedsg=
+					 * detailSG.getQuantite(); detailSG.setQuantite(quantitedsg); quantitedsg-=
+					 * d.get().getQuantite(); montantdsg = quantitedsg * detailSG.getPrixUnitaire();
+					 * detailSG.setMontant(montantdsg);
+					 * 
+					 * detailArticleStockGeneralRepository.save(detailSG);
+					 */
+				  //stock 
+
 				  
-				  detailSG.setMontant(null);
-				  detailSG.setQuantite(null);
-				 
-				
 					
-					 
-					 
-				 
-				
 			}else {
 				montantD = ((detail.getPrixUnitaire()*detail.getQuantite() ));
 				detail.setMontant(montantD);
@@ -95,24 +103,17 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 				entity.setQuantite(detail.getQuantite());
 
 				achat = achaTravauxRepository.save(entity);
+				Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
+				  montantTravaux = travaux.getTotal();
+					montantT = montantTravaux + sommeMontant;
+					travaux.setTotal(montantT);
+					Travaux tr =travauxRepository.save(travaux);
+					reste = (tr.getBudget())-(tr.getTotal());
+					       tr.setReste(reste);
+					       travauxRepository.save(tr);
+				
 			}
-			DetailAticleStockGeneral detailSG = detailArticleStockGeneralRepository.findByLibelleMateriaux(detail.getLibelleMateriaux()).get();
-
-			montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
 			
-			detail.setMontant(montantD);
-			sommeMontant += montantD;   
-			System.out.println("Voir le montant calculer" + detail);
-			entity.setMontant(sommeMontant);
-			entity.setLibelle(detail.getLibelleMateriaux());
-			AchatTravaux t =  achatTravauxRepository.save(entity);
-			System.out.println("Voir le achat Travaux:" + t);
-			// stock general
-			double quantite = detailSG.getQuantite();
-			double nquantite = quantite - detail.getQuantite();
-			double nmontant = nquantite * detailSG.getPrixUnitaire();
-			detailSG.setMontant(nmontant);
-			detailArticleStockGeneralRepository.save(detailSG);
 		}
 
 		return achat;

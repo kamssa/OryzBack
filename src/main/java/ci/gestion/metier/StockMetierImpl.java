@@ -44,9 +44,7 @@ public class StockMetierImpl implements StockMetier{
 			for(DetailStock detail : detailStock) {
 				Optional<DetailStock> d = detailStockRepository.findByLibelleMateriaux(detail.getLibelleMateriaux());
 				if(d.isPresent()) {
-					System.out.println("Voir detail retour:"+d);
 					if(d.get().getLibelleMateriaux().equals(detail.getLibelleMateriaux()) ) {
-						System.out.println("Voir si je rentre:");
 						montantD = ((detail.getPrixUnitaire()*detail.getQuantite())+ detail.getFrais());
 						Stock stc = stockRepository.getStockBylibelle(detail.getLibelleMateriaux());
 						double montantDetail = d.get().getMontant();
@@ -56,7 +54,6 @@ public class StockMetierImpl implements StockMetier{
 						d.get().setQuantite(quantite);
 						d.get().setMontant(montantDetail);
 						
-						System.out.println("Voir le montant calculer" + detail);
 						List<DetailStock> detailStocks = new ArrayList<>();
 						detailStocks.add(d.get());
 						stc.setDetailStock(detailStocks);
@@ -92,11 +89,9 @@ public class StockMetierImpl implements StockMetier{
 				montantD = ((detail.getPrixUnitaire()*detail.getQuantite() )+ detail.getFrais());
 				detail.setMontant(montantD);
 				sommeMontant += montantD;   
-				System.out.println("Voir le montant calculer" + detail);
 				entity.setMontant(sommeMontant);
 				entity.setLibelle(detail.getLibelleMateriaux());
 				entity.setQuantite(detail.getQuantite());
-				System.out.println("Voir le stock:" + entity);
 
                 stock = stockRepository.save(entity);
                 // detailArticleStockGeneral
