@@ -68,10 +68,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/getDepartementByidEntreprise/**",
             		"/api/banque/**",
             		"/api/achat/**","/api/achats/**"
-            		,"/api/DeleteDetail/**",
+            		,"/api/DeleteDetail/**","/api/listStockParEntreprise/**",
             		"/api/autres/**","/api/autre/**","/api/DeleteDetailAutre/**",
             		"/api/upload/**","/api/travauxByIdSite/**","/api/categorie/**",
-            		"/api/transport/**",
+            		"/api/transport/**","/api/listMatParEntreprise/**",
             		"/api/mainOeuvre/**","/api/loyer/**","/api/detailSalaire/",
             		"/api/mainOeuvres/**","/api/DeleteDetailMain/**","/api/categorie/**",
             		"/api/getCategorieByidEntreprise/**","/api/stock/**",

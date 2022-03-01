@@ -6,4 +6,5 @@ import ci.gestion.entites.entreprise.Stock;
 
 public interface StockMetier extends Imetier<Stock, Long>{
 	List<Stock> getStockByIdEntreprise(long id);
+	 List<Stock> listStockParEntreprise(long id);
 }

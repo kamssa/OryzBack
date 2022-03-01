@@ -18,7 +18,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.entreprise.Departement;
+import ci.gestion.entites.entreprise.DetailStock;
 import ci.gestion.entites.entreprise.Stock;
+import ci.gestion.entites.operation.Materiaux;
 import ci.gestion.metier.StockMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
@@ -168,5 +170,24 @@ public class StockControlleur {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
-		
+		@GetMapping("/listStockParEntreprise/{id}")
+		public String getdetailstockByEntreprise(@PathVariable Long id) throws JsonProcessingException {
+			Reponse<List<Stock>> reponse;
+			try {
+				List<Stock> pers = stockMetier.listStockParEntreprise(id);
+				if (!pers.isEmpty()) {
+					reponse = new Reponse<List<Stock>>(0, null, pers);
+					System.out.println("list mat par entreprise:"+ pers);
+				} else {
+					List<String> messages = new ArrayList<>();
+					messages.add("Pas de departement enregistrés");
+					reponse = new Reponse<List<Stock>>(1, messages, new ArrayList<>());
+				}
+
+			} catch (Exception e) {
+				reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+			}
+			return jsonMapper.writeValueAsString(reponse);
+
+		}
 }

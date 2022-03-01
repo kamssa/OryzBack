@@ -28,6 +28,8 @@ public class AchatTravaux extends DateAudit{
 	private String libelle;
 	private LocalDateTime date;
 	private double montant=0d;
+	private double quantite=0d;
+
     private Long travauxId;
 	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
 	@JoinColumn(name = "fk_achatTravaux")
@@ -42,6 +44,14 @@ public class AchatTravaux extends DateAudit{
 
 		this.date = date;
 		this.montant = montant;
+	}
+
+	public double getQuantite() {
+		return quantite;
+	}
+
+	public void setQuantite(double quantite) {
+		this.quantite = quantite;
 	}
 
 	public Long getId() {

@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.entreprise.Departement;
 import ci.gestion.entites.operation.Categorie;
+import ci.gestion.entites.operation.Materiaux;
 import ci.gestion.metier.combo.CategorieMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
@@ -168,6 +168,26 @@ public class CategorieController {
 				List<String> messages = new ArrayList<>();
 				messages.add("Pas de departement enregistrés");
 				reponse = new Reponse<List<Categorie>>(1, messages, new ArrayList<>());
+			}
+
+		} catch (Exception e) {
+			reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
+
+	}
+	@GetMapping("/listMatParEntreprise/{id}")
+	public String getMatByEntreprise(@PathVariable Long id) throws JsonProcessingException {
+		Reponse<List<Materiaux>> reponse;
+		try {
+			List<Materiaux> pers = categorieMetier.listMatParEntreprise(id);
+			if (!pers.isEmpty()) {
+				reponse = new Reponse<List<Materiaux>>(0, null, pers);
+				System.out.println("list mat par entreprise:"+ pers);
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add("Pas de departement enregistrés");
+				reponse = new Reponse<List<Materiaux>>(1, messages, new ArrayList<>());
 			}
 
 		} catch (Exception e) {

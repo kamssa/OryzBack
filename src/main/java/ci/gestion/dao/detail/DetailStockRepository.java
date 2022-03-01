@@ -10,7 +10,7 @@ import ci.gestion.entites.entreprise.DetailStock;
 
 public interface DetailStockRepository extends JpaRepository<DetailStock, Long>{
 	@Query("select ds from DetailStock ds where ds.categorie.id=?1")
-	List<DetailStock> getDetailByIdCatgorie(long id);
+	List<DetailStock> getDetailByIdStock(long id);
 	@Query("select ds from DetailStock ds where ds.libelleMateriaux=?1")
 	Optional<DetailStock>  findByLibelleMateriaux(String libelleMateriaux);
 }

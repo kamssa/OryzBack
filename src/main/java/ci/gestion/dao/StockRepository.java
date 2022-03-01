@@ -11,7 +11,7 @@ public interface StockRepository extends JpaRepository<Stock, Long>{
 	@Query("select stock from Stock stock where stock.entreprise.id=?1")
 	List<Stock> getStockByIdEntreprise(long id);
 	@Query("select stock from Stock stock where stock.libelle=?1")
-	List<Stock> getStockBylibelle(String libelle);
+	Stock getStockBylibelle(String libelle);
 	
 	
 

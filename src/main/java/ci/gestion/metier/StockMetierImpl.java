@@ -4,11 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.CascadeType;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,8 +17,6 @@ import ci.gestion.entites.entreprise.DetailStock;
 import ci.gestion.entites.entreprise.DetailStockHistory;
 import ci.gestion.entites.entreprise.MontantStock;
 import ci.gestion.entites.entreprise.Stock;
-import ci.gestion.entites.operation.Categorie;
-import ci.gestion.entites.operation.Fournisseur;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 
@@ -55,23 +48,27 @@ public class StockMetierImpl implements StockMetier{
 					if(d.get().getLibelleMateriaux().equals(detail.getLibelleMateriaux()) ) {
 						System.out.println("Voir si je rentre:");
 						montantD = ((detail.getPrixUnitaire()*detail.getQuantite())+ detail.getFrais());
-						
+						Stock stc = stockRepository.getStockBylibelle(detail.getLibelleMateriaux());
 						double montantDetail = d.get().getMontant();
 						double quantite = d.get().getQuantite();
 						quantite += detail.getQuantite();
 						montantDetail+= montantD;
 						d.get().setQuantite(quantite);
 						d.get().setMontant(montantDetail);
-						sommeMontant += montantDetail;
+						
 						System.out.println("Voir le montant calculer" + detail);
 						List<DetailStock> detailStocks = new ArrayList<>();
 						detailStocks.add(d.get());
-						entity.setDetailStock(detailStocks);
-						entity.setMontant(montantD);
-						entity.setLibelle(d.get().getLibelleMateriaux());
-						entity.setPrixUnitaire(detail.getPrixUnitaire());
-						entity.setQuantite(detail.getQuantite());
-						stock = stockRepository.save(entity);
+						stc.setDetailStock(detailStocks);
+						double montants = stc.getMontant();
+						double quantites = stc.getQuantite();
+						
+						quantites+= d.get().getQuantite();
+						montants += montantD;
+						stc.setQuantite(quantites);
+						stc.setMontant(montants);
+						
+						stock = stockRepository.save(stc);
 						
 						 // detailArticleStockGeneral
 					List<DetailAticleStockGeneral>	dasg = detailArticleStockGeneralRepository.getDetailArticleStockGeneralByIdEntreprise(stock.getEntreprise().getId());
@@ -98,9 +95,7 @@ public class StockMetierImpl implements StockMetier{
 				System.out.println("Voir le montant calculer" + detail);
 				entity.setMontant(sommeMontant);
 				entity.setLibelle(detail.getLibelleMateriaux());
-				entity.setPrixUnitaire(detail.getPrixUnitaire());
 				entity.setQuantite(detail.getQuantite());
-				entity.setFrais(detail.getFrais());
 				System.out.println("Voir le stock:" + entity);
 
                 stock = stockRepository.save(entity);
@@ -134,7 +129,8 @@ public class StockMetierImpl implements StockMetier{
 				 dsh.setMontant(montantDH); 
 				  dsh.setUnite(detail.getUnite());
 				  dsh.setFrais(detail.getFrais());
-				  dsh.setFournisseur(detail.getFournisseur());
+				  dsh.setLibellefournisseur(detail.getFournisseur().getLibelle());
+				  dsh.setEntreprise(entity.getEntreprise());
 				  detailStockHistoryRepository.save(dsh);
 	}
 			 montantStocks= montantSockRepository.getMontantStockByIdEntreprise(stock.getEntreprise().getId());
@@ -150,37 +146,108 @@ public class StockMetierImpl implements StockMetier{
 
 	@Override
 	public Stock modifier(Stock entity) throws InvalideOryzException {
-		// TODO Auto-generated method stub
-		return stockRepository.save(entity);
+		Stock stock = null;
+		 double montantD = 0d;
+		 Optional<MontantStock> montantStocks;
+			List<DetailStock> detailStock = entity.getDetailStock();
+			for(DetailStock detail : detailStock) {
+				Optional<DetailStock> d = detailStockRepository.findByLibelleMateriaux(detail.getLibelleMateriaux());
+				if(d.isPresent()) {
+					if(d.get().getLibelleMateriaux().equals(detail.getLibelleMateriaux()) ) {
+						System.out.println("Voir si je rentre:");
+						montantD = ((detail.getPrixUnitaire()*detail.getQuantite())+ detail.getFrais());
+						Stock stc = stockRepository.getStockBylibelle(detail.getLibelleMateriaux());
+						double montantDetail = d.get().getMontant();
+						double quantite = d.get().getQuantite();
+						quantite += detail.getQuantite();
+						montantDetail+= montantD;
+						d.get().setQuantite(quantite);
+						d.get().setMontant(montantDetail);
+						
+						List<DetailStock> detailStocks = new ArrayList<>();
+						detailStocks.add(d.get());
+						stc.setDetailStock(detailStocks);
+						double montants = stc.getMontant();
+						double quantites = stc.getQuantite();
+						
+						quantites+= d.get().getQuantite();
+						montants += montantD;
+						stc.setQuantite(quantites);
+						stc.setMontant(montants);
+						
+						stock = stockRepository.save(stc);
+						
+						 // detailArticleStockGeneral
+					List<DetailAticleStockGeneral>	dasg = detailArticleStockGeneralRepository.getDetailArticleStockGeneralByIdEntreprise(stock.getEntreprise().getId());
+				     if (!dasg.isEmpty()) {
+						for (DetailAticleStockGeneral detailSG : dasg) {
+							if (detailSG.getLibelleMateriaux().equals(d.get().getLibelleMateriaux())) {
+								double m =(d.get().getMontant())/(d.get().getQuantite());
+								double valaur = Math.round(m);
+								detailSG.setPrixUnitaire(valaur);
+								detailSG.setQuantite(d.get().getQuantite());
+								detailSG.setMontant(d.get().getMontant());
+								detailArticleStockGeneralRepository.save(detailSG);
+							}
+						}
+					
+					}
+				}
+				
+			}
+				// detailStock history
+				double montantDH = ((detail.getPrixUnitaire()*detail.getQuantite())+ detail.getFrais());
+
+				DetailStockHistory dsh =new DetailStockHistory();
+				dsh.setCategorie(detail.getCategorie());
+				 dsh.setLibelleMateriaux(detail.getLibelleMateriaux());
+				 dsh.setPrixUnitaire(detail.getPrixUnitaire());
+				 dsh.setQuantite(detail.getQuantite());
+				 dsh.setMontant(montantDH); 
+				  dsh.setUnite(detail.getUnite());
+				  dsh.setFrais(detail.getFrais());
+				  dsh.setLibellefournisseur(detail.getFournisseur().getLibelle());
+				  dsh.setEntreprise(entity.getEntreprise());
+				  detailStockHistoryRepository.save(dsh);
+	}
+			 montantStocks= montantSockRepository.getMontantStockByIdEntreprise(stock.getEntreprise().getId());
+			    System.out.println("MontantStocks =>"+montantStocks);
+			   if(!montantStocks.isPresent()) {
+			    MontantStock mts = new MontantStock();
+			    mts.setEntreprise(stock.getEntreprise());
+			    montantSockRepository.save(mts);	
+		}
+		 
+			return stock;	
 	}
 
 	@Override
 	public List<Stock> findAll() {
-		// TODO Auto-generated method stub
+		
 		return stockRepository.findAll();
 	}
 
 	@Override
 	public Stock findById(Long id) {
-		// TODO Auto-generated method stub
 		return stockRepository.findById(id).get();
 	}
 
 	@Override
 	public boolean supprimer(Long id) {
-		Stock stock;
-		DetailStock ds;
-		MontantStock mt;
-		ds = detailStockRepository.findById(id).get();
-		List<Stock> sts = stockRepository.getStockBylibelle(ds.getLibelleMateriaux());
-		List<DetailStockHistory> dh = detailStockHistoryRepository.findByLibelleMateriaux(ds.getLibelleMateriaux());
-		DetailAticleStockGeneral dsg = detailArticleStockGeneralRepository.findByLibelleMateriaux(ds.getLibelleMateriaux()).get();
-		detailArticleStockGeneralRepository.deleteById(dsg.getId());
-		detailStockHistoryRepository.deleteAll(dh);
-		detailStockRepository.deleteById(id);
-		stockRepository.deleteAll(sts);
-		stockRepository.deleteById(id);
+		Stock stock = stockRepository.findById(id).get();
 		
+		
+		 List<DetailStockHistory> dsh = detailStockHistoryRepository.getDetailStockHistorykByIdEntreprise(stock.getId());
+			for (DetailStockHistory detailAticleStockGeneral : dsh) {
+				List<DetailStockHistory> dhs = detailStockHistoryRepository.findByLibelleMateriaux(stock.getLibelle());
+				detailStockHistoryRepository.deleteAll(dhs);
+			}
+	    List<DetailAticleStockGeneral> dsg =	 detailArticleStockGeneralRepository.getDetailArticleStockGeneralByIdEntreprise(stock.getEntreprise().getId());
+		for (DetailAticleStockGeneral detailAticleStockGeneral : dsg) {
+		  DetailAticleStockGeneral ds = detailArticleStockGeneralRepository.findByLibelleMateriaux(stock.getLibelle()).get();
+		  detailArticleStockGeneralRepository.deleteById(ds.getId());
+		}
+		stockRepository.deleteById(id);		
 	    return true;
 	}
 
@@ -210,5 +277,15 @@ public class StockMetierImpl implements StockMetier{
 		System.out.println(mts);
 		return stocks;
 	}
+
+	@Override
+	public List<Stock> listStockParEntreprise(long id) {
+
+		 List<Stock> dts= stockRepository.getStockByIdEntreprise(id);
+	
+			return dts;
+		
+		}
+	
 
 }

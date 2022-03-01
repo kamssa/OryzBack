@@ -23,11 +23,9 @@ import lombok.NoArgsConstructor;
 public class Stock extends AbstractEntity{
 	
 	private static final long serialVersionUID = 1L;
+	private LocalDateTime date;
 	private String libelle;
-	private Double prixUnitaire;
 	private Double quantite;
-	private Double frais;
-    private LocalDateTime date;
 	private double montant=0d;
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_entreprise")
