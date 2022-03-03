@@ -20,4 +20,6 @@ public  class DetailAchatTravaux extends AbstractEntity{
 	private double montant;
 	
 	
+	
+	
 	}

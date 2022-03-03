@@ -24,6 +24,7 @@ public class Travaux extends AbstractEntity{
 	private double budget;
 	private double reste;
 	private double total;
+	private Double seuil;
 	private LocalDateTime date;
 	private LocalDateTime dateLivraison;
 	
@@ -31,6 +32,8 @@ public class Travaux extends AbstractEntity{
 	private Site site;
 	@ManyToOne(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
 	private Ville ville;
+	@ManyToOne(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
+	private Client client;
 	
 	
 }

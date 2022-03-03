@@ -21,9 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor
 @Data
 public class AutreAchatTravaux extends AbstractEntity{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private String libelle;
 	private LocalDateTime date;

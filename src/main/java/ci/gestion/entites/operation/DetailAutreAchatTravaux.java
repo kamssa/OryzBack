@@ -17,7 +17,8 @@ public  class DetailAutreAchatTravaux extends AbstractEntity{
 	private String unite;
 	private double quantite;
 	private double prixUnitaire;
+	private double frais;
 	private double montant;
-	
+	private String fournisseur;
 	
 	}

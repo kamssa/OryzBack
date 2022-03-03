@@ -67,8 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/getOperationByParam/**","/api/departement/**",
             		"/api/getDepartementByidEntreprise/**",
             		"/api/banque/**","/api/getStockGenralByidEntreprise/**",
-            		"/api/achat/**","/api/achats/**"
-            		,"/api/DeleteDetail/**","/api/listStockParEntreprise/**",
+            		"/api/achat/**","/api/achats/**","/api/autreAchatTravaux/**",
+            		"/api/DeleteDetail/**","/api/listStockParEntreprise/**",
             		"/api/autres/**","/api/autre/**","/api/DeleteDetailAutre/**",
             		"/api/upload/**","/api/travauxByIdSite/**","/api/categorie/**",
             		"/api/transport/**","/api/listMatParEntreprise/**",
@@ -77,8 +77,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/getCategorieByidEntreprise/**","/api/stock/**",
             		"/api/getStockByidEntreprise/**","/api/detailStock/**",
             		"/api/materiel/**","/api/getMaterielByidCategorie/**",
-            		"/api/montantStock/**","/api/detailStockHistory/**",
-            		"/api/getMontantStockByidEntreprise/**","/api/detailAticleStockGeneral/**"
+            		"/api/montantStock/**","/api/detailStockHistory/**","/api/caisse/**",
+            		"/api/getMontantStockByidEntreprise/**","/api/caisseDetail/**",
+            		"/api/detailAticleStockGeneral/**","/api/getCaisseDetailByIdEntreprise/**"
             		).permitAll()
 	       .anyRequest().authenticated();
 	       

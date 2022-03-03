@@ -29,16 +29,18 @@ private TravauxRepository travauxRepository;
 
 @Override
 public Autres creer(Autres entity) throws InvalideOryzException {
-	double motantD = 0;
+	double montantD = 0;
 	double montantTravaux = 0;
 	double montantT = 0;
 	double reste=0;
 	List<DetailAutres> detailAutres = entity.getDetailAutres();
 	for(DetailAutres detail : detailAutres) {
-		motantD += detail.getMontant();
-		detail.setMontant(motantD);
+		montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
+		detail.setMontant(montantD);
+		
+
 		}
-	   entity.setMontant(motantD);
+	entity.setMontant(montantD);
 	Autres autre= autreRepository.save(entity);
 	Travaux travaux = travauxRepository.findById(autre.getTravauxId()).get();
     montantTravaux = travaux.getTotal();
