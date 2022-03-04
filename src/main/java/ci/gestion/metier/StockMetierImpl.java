@@ -64,7 +64,7 @@ public class StockMetierImpl implements StockMetier{
 						
 						quantites+= d.get().getQuantite();
 						montants += montantD;
-						stc.setQuantite(quantites);
+						stc.setQuantite(quantite);
 						stc.setMontant(montants);
 						
 						stock = stockRepository.save(stc);
