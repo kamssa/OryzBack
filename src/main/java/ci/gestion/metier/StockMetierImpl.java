@@ -236,7 +236,7 @@ public class StockMetierImpl implements StockMetier{
 	@Override
 	public boolean supprimer(Long id) {
 		Stock stock = stockRepository.findById(id).get();
-		
+		////////////////////////////
 		
 		/*
 		 * List<DetailStockHistory> dsh =
