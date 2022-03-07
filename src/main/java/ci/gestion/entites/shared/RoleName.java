@@ -8,5 +8,9 @@ public enum RoleName {
 	    ROLE_READ,
 	    ROLE_UPDATE,
 	    ROLE_DELETE,
+	    ROLE_COMPTABILITE,
+	    ROLE_ADMINISTRATION,
+	    ROLE_TECHNICIEN
+	    		
 	    
 }

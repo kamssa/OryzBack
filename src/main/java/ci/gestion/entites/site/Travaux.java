@@ -24,7 +24,7 @@ public class Travaux extends AbstractEntity{
 	private double budget;
 	private double reste;
 	private double total;
-	private Double seuil;
+	private Double debousserSec;
 	private LocalDateTime date;
 	private LocalDateTime dateLivraison;
 	
