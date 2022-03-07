@@ -19,12 +19,14 @@ public class Travaux extends AbstractEntity{
 	
 	
 	private static final long serialVersionUID = 1L;
+	private String libelle;
 	private String numeroBon;
 	private double accompte;
 	private double budget;
 	private double reste;
 	private double total;
 	private Double debousserSec;
+	private Double percent;
 	private LocalDateTime date;
 	private LocalDateTime dateLivraison;
 	

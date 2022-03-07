@@ -238,14 +238,14 @@ public class StockMetierImpl implements StockMetier{
 		Stock stock = stockRepository.findById(id).get();
 		////////////////////////////
 		
-		/*
-		 * List<DetailStockHistory> dsh =
-		 * detailStockHistoryRepository.getDetailStockHistorykByIdEntreprise(stock.getId
-		 * ()); for (DetailStockHistory detailAticleStockGeneral : dsh) {
-		 * List<DetailStockHistory> dhs =
-		 * detailStockHistoryRepository.findByLibelleMateriaux(stock.getLibelle());
-		 * detailStockHistoryRepository.deleteAll(dhs); }
-		 */
+		
+		  List<DetailStockHistory> dsh =
+		  detailStockHistoryRepository.getDetailStockHistorykByIdEntreprise(stock.getId
+		  ()); for (DetailStockHistory detailAticleStockGeneral : dsh) {
+		  List<DetailStockHistory> dhs =
+		  detailStockHistoryRepository.findByLibelleMateriaux(stock.getLibelle());
+		  detailStockHistoryRepository.deleteAll(dhs); }
+		 
 	    List<DetailAticleStockGeneral> dsg =	 detailArticleStockGeneralRepository.getDetailArticleStockGeneralByIdEntreprise(stock.getEntreprise().getId());
 		for (DetailAticleStockGeneral detailAticleStockGeneral : dsg) {
 		  DetailAticleStockGeneral ds = detailArticleStockGeneralRepository.findByLibelleMateriaux(stock.getLibelle()).get();

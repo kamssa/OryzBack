@@ -44,7 +44,6 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	public AchatTravaux creer(AchatTravaux entity) throws InvalideOryzException {
 		System.out.println("entre  Achat Travaux:>>>>>>>" + entity);
 		AchatTravaux achat = null;
-		Travaux travau = null;
 		double montantD = 0;
 		double montantTravaux = 0;
 		double montantT = 0;
@@ -81,11 +80,10 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 				Travaux tr = travauxRepository.save(travaux);
 				reste = (tr.getBudget()) - (tr.getTotal());
 				tr.setReste(reste);
-				travau = travauxRepository.save(tr);
 				
 				// stock
-				System.out.println("Voir id de l'entreprise: ~~~~~~~~~~~~>" + travau);
-				List<Stock> ts = stockRepository.getStockByIdEntreprise(travau.getSite().getEntreprise().getId());
+				System.out.println("Voir id de l'entreprise: ~~~~~~~~~~~~>" + tr);
+				List<Stock> ts = stockRepository.getStockByIdEntreprise(tr.getSite().getEntreprise().getId());
 				for (Stock stoc : ts) {
 					if (stoc.getLibelle().equals(entity.getLibelle())) {
 						// detail stock
@@ -112,7 +110,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 							// detailArticleStockGeneral
 							List<DetailAticleStockGeneral> dasg = detailArticleStockGeneralRepository
 									.getDetailArticleStockGeneralByIdEntreprise(
-											travau.getSite().getEntreprise().getId());
+											tr.getSite().getEntreprise().getId());
 							if (!dasg.isEmpty()) {
 								for (DetailAticleStockGeneral detailSG : dasg) {
 									if (detailSG.getLibelleMateriaux().equals(detail.getLibelleMateriaux())) {
@@ -144,11 +142,11 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 				Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
 				montantTravaux = travaux.getTotal();
 				montantTravaux += montantD;
-				travaux.setTotal(montantT);
+				travaux.setTotal(montantTravaux);
 				Travaux tr = travauxRepository.save(travaux);
 				reste = (tr.getBudget()) - (tr.getTotal());
 				tr.setReste(reste);
-				travau = travauxRepository.save(tr);
+				
 				// stock
 				List<Stock> ts = stockRepository.getStockByIdEntreprise(tr.getSite().getEntreprise().getId());
 				for (Stock stoc : ts) {
@@ -177,7 +175,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 							// detailArticleStockGeneral
 							List<DetailAticleStockGeneral> dasg = detailArticleStockGeneralRepository
 									.getDetailArticleStockGeneralByIdEntreprise(
-											travau.getSite().getEntreprise().getId());
+											tr.getSite().getEntreprise().getId());
 							if (!dasg.isEmpty()) {
 								for (DetailAticleStockGeneral detailSG : dasg) {
 									if (detailSG.getLibelleMateriaux().equals(de.getLibelleMateriaux())) {
