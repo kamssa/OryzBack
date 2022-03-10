@@ -28,6 +28,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.entreprise.Employe;
+import ci.gestion.entites.operation.Materiaux;
 import ci.gestion.entites.shared.Personne;
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
@@ -216,5 +217,25 @@ public class EmployeController {
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
+	}
+	@GetMapping("/listEmployeParEntreprise/{id}")
+	public String getlistEmployeParEntreprise(@PathVariable Long id) throws JsonProcessingException {
+		Reponse<List<Employe>> reponse;
+		try {
+			List<Employe> pers = employeMetier.listEmployeParEntreprise(id);
+			if (!pers.isEmpty()) {
+				reponse = new Reponse<List<Employe>>(0, null, pers);
+				System.out.println("list empl par entreprise:"+ pers);
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add("Pas de departement enregistrés");
+				reponse = new Reponse<List<Employe>>(1, messages, new ArrayList<>());
+			}
+
+		} catch (Exception e) {
+			reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+		}
+		return jsonMapper.writeValueAsString(reponse);
+
 	}
 }

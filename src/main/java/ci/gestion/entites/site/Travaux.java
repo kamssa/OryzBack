@@ -30,7 +30,7 @@ public class Travaux extends AbstractEntity{
 	private LocalDateTime date;
 	private LocalDateTime dateLivraison;
 	
-	@ManyToOne(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
+	@ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
 	private Site site;
 	@ManyToOne(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
 	private Ville ville;

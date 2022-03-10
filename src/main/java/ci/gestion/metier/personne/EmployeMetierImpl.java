@@ -1,5 +1,6 @@
 package ci.gestion.metier.personne;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -8,9 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import ci.gestion.dao.personne.DepartementRepository;
 import ci.gestion.dao.personne.EmployeRepository;
 import ci.gestion.dao.personne.RoleRepository;
+import ci.gestion.entites.entreprise.Departement;
 import ci.gestion.entites.entreprise.Employe;
+import ci.gestion.entites.operation.Categorie;
+import ci.gestion.entites.operation.Materiaux;
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
 import ci.gestion.metier.exception.InvalideOryzException;
@@ -21,6 +26,8 @@ import ci.gestion.metier.exception.InvalideOryzException;
 public class EmployeMetierImpl implements IEmployeMetier{
 @Autowired
 private EmployeRepository employeRepository;
+@Autowired
+private DepartementRepository departementRepository;
 @Autowired
 private RoleRepository roleRepository;
 @Autowired
@@ -92,6 +99,27 @@ PasswordEncoder passwordEncoder;
 		
 		return employeRepository.getEmployeByIdEntreprise(id);
 	}
-
+	@Override
+	public List<Employe> listEmployeParEntreprise(long id) {
+		
+		List<Employe> employes = new ArrayList<>(); 
+		List<Departement> departements = departementRepository.getDepByIdEntreprise(id);
+		if(!departements.isEmpty()) {
+			for (Departement dep : departements) {
+				List<Employe> empl = employeRepository.getEmployeByIdDepartement(dep.getId());
+				 for (Employe employes2 : empl) {
+					 employes.add(employes2);
+				}
+					System.out.println("Voir retour mat:"+ employes);
+				
+		}	
+		}else {
+			System.out.println("employe vide:");
+		}
+		
+			return employes;
+		
+		
+	}
 	
 }

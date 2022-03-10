@@ -9,4 +9,5 @@ import ci.gestion.metier.Imetier;
 
 public interface IEmployeMetier extends Imetier<Employe, Long>{
 	List<Employe> getDepByIdEntreprise(Long id);
+	public List<Employe> listEmployeParEntreprise(long id);
 }
