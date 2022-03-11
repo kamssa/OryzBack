@@ -163,6 +163,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 							DetailStock de = detailStockRepository.findByLibelleMateriaux(detail.getLibelleMateriaux()).get();
 							double quantite = de.getQuantite();
 							if(quantite > detail.getQuantite()) {
+								
 								achat = achaTravauxRepository.save(entity);
 								Travaux travaux = travauxRepository.findById(entity.getTravauxId()).get();
 								montantTravaux = travaux.getTotal();
@@ -271,6 +272,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	@Override
 	public boolean supprimer(Long id) {
 		AchatTravaux achat = findById(id);
+		System.out.println("Voir achat:"+achat);
 		double montantTravaux = 0;
 		double montantT = 0;
 		double reste = 0;
@@ -281,7 +283,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		Travaux tr = travauxRepository.save(travaux);
 		reste = tr.getReste() + achat.getMontant();
 		tr.setReste(reste);
-		double percent = (tr.getDebousserSec()/tr.getTotal())*100;
+		double percent = (tr.getDebousserSec()*tr.getTotal())/100;
 		tr.setPercent(percent);
 		travauxRepository.save(tr);
 		List<Stock> ts = stockRepository.getStockByIdEntreprise(tr.getSite().getEntreprise().getId());
