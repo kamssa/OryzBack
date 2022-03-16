@@ -34,19 +34,21 @@ TravauxRepository travauxRepository;
 		double reste=0;
 		List<DetailLoyer> detailLoyers = entity.getDetailLoyer();
 		for(DetailLoyer detail : detailLoyers) {
-			motantD += detail.getMontant();
+			motantD = detail.getMontant();
 			detail.setMontant(motantD);
 			}
 		entity.setMontant(motantD);
 		Loyer loyer= loyerRepository.save(entity);
 		Travaux travaux = travauxRepository.findById(loyer.getTravauxId()).get();
-        montantTravaux = travaux.getTotal();
+		montantTravaux = travaux.getTotal();
 		montantT = montantTravaux + loyer.getMontant();
 		travaux.setTotal(montantT);
 		Travaux tr =travauxRepository.save(travaux);
-		reste = (tr.getBudget())-(tr.getTotal());
-		       tr.setReste(reste);
-		       travauxRepository.save(tr);
+			reste = (tr.getDebousserSec())-(tr.getTotal());
+			tr.setReste(reste);
+			double percent = 100*(tr.getTotal()/tr.getDebousserSec());
+			tr.setPercent(percent);
+			travauxRepository.save(tr);
 		 return loyer;
 		 
 	}
@@ -101,13 +103,15 @@ TravauxRepository travauxRepository;
 		double montantT = 0;
 		double reste=0;
 		Travaux travaux = travauxRepository.findById(loyer.getTravauxId()).get();
-        montantTravaux = travaux.getTotal();
+		montantTravaux = travaux.getTotal();
 		montantT = montantTravaux - loyer.getMontant();
 		travaux.setTotal(montantT);
 		Travaux tr = travauxRepository.save(travaux);
-		reste = tr.getReste()+ loyer.getMontant();
-		       tr.setReste(reste);
-		       travauxRepository.save(tr);
+		reste = tr.getReste() + loyer.getMontant();
+		tr.setReste(reste);
+		double percent = (tr.getDebousserSec()*tr.getTotal())/100;
+		tr.setPercent(percent);
+		travauxRepository.save(tr);
 				loyerRepository.deleteById(id);
                 return true; 
 	}

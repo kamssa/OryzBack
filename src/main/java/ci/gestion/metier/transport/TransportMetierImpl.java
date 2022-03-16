@@ -34,19 +34,21 @@ public Transport creer(Transport entity) throws InvalideOryzException {
 	double reste=0;
 	List<DetailTransport> detailTransports = entity.getDetailTransport();
 	for(DetailTransport detail : detailTransports) {
-		motantD += detail.getMontant();
+		motantD = detail.getMontant();
 		detail.setMontant(motantD);
 		}
 	entity.setMontant(motantD);
 	Transport transport= transportRepository.save(entity);
 	Travaux travaux = travauxRepository.findById(transport.getTravauxId()).get();
-    montantTravaux = travaux.getTotal();
+	montantTravaux = travaux.getTotal();
 	montantT = montantTravaux + transport.getMontant();
 	travaux.setTotal(montantT);
 	Travaux tr =travauxRepository.save(travaux);
-	reste = (tr.getBudget())-(tr.getTotal());
-	       tr.setReste(reste);
-	       travauxRepository.save(tr);
+		reste = (tr.getDebousserSec())-(tr.getTotal());
+		tr.setReste(reste);
+		double percent = 100*(tr.getTotal()/tr.getDebousserSec());
+		tr.setPercent(percent);
+		travauxRepository.save(tr);
 	 return transport;
 }
 
@@ -98,13 +100,15 @@ public boolean supprimer(Long id) {
 	double montantT = 0;
 	double reste=0;
 	Travaux travaux = travauxRepository.findById(transport.getTravauxId()).get();
-    montantTravaux = travaux.getTotal();
+	montantTravaux = travaux.getTotal();
 	montantT = montantTravaux - transport.getMontant();
 	travaux.setTotal(montantT);
 	Travaux tr = travauxRepository.save(travaux);
-	reste = tr.getReste()+ transport.getMontant();
-	       tr.setReste(reste);
-	       travauxRepository.save(tr);
+	reste = tr.getReste() + transport.getMontant();
+	tr.setReste(reste);
+	double percent = (tr.getDebousserSec()*tr.getTotal())/100;
+	tr.setPercent(percent);
+	travauxRepository.save(tr);
 			transportRepository.deleteById(id);
             return true; 
 }

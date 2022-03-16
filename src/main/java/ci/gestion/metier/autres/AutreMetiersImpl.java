@@ -47,9 +47,11 @@ public Autres creer(Autres entity) throws InvalideOryzException {
 	montantT = montantTravaux + autre.getMontant();
 	travaux.setTotal(montantT);
 	Travaux tr =travauxRepository.save(travaux);
-	reste = (tr.getBudget())-(tr.getTotal());
-	       tr.setReste(reste);
-	       travauxRepository.save(tr);
+		reste = (tr.getDebousserSec())-(tr.getTotal());
+		tr.setReste(reste);
+		double percent = 100*(tr.getTotal()/tr.getDebousserSec());
+		tr.setPercent(percent);
+		travauxRepository.save(tr);
 	 return autre;
 }
 
@@ -103,14 +105,16 @@ public boolean supprimer(Long id) {
 	double montantT = 0;
 	double reste=0;
 	Travaux travaux = travauxRepository.findById(autres.getTravauxId()).get();
-    montantTravaux = travaux.getTotal();
+	montantTravaux = travaux.getTotal();
 	montantT = montantTravaux - autres.getMontant();
 	travaux.setTotal(montantT);
 	Travaux tr = travauxRepository.save(travaux);
-	reste = tr.getReste()+ autres.getMontant();
-	       tr.setReste(reste);
-	       travauxRepository.save(tr);
-			autreRepository.deleteById(id);
+	reste = tr.getReste() + autres.getMontant();
+	tr.setReste(reste);
+	double percent = (tr.getDebousserSec()*tr.getTotal())/100;
+	tr.setPercent(percent);
+	travauxRepository.save(tr);
+	autreRepository.deleteById(id);
             return true; 
 }
 

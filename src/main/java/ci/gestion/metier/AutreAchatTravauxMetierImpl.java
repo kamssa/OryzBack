@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.AutreAchatTravauxRepository;
 import ci.gestion.dao.TravauxRepository;
+import ci.gestion.entites.mainoeuvre.MainOeuvre;
 import ci.gestion.entites.operation.AutreAchatTravaux;
 import ci.gestion.entites.operation.DetailAutreAchatTravaux;
 import ci.gestion.entites.site.Travaux;
@@ -32,7 +33,7 @@ private TravauxRepository travauxRepository;
 			
 		       montantD = ((detail.getPrixUnitaire() * detail.getQuantite())+ detail.getFrais());
 				detail.setMontant(montantD);
-				sommeMontant += montantD;
+				sommeMontant = montantD;
 				entity.setMontant(sommeMontant);
 				entity.setLibelle(detail.getLibelleMateriaux());
 				entity.setQuantite(detail.getQuantite());
@@ -40,13 +41,14 @@ private TravauxRepository travauxRepository;
 				autreAchat = autreAchatTravauxRepository.save(entity);
 				Travaux travaux = travauxRepository.findById(autreAchat.getTravauxId()).get();
 				montantTravaux = travaux.getTotal();
-				 montantTravaux += montantD;
-				travaux.setTotal(montantTravaux);
-				Travaux tr = travauxRepository.save(travaux);
-				reste = (tr.getBudget()) - (tr.getTotal());
+				montantT = montantTravaux + autreAchat.getMontant();
+				travaux.setTotal(montantT);
+				Travaux tr =travauxRepository.save(travaux);
+				reste = (tr.getDebousserSec())-(tr.getTotal());
 				tr.setReste(reste);
-				travau = travauxRepository.save(tr);
-			
+				double percent = 100*(tr.getTotal()/tr.getDebousserSec());
+				tr.setPercent(percent);
+				travauxRepository.save(tr);
 			
 
 		}
@@ -75,8 +77,22 @@ private TravauxRepository travauxRepository;
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		AutreAchatTravaux autreAchatTravaux = findById(id);
+		double montantTravaux = 0;
+		double montantT = 0;
+		double reste=0;
+		Travaux travaux = travauxRepository.findById(autreAchatTravaux.getTravauxId()).get();
+		montantTravaux = travaux.getTotal();
+		montantT = montantTravaux - autreAchatTravaux.getMontant();
+		travaux.setTotal(montantT);
+		Travaux tr = travauxRepository.save(travaux);
+		reste = tr.getReste() + autreAchatTravaux.getMontant();
+		tr.setReste(reste);
+		double percent = (tr.getDebousserSec()*tr.getTotal())/100;
+		tr.setPercent(percent);
+		travauxRepository.save(tr);
+				autreAchatTravauxRepository.deleteById(id);
+                return true; 
 	}
 
 	@Override

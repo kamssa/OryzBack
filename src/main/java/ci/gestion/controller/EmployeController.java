@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -238,4 +239,18 @@ public class EmployeController {
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
+	// Add role to employe
+		@GetMapping("/addRoleToEmploye")
+		public String rechercheAbonnesParParamettres(@RequestParam(value = "idEmploye") Long idEmploye,
+				@RequestParam(value = "idRole") Long idRole) throws JsonProcessingException {
+			Reponse<Employe> reponse;
+			try {
+				Employe em = employeMetier.addRoleToEmploye(idEmploye, idRole);
+				reponse = new Reponse<Employe>(0, null, em);
+			} catch (Exception e) {
+				reponse = new Reponse<Employe>(1, Static.getErreursForException(e), null);
+			}
+			return jsonMapper.writeValueAsString(reponse);
+
+		}
 }

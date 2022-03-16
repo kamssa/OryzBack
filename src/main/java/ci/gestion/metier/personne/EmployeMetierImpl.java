@@ -2,8 +2,10 @@ package ci.gestion.metier.personne;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,6 +28,8 @@ import ci.gestion.metier.exception.InvalideOryzException;
 public class EmployeMetierImpl implements IEmployeMetier{
 @Autowired
 private EmployeRepository employeRepository;
+@Autowired
+private RoleRepository rolRepository;
 @Autowired
 private DepartementRepository departementRepository;
 @Autowired
@@ -121,5 +125,18 @@ PasswordEncoder passwordEncoder;
 		
 		
 	}
+
+	@Override
+	public Employe addRoleToEmploye(Long empl, Long role) {
+		Employe emp = employeRepository.findById(empl).get();
+        Role userRole = roleRepository.findById(role).get();
+        Set<Role> roles = new HashSet<>();
+        roles = emp.getRoles();
+        roles.add(userRole);
+        emp.setRoles(roles);
+        return employeRepository.save(emp);
+	}
+
+	
 	
 }

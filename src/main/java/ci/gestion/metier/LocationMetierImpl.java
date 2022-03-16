@@ -8,12 +8,9 @@ import org.springframework.stereotype.Service;
 import ci.gestion.dao.LocationRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailLcationRepository;
+import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.location.DetailLocation;
 import ci.gestion.entites.location.LocationTravaux;
-import ci.gestion.entites.loyer.DetailLoyer;
-import ci.gestion.entites.loyer.Loyer;
-import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.entites.operation.DetailAchatTravaux;
 import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 @Service
@@ -33,19 +30,21 @@ public LocationTravaux creer(LocationTravaux entity) throws InvalideOryzExceptio
 	double reste=0;
 	List<DetailLocation> detailLocations = entity.getDetailLocation();
 	for(DetailLocation detail : detailLocations) {
-		motantD += detail.getMontant();
+		motantD = detail.getMontant();
 		detail.setMontant(motantD);
 		}
 	entity.setMontant(motantD);
 	LocationTravaux location= locationRepository.save(entity);
 	Travaux travaux = travauxRepository.findById(location.getTravauxId()).get();
-    montantTravaux = travaux.getTotal();
-	montantT = montantTravaux + location.getMontant();
-	travaux.setTotal(montantT);
-	Travaux tr =travauxRepository.save(travaux);
-	reste = (tr.getBudget())-(tr.getTotal());
-	       tr.setReste(reste);
-	       travauxRepository.save(tr);
+	 montantTravaux = travaux.getTotal();
+		montantT = montantTravaux + location.getMontant();
+		travaux.setTotal(montantT);
+		Travaux tr =travauxRepository.save(travaux);
+			reste = (tr.getDebousserSec())-(tr.getTotal());
+			tr.setReste(reste);
+			double percent = 100*(tr.getTotal()/tr.getDebousserSec());
+			tr.setPercent(percent);
+			travauxRepository.save(tr);
 	 return location;
 	 
     }
@@ -69,7 +68,22 @@ public LocationTravaux findById(Long id) {
 
 @Override
 public boolean supprimer(Long id) {
-	return false;
+	LocationTravaux locationTravaux = findById(id);
+	double montantTravaux = 0;
+	double montantT = 0;
+	double reste=0;
+	Travaux travaux = travauxRepository.findById(locationTravaux.getTravauxId()).get();
+	montantTravaux = travaux.getTotal();
+	montantT = montantTravaux - locationTravaux.getMontant();
+	travaux.setTotal(montantT);
+	Travaux tr = travauxRepository.save(travaux);
+	reste = tr.getReste() + locationTravaux.getMontant();
+	tr.setReste(reste);
+	double percent = (tr.getDebousserSec()*tr.getTotal())/100;
+	tr.setPercent(percent);
+	travauxRepository.save(tr);
+	locationRepository.deleteById(id);
+            return true; 
 }
 
 @Override

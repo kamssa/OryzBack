@@ -35,19 +35,19 @@ public Role modifier(Role entity) {
 @Override
 public List<Role> findAll() {
 	// TODO Auto-generated method stub
-	return null;
+	return roleRepository.findAll();
 }
 
 @Override
 public Role findById(Long id) {
 	// TODO Auto-generated method stub
-	return null;
+	return roleRepository.findById(id).get();
 }
 
 @Override
 public boolean supprimer(Long id) {
-	// TODO Auto-generated method stub
-	return false;
+	roleRepository.deleteById(id);
+	return true;
 }
 
 @Override

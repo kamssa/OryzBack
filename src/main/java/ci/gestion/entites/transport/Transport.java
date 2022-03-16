@@ -15,9 +15,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
 import ci.gestion.entites.salaire.DetailSalaire;
+import ci.gestion.metier.model.DateAudit;
 
 @Entity
-public class Transport {
+public class Transport extends DateAudit {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
