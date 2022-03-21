@@ -16,9 +16,7 @@ public class TravauxMetierImpl implements ITravauxMetier{
 private TravauxRepository travauxRepository;
 	@Override
 	public Travaux creer(Travaux entity) throws InvalideOryzException {
-		if ((entity.getNumeroBon().equals(null)) || (entity.getNumeroBon() == "")) {
-			throw new InvalideOryzException("Le numéro de bon ne peut etre null");
-		}
+		
 		Optional<Travaux> travaux = null;
 
 		
@@ -51,8 +49,8 @@ private TravauxRepository travauxRepository;
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		travauxRepository.deleteById(id);
+		return true;
 	}
 
 	@Override

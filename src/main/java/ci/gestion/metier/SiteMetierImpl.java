@@ -21,7 +21,7 @@ public class SiteMetierImpl implements ISiteMetier{
 	public Site creer(Site entity) throws InvalideOryzException {
 		System.out.println("personne a enregistrer" + ":" + entity);
 		if ((entity.getNomChantier().equals(null)) || (entity.getNomChantier() == "")) {
-			throw new InvalideOryzException("Le email ne peut etre null");
+			throw new InvalideOryzException("Le nom du projet ne peut etre null");
 		}
 		
 		Optional<Site> site = null; 
@@ -51,8 +51,8 @@ public class SiteMetierImpl implements ISiteMetier{
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		siteRepository.deleteById(id);
+		return true;
 	}
 
 	@Override
