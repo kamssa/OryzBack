@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ci.gestion.entites.operation.AchatTravaux;
 import ci.gestion.entites.operation.AutreAchatTravaux;
 import ci.gestion.metier.AutreAchatTravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
@@ -129,5 +130,25 @@ public class AutreAchatTravauxControlleur {
 
 				return jsonMapper.writeValueAsString(reponse);
 			}
-		
+			// recuperer achat par id travaux
+			@GetMapping("/autreAchat/{idTravaux}")
+			public String getAchatByIdTravaux(@PathVariable("idTravaux") long idTravaux) throws JsonProcessingException {
+				Reponse<List<AutreAchatTravaux>> reponse;
+
+				try {
+					List<AutreAchatTravaux> achats = autreAchatTravauxMetier.getAutreAchatTravauxTravauxByIdTravaux(idTravaux);
+					if (!achats.isEmpty()) {
+						reponse = new Reponse<List<AutreAchatTravaux>>(0, null, achats);
+					} else {
+						List<String> messages = new ArrayList<>();
+						messages.add("Pas d'achat enregistré");
+						reponse = new Reponse<List<AutreAchatTravaux>>(1, messages, new ArrayList<>());
+					}
+
+				} catch (Exception e) {
+
+					reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+				}
+				return jsonMapper.writeValueAsString(reponse);
+			}
 }

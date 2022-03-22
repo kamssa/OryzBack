@@ -31,8 +31,6 @@ public class DetailAutres extends AbstractEntity{
 	private Double prixUnitaire;
 	private Double quantite;
 	private double montant;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "id_employe")
-	private Employe employe;
+	private String nomPrenom;
 	
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ci.gestion.dao.AutreAchatTravauxRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.entites.mainoeuvre.MainOeuvre;
+import ci.gestion.entites.operation.AchatTravaux;
 import ci.gestion.entites.operation.AutreAchatTravaux;
 import ci.gestion.entites.operation.DetailAutreAchatTravaux;
 import ci.gestion.entites.site.Travaux;
@@ -105,6 +106,13 @@ private TravauxRepository travauxRepository;
 	public boolean existe(Long id) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+
+	@Override
+	public List<AutreAchatTravaux> getAutreAchatTravauxTravauxByIdTravaux(long id) {
+		// TODO Auto-generated method stub
+		return autreAchatTravauxRepository.getAutreAchatTravauxTravauxByIdTravaux(id);
 	}
 
 }

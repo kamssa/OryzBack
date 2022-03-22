@@ -65,7 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests().antMatchers("/api/auth/**","/api/role/**",
             		"/api/getPhoto/**","/api/travaux/**", "/api/rechemc/**",
             		"/api/getOperationByParam/**","/api/departement/**",
-            		"/api/getDepartementByidEntreprise/**",
+            		"/api/getDepartementByidEntreprise/**", "/api/autreAchat/**",
             		"/api/banque/**","/api/getStockGenralByidEntreprise/**",
             		"/api/achat/**","/api/achats/**","/api/autreAchatTravaux/**",
             		"/api/DeleteDetail/**","/api/listStockParEntreprise/**",
