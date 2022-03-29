@@ -18,14 +18,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor @AllArgsConstructor
 @Data
 public class CaisseDetail extends AbstractEntity{
-    private LocalDateTime date;
+    
+	private static final long serialVersionUID = 1L;
+	private LocalDateTime date;
 	private String designation;
 	private Double prixUnitaire;
 	private Double quantite;
 	private double montant;
 	private Long entrepriseId;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "id_employe")
-	private Employe employe;
+	private String employe;
 	
 }
