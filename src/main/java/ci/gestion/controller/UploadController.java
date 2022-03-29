@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ci.gestion.entites.site.Photo;
-import ci.gestion.metier.CloudinaryService;
-import ci.gestion.metier.ImageService;
 import ci.gestion.metier.exception.InvalideOryzException;
+import ci.gestion.metier.image.CloudinaryService;
+import ci.gestion.metier.image.ImageService;
 
 @RestController
 @RequestMapping("/api")

@@ -20,10 +20,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.site.Photo;
 import ci.gestion.entites.site.Travaux;
-import ci.gestion.metier.IPhotoMetier;
-import ci.gestion.metier.ITravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
+import ci.gestion.metier.image.IPhotoMetier;
 import ci.gestion.metier.model.Reponse;
+import ci.gestion.metier.travaux.ITravauxMetier;
 import ci.gestion.metier.utilitaire.Static;
 
 @RestController

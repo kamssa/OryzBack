@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.metier.IAchatTravauxMetier;
+import ci.gestion.metier.achatTravaux.IAchatTravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;

@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import ci.gestion.entites.operation.Categorie;
 import ci.gestion.entites.operation.Materiaux;
-import ci.gestion.metier.Imetier;
+import ci.gestion.metier.utilitaire.Imetier;
 
 public interface CategorieMetier extends Imetier<Categorie, Long>{
 	List<Categorie> getCategorieByIdEntreprise(long id);

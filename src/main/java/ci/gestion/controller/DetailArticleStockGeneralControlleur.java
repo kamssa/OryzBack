@@ -20,10 +20,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
 import ci.gestion.entites.entreprise.DetailStock;
 import ci.gestion.entites.entreprise.Stock;
-import ci.gestion.metier.DetailStockGeneralMetier;
-import ci.gestion.metier.DetailStockMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
+import ci.gestion.metier.stock.DetailStockMetier;
+import ci.gestion.metier.stockGeneral.DetailStockGeneralMetier;
 import ci.gestion.metier.utilitaire.Static;
 
 @RestController

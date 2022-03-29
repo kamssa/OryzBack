@@ -15,8 +15,8 @@ import ci.gestion.entites.loyer.Loyer;
 import ci.gestion.entites.operation.AchatTravaux;
 import ci.gestion.entites.operation.DetailAchatTravaux;
 import ci.gestion.entites.site.Travaux;
-import ci.gestion.metier.Imetier;
 import ci.gestion.metier.exception.InvalideOryzException;
+import ci.gestion.metier.utilitaire.Imetier;
 
 @Service
 public class AutreMetiersImpl implements IAutresMetier{

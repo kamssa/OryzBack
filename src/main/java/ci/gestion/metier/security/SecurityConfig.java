@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/montantStock/**","/api/detailStockHistory/**","/api/caisse/**",
             		"/api/getMontantStockByidEntreprise/**","/api/caisseDetail/**","/api/site/**",
             		"/api/detailAticleStockGeneral/**","/api/getCaisseDetailByIdEntreprise/**",
-            		"/api/locations/**","/api/location/**"
+            		"/api/locations/**","/api/location/**","/api/evolution/**"
             		).permitAll()
 	       .anyRequest().authenticated();
 	       

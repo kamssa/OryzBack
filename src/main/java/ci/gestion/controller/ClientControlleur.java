@@ -31,7 +31,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.shared.Personne;
 import ci.gestion.entites.site.Client;
-import ci.gestion.metier.ClientMetier;
+import ci.gestion.metier.client.ClientMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.personne.IPersonneMetier;

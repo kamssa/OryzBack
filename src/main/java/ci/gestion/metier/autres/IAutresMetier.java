@@ -3,7 +3,7 @@ package ci.gestion.metier.autres;
 import java.util.List;
 
 import ci.gestion.entites.autres.Autres;
-import ci.gestion.metier.Imetier;
+import ci.gestion.metier.utilitaire.Imetier;
 
 public interface IAutresMetier extends Imetier<Autres, Long>{
 	List<Autres> findAutresByIdTravaux(long id);

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.site.Banque;
-import ci.gestion.metier.IBanqueMetier;
+import ci.gestion.metier.banque.IBanqueMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;

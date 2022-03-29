@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.operation.AchatTravaux;
 import ci.gestion.entites.operation.AutreAchatTravaux;
-import ci.gestion.metier.AutreAchatTravauxMetier;
+import ci.gestion.metier.autreAchatTravaux.AutreAchatTravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;

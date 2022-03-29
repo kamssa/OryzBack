@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
-import ci.gestion.metier.Imetier;
+import ci.gestion.metier.utilitaire.Imetier;
 
 
 

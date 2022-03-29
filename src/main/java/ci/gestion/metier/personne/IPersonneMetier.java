@@ -3,7 +3,7 @@ package ci.gestion.metier.personne;
 import java.util.Optional;
 
 import ci.gestion.entites.shared.Personne;
-import ci.gestion.metier.Imetier;
+import ci.gestion.metier.utilitaire.Imetier;
 
 
 
