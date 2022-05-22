@@ -1,5 +1,7 @@
 package ci.gestion.entites.location;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,10 +27,12 @@ public class DetailLocation extends DateAudit{
 	@Version
 	private Long version;
 	private double montant;
+	private LocalDateTime date;
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Materiaux materiaux;
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Fournisseur fournisseur;
+	private Long travauxId;
 	public DetailLocation() {
 		super();
 	}
@@ -37,6 +41,13 @@ public class DetailLocation extends DateAudit{
 		this.montant = montant;
 		this.materiaux = materiaux;
 		this.fournisseur = fournisseur;
+	}
+	
+	public LocalDateTime getDate() {
+		return date;
+	}
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 	public double getMontant() {
 		return montant;
@@ -49,6 +60,13 @@ public class DetailLocation extends DateAudit{
 	}
 	public void setMateriaux(Materiaux materiaux) {
 		this.materiaux = materiaux;
+	}
+	
+	public Long getTravauxId() {
+		return travauxId;
+	}
+	public void setTravauxId(Long travauxId) {
+		this.travauxId = travauxId;
 	}
 	public Fournisseur getFournisseur() {
 		return fournisseur;

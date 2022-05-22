@@ -18,6 +18,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.autres.Autres;
+import ci.gestion.entites.location.DetailLocation;
+import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.loyer.ILoyerMetier;
@@ -168,4 +170,25 @@ public class LoyerController {
 			return jsonMapper.writeValueAsString(reponse);
 		
 		}
+		// recuperer Detail loyer  par id travaux
+					@GetMapping("/detailLoye/{idTravaux}")
+					public String getDetailLocationByIdTravaux(@PathVariable("idTravaux") long idTravaux) throws JsonProcessingException {
+						Reponse<List<DetailLoyer>> reponse;
+
+						try {
+							List<DetailLoyer> mainOeuvres = loyerMetier.findDetailLoyerByIdTravaux(idTravaux);
+							if (!mainOeuvres.isEmpty()) {
+								reponse = new Reponse<List<DetailLoyer>>(0, null, mainOeuvres);
+							} else {
+								List<String> messages = new ArrayList<>();
+								messages.add("Pas Autres enregistré");
+								reponse = new Reponse<List<DetailLoyer>>(1, messages, new ArrayList<>());
+							}
+
+						} catch (Exception e) {
+
+							reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+						}
+						return jsonMapper.writeValueAsString(reponse);
+					}
 }

@@ -6,10 +6,12 @@ import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.AutreAchatTravauxRepository;
 import ci.gestion.dao.TravauxRepository;
+import ci.gestion.dao.detail.DetailAutreAchatTravauxRepository;
+import ci.gestion.entites.achat.AutreAchatTravaux;
+import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.mainoeuvre.MainOeuvre;
-import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.entites.operation.AutreAchatTravaux;
-import ci.gestion.entites.operation.DetailAutreAchatTravaux;
+import ci.gestion.entites.retraitStock.AchatTravaux;
+import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
@@ -18,6 +20,8 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class AutreAchatTravauxMetierImpl implements AutreAchatTravauxMetier{
 private AutreAchatTravauxRepository autreAchatTravauxRepository;
+private DetailAutreAchatTravauxRepository detailAutreAchatTravauxRepository;
+
 private TravauxRepository travauxRepository;
 	@Override
 	public AutreAchatTravaux creer(AutreAchatTravaux entity) throws InvalideOryzException {
@@ -34,6 +38,7 @@ private TravauxRepository travauxRepository;
 			
 		       montantD = ((detail.getPrixUnitaire() * detail.getQuantite())+ detail.getFrais());
 				detail.setMontant(montantD);
+				detail.setTravauxId(entity.getTravauxId());
 				sommeMontant = montantD;
 				entity.setMontant(sommeMontant);
 				entity.setLibelle(detail.getLibelleMateriaux());
@@ -115,4 +120,10 @@ private TravauxRepository travauxRepository;
 		return autreAchatTravauxRepository.getAutreAchatTravauxTravauxByIdTravaux(id);
 	}
 
+	@Override
+	public List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByIdTravaux(long id) {
+		return detailAutreAchatTravauxRepository.findDetailAutreAchatTravauxByIdTravaux(id);
+	}
+
+	
 }

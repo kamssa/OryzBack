@@ -1,4 +1,4 @@
-package ci.gestion.entites.operation;
+package ci.gestion.entites.retraitStock;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

@@ -32,6 +32,7 @@ public LocationTravaux creer(LocationTravaux entity) throws InvalideOryzExceptio
 	for(DetailLocation detail : detailLocations) {
 		motantD = detail.getMontant();
 		detail.setMontant(motantD);
+		detail.setTravauxId(entity.getTravauxId());
 		}
 	entity.setMontant(motantD);
 	LocationTravaux location= locationRepository.save(entity);
@@ -144,6 +145,14 @@ public boolean supprimerDetailLocation(Long idLocation, Long idDetail) {
 				locationRepository.deleteById(location1.getId());
 			}
 			 return true;
+}
+
+
+
+@Override
+public List<DetailLocation> findDetailLocationByIdTravaux(long id) {
+	// TODO Auto-generated method stub
+	return detailLcationRepository.findDetailLocationByIdTravaux(id);
 }
 
 

@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.entites.operation.AutreAchatTravaux;
+import ci.gestion.entites.achat.AutreAchatTravaux;
+import ci.gestion.entites.achat.DetailAutreAchatTravaux;
+import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
+import ci.gestion.entites.retraitStock.AchatTravaux;
 import ci.gestion.metier.autreAchatTravaux.AutreAchatTravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
@@ -143,6 +145,27 @@ public class AutreAchatTravauxControlleur {
 						List<String> messages = new ArrayList<>();
 						messages.add("Pas d'achat enregistré");
 						reponse = new Reponse<List<AutreAchatTravaux>>(1, messages, new ArrayList<>());
+					}
+
+				} catch (Exception e) {
+
+					reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+				}
+				return jsonMapper.writeValueAsString(reponse);
+			}
+			// recuperer Detail Autre Achat par id travaux
+			@GetMapping("/detailAutreAchatTravaux/{idTravaux}")
+			public String getDetailAutreAchatTravauxByIdTravaux(@PathVariable("idTravaux") long idTravaux) throws JsonProcessingException {
+				Reponse<List<DetailAutreAchatTravaux>> reponse;
+
+				try {
+					List<DetailAutreAchatTravaux> mainOeuvres = autreAchatTravauxMetier.findDetailAutreAchatTravauxByIdTravaux(idTravaux);
+					if (!mainOeuvres.isEmpty()) {
+						reponse = new Reponse<List<DetailAutreAchatTravaux>>(0, null, mainOeuvres);
+					} else {
+						List<String> messages = new ArrayList<>();
+						messages.add("Pas Autres enregistré");
+						reponse = new Reponse<List<DetailAutreAchatTravaux>>(1, messages, new ArrayList<>());
 					}
 
 				} catch (Exception e) {

@@ -9,14 +9,9 @@ import ci.gestion.dao.AutreRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailAutreRepository;
 import ci.gestion.entites.autres.Autres;
-import ci.gestion.entites.autres.DetailAutres;
-import ci.gestion.entites.loyer.DetailLoyer;
-import ci.gestion.entites.loyer.Loyer;
-import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.entites.operation.DetailAchatTravaux;
+import ci.gestion.entites.autres.DetailAutres; 
 import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
-import ci.gestion.metier.utilitaire.Imetier;
 
 @Service
 public class AutreMetiersImpl implements IAutresMetier{
@@ -37,7 +32,7 @@ public Autres creer(Autres entity) throws InvalideOryzException {
 	for(DetailAutres detail : detailAutres) {
 		montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
 		detail.setMontant(montantD);
-		
+		detail.setTravauxId(entity.getTravauxId());
 
 		}
 	entity.setMontant(montantD);
@@ -177,6 +172,12 @@ public boolean supprimerDetailAutre(Long idAutre, Long idDetail) {
 				autreRepository.deleteById(autre2.getId());
 			}
 			 return true;
+}
+
+@Override
+public List<DetailAutres> findDetailAutresByIdTravaux(long id) {
+	// TODO Auto-generated method stub
+	return detailAutreRepository.findDetailAutresByIdTravaux(id);
 }
 
 }

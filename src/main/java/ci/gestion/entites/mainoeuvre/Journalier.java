@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Version;
 
 import ci.gestion.metier.model.DateAudit;
@@ -21,6 +23,7 @@ public class Journalier extends DateAudit{
 	private Long version;
 	private String nom;
 	private String Prenom;
+	private String nomComplet;
 	private String fonction;
 	public String getNom() {
 		return nom;
@@ -48,6 +51,15 @@ public class Journalier extends DateAudit{
 		return version;
 	}
 	
+	public String getNomComplet() {
+		return nomComplet;
+	}
+	
+	@PrePersist
+	@PreUpdate
+	public void setNomComplet() {
+		this.nomComplet = nom + " " + Prenom;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;

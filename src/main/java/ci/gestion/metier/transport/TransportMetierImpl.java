@@ -10,8 +10,8 @@ import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
-import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.entites.operation.DetailAchatTravaux;
+import ci.gestion.entites.retraitStock.AchatTravaux;
+import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 import ci.gestion.entites.site.Travaux;
 import ci.gestion.entites.transport.DetailTransport;
 import ci.gestion.entites.transport.Transport;
@@ -36,6 +36,7 @@ public Transport creer(Transport entity) throws InvalideOryzException {
 	for(DetailTransport detail : detailTransports) {
 		motantD = detail.getMontant();
 		detail.setMontant(motantD);
+		detail.setTravauxId(entity.getTravauxId());
 		}
 	entity.setMontant(motantD);
 	Transport transport= transportRepository.save(entity);
@@ -172,6 +173,12 @@ public boolean supprimerDetailTransport(Long idTransport, Long idDetail) {
 				transportRepository.deleteById(transport2.getId());
 			}
 			 return true;
+}
+
+@Override
+public List<DetailTransport> findDetailTransportByIdTravaux(long id) {
+	// TODO Auto-generated method stub
+	return detailTransportRepository.findDetailTransportByIdTravaux(id);
 }
 	
 }

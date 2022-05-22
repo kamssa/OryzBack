@@ -1,4 +1,4 @@
-package ci.gestion.entites.operation;
+package ci.gestion.entites.achat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -24,12 +24,11 @@ public class AutreAchatTravaux extends AbstractEntity{
 	
 	private static final long serialVersionUID = 1L;
 	private String libelle;
-	private LocalDateTime date;
 	private double montant=0d;
 	private double quantite=0d;
-
-    private Long travauxId;
-	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
+    private LocalDateTime date;
+	private Long travauxId;
+    @OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
 	@JoinColumn(name = "fk_achatTravaux")
 	private List<DetailAutreAchatTravaux> detailAutreAchatTravaux = new ArrayList<>();
 }

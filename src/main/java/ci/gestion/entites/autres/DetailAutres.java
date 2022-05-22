@@ -14,11 +14,12 @@ import lombok.NoArgsConstructor;
 @Data
 public class DetailAutres extends AbstractEntity{
 	
+	private static final long serialVersionUID = 1L;
 	private LocalDateTime date;
 	private String designation;
 	private Double prixUnitaire;
 	private Double quantite;
 	private double montant;
 	private String nomPrenom;
-	
+	private Long travauxId;
 }

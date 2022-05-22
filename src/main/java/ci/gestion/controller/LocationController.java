@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ci.gestion.entites.autres.DetailAutres;
+import ci.gestion.entites.location.DetailLocation;
 import ci.gestion.entites.location.LocationTravaux;
-import ci.gestion.entites.operation.AchatTravaux;
+import ci.gestion.entites.retraitStock.AchatTravaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.location.ILocationMetier;
 import ci.gestion.metier.model.Reponse;
@@ -136,5 +138,26 @@ public class LocationController {
 
 				return jsonMapper.writeValueAsString(reponse);
 			
+			}
+			// recuperer Detail location  par id travaux
+			@GetMapping("/detailLocation/{idTravaux}")
+			public String getDetailLocationByIdTravaux(@PathVariable("idTravaux") long idTravaux) throws JsonProcessingException {
+				Reponse<List<DetailLocation>> reponse;
+
+				try {
+					List<DetailLocation> mainOeuvres = locationMetier.findDetailLocationByIdTravaux(idTravaux);
+					if (!mainOeuvres.isEmpty()) {
+						reponse = new Reponse<List<DetailLocation>>(0, null, mainOeuvres);
+					} else {
+						List<String> messages = new ArrayList<>();
+						messages.add("Pas Autres enregistré");
+						reponse = new Reponse<List<DetailLocation>>(1, messages, new ArrayList<>());
+					}
+
+				} catch (Exception e) {
+
+					reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+				}
+				return jsonMapper.writeValueAsString(reponse);
 			}
 }

@@ -13,8 +13,8 @@ import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.location.LocationTravaux;
 import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
-import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.entites.operation.DetailAchatTravaux;
+import ci.gestion.entites.retraitStock.AchatTravaux;
+import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 
@@ -36,6 +36,7 @@ TravauxRepository travauxRepository;
 		for(DetailLoyer detail : detailLoyers) {
 			motantD = detail.getMontant();
 			detail.setMontant(motantD);
+			detail.setTravauxId(entity.getTravauxId());
 			}
 		entity.setMontant(motantD);
 		Loyer loyer= loyerRepository.save(entity);
@@ -175,6 +176,12 @@ TravauxRepository travauxRepository;
 					loyerRepository.deleteById(loyer2.getId());
 				}
 				 return true;
+	}
+
+	@Override
+	public List<DetailLoyer> findDetailLoyerByIdTravaux(long id) {
+		// TODO Auto-generated method stub
+		return detailLoyerRepository.findDetailLoyerByIdTravaux(id);
 	}
 
 }

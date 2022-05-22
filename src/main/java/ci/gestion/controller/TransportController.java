@@ -18,7 +18,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.autres.Autres;
+import ci.gestion.entites.location.DetailLocation;
 import ci.gestion.entites.mainoeuvre.MainOeuvre;
+import ci.gestion.entites.transport.DetailTransport;
 import ci.gestion.entites.transport.Transport;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.mainOeuvre.IMainDoeuvreMetier;
@@ -167,4 +169,25 @@ public class TransportController {
 			return jsonMapper.writeValueAsString(reponse);
 		
 		}
+		// recuperer Detail transport  par id travaux
+					@GetMapping("/detailTransport/{idTravaux}")
+					public String getDetailTransportByIdTravaux(@PathVariable("idTravaux") long idTravaux) throws JsonProcessingException {
+						Reponse<List<DetailTransport>> reponse;
+
+						try {
+							List<DetailTransport> mainOeuvres = transportMetier.findDetailTransportByIdTravaux(idTravaux);
+							if (!mainOeuvres.isEmpty()) {
+								reponse = new Reponse<List<DetailTransport>>(0, null, mainOeuvres);
+							} else {
+								List<String> messages = new ArrayList<>();
+								messages.add("Pas Autres enregistré");
+								reponse = new Reponse<List<DetailTransport>>(1, messages, new ArrayList<>());
+							}
+
+						} catch (Exception e) {
+
+							reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+						}
+						return jsonMapper.writeValueAsString(reponse);
+					}
 }

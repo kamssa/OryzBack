@@ -1,4 +1,6 @@
-package ci.gestion.entites.operation;
+package ci.gestion.entites.retraitStock;
+
+import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 
@@ -18,7 +20,8 @@ public  class DetailAchatTravaux extends AbstractEntity{
 	private double quantite;
 	private double prixUnitaire;
 	private double montant;
-	
+	private Long travauxId;
+	private LocalDateTime date;
 	
 	
 	

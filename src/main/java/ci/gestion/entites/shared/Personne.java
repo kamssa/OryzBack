@@ -65,10 +65,11 @@ public class Personne extends AbstractEntity {
 	@Size(max = 15)
 	private String prenom;
 
-	@NaturalId
+	@NaturalId(mutable=true)
 	@NotBlank
 	@Size(max = 40)
 	@Email
+	@Column(name = "email", unique=true)
 	private String email;
 	
     private String telephone;

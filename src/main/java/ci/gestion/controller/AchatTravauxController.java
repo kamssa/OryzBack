@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.operation.AchatTravaux;
+import ci.gestion.entites.retraitStock.AchatTravaux;
+import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 import ci.gestion.metier.achatTravaux.IAchatTravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
@@ -169,5 +170,27 @@ public class AchatTravauxController {
  
 			return jsonMapper.writeValueAsString(reponse);
 		}
+		// recuperer Detail MainOeuvre par id travaux
+		@GetMapping("/detailAchatTravaux/{idTravaux}")
+		public String getDetailAchatTravauxByIdTravaux(@PathVariable("idTravaux") long idTravaux) throws JsonProcessingException {
+			Reponse<List<DetailAchatTravaux>> reponse;
+
+			try {
+				List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByIdTravaux(idTravaux);
+				if (!mainOeuvres.isEmpty()) {
+					reponse = new Reponse<List<DetailAchatTravaux>>(0, null, mainOeuvres);
+				} else {
+					List<String> messages = new ArrayList<>();
+					messages.add("Pas Autres enregistré");
+					reponse = new Reponse<List<DetailAchatTravaux>>(1, messages, new ArrayList<>());
+				}
+
+			} catch (Exception e) {
+
+				reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+			}
+			return jsonMapper.writeValueAsString(reponse);
+		}
+		
 }
  

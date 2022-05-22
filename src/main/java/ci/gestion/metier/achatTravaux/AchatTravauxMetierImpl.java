@@ -19,8 +19,8 @@ import ci.gestion.dao.detail.DetailStockRepository;
 import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
 import ci.gestion.entites.entreprise.DetailStock;
 import ci.gestion.entites.entreprise.Stock;
-import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.entites.operation.DetailAchatTravaux;
+import ci.gestion.entites.retraitStock.AchatTravaux;
+import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 
@@ -63,7 +63,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 				quantity += detail.getQuantite();
 				montantD = ((detail.getPrixUnitaire() * quantity));
 				AchatTravaux stc = achaTravauxRepository.getAchatTravauxBylibelle(detail.getLibelleMateriaux());
-
+                d.get().setTravauxId(entity.getTravauxId());
 				d.get().setQuantite(quantity);
 				d.get().setMontant(montantD);
 				d.get().setPrixUnitaire(detail.getPrixUnitaire());
@@ -146,6 +146,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 
 			} else {
 				montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
+				detail.setTravauxId(entity.getTravauxId());
 				detail.setMontant(montantD);
 				sommeMontant += montantD;
 				entity.setMontant(sommeMontant);
@@ -395,6 +396,12 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 			achatTravauxRepository.deleteById(achat2.getId());
 		}
 		return true;
+	}
+
+	@Override
+	public List<DetailAchatTravaux> findDetailAchatTravauxByIdTravaux(long id) {
+		// TODO Auto-generated method stub
+		return detailAchatTravauxRepository.findDetailAchatTravauxByIdTravaux(id);
 	}
 
 }

@@ -8,15 +8,9 @@ import org.springframework.stereotype.Service;
 import ci.gestion.dao.MainDoeuvreRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailMainOeuvreRepository;
-import ci.gestion.entites.loyer.DetailLoyer;
-import ci.gestion.entites.loyer.Loyer;
 import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
 import ci.gestion.entites.mainoeuvre.MainOeuvre;
-import ci.gestion.entites.operation.AchatTravaux;
-import ci.gestion.entites.operation.DetailAchatTravaux;
 import ci.gestion.entites.site.Travaux;
-import ci.gestion.entites.transport.DetailTransport;
-import ci.gestion.entites.transport.Transport;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service
@@ -30,15 +24,20 @@ private TravauxRepository travauxRepository;
 	@Override
 	public MainOeuvre creer(MainOeuvre entity) throws InvalideOryzException {
 		double motantD = 0;
+		double montantFoisJours = 0;
 		double montantTravaux = 0;
 		double montantT = 0;
 		double reste=0;
+		double salaire =0;
 		List<DetailMainOeuvre> detailMainOeuvres = entity.getDetailMainOeuvre();
 		for(DetailMainOeuvre detail : detailMainOeuvres) {
-			motantD = detail.getMontantVerser();
-			reste = detail.getSalaire()- detail.getMontantVerser();
-			detail.setMontantVerser(motantD);
-			detail.setReste(reste);
+			montantFoisJours= detail.getMontantVerser();
+			motantD = detail.getMontantVerser() * detail.getNbreJours();
+			salaire = detail.getMontantVerser();
+			detail.setNbreJours(detail.getNbreJours());
+			detail.setSalaire(salaire);
+            detail.setMontantVerser(motantD);
+			detail.setTravauxId(entity.getTravauxId());
 			}
 		entity.setMontant(motantD);
 		MainOeuvre mainOeuvre= mainDoeuvreRepository.save(entity);
@@ -177,6 +176,12 @@ private TravauxRepository travauxRepository;
 					mainDoeuvreRepository.deleteById(mainOeuvre2.getId());
 				}
 				 return true;
+	}
+
+	@Override
+	public List<DetailMainOeuvre> findDetailMainOeuvreByIdTravaux(long id) {
+		// TODO Auto-generated method stub
+		return detailMainOeuvreRepository.findDetailMainOeuvreByIdTravaux(id);
 	}
 	
 }

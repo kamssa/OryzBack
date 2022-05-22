@@ -1,5 +1,7 @@
 package ci.gestion.entites.transport;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,7 +18,8 @@ public class DetailTransport {
 	private Long version;
 	private String libelle;
 	private double montant;
-	
+	private LocalDateTime date;
+	private Long travauxId;
 	
 	public DetailTransport() {
 		super();
@@ -26,6 +29,22 @@ public class DetailTransport {
 		super();
 		this.libelle = libelle;
 		this.montant = montant;
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDateTime date) {
+		this.date = date;
+	}
+
+	public Long getTravauxId() {
+		return travauxId;
+	}
+
+	public void setTravauxId(Long travauxId) {
+		this.travauxId = travauxId;
 	}
 
 	public String getLibelle() {

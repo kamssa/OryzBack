@@ -1,5 +1,7 @@
 package ci.gestion.entites.mainoeuvre;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,24 +15,45 @@ import ci.gestion.entites.entreprise.Employe;
 import ci.gestion.metier.model.DateAudit;
 
 @Entity
-public class DetailMainOeuvre extends DateAudit{
+public class DetailMainOeuvre extends DateAudit {
 
-	
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-    @Version
+	@Version
 	private Long version;
-    private double salaire;
+	private double salaire;
 	private double montantVerser;
 	private double reste;
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	private Double nbreJours;
+	private LocalDateTime date;
+	private Long travauxId;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Journalier journalier;
-	
+
 	public DetailMainOeuvre() {
 		super();
+	}
+
+	public LocalDateTime getDate() {
+		return date;
+	}
+
+	
+	public Long getTravauxId() {
+		return travauxId;
+	}
+
+	public void setTravauxId(Long travauxId) {
+		this.travauxId = travauxId;
+	}
+
+	
+	
+	public void setDate(LocalDateTime date) {
+		this.date = date;
 	}
 
 	public double getSalaire() {
@@ -55,6 +78,14 @@ public class DetailMainOeuvre extends DateAudit{
 
 	public void setReste(double reste) {
 		this.reste = reste;
+	}
+
+	public Double getNbreJours() {
+		return nbreJours;
+	}
+
+	public void setNbreJours(Double nbreJours) {
+		this.nbreJours = nbreJours;
 	}
 
 	public Long getId() {
