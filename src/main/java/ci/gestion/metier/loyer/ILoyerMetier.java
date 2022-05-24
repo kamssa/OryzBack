@@ -10,5 +10,6 @@ public interface ILoyerMetier  extends Imetier<Loyer, Long>{
 	List<Loyer> findLoyerByIdTravaux(long id);
     boolean supprimerDetailLoyer(Long idLoyer, Long idDetail);
 	List<DetailLoyer> findDetailLoyerByIdTravaux(long id);
+	
 
 }
