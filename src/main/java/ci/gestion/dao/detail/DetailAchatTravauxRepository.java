@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 
+
 public interface DetailAchatTravauxRepository extends JpaRepository<DetailAchatTravaux, Long>{
 	@Query("select ds from DetailAchatTravaux ds where ds.libelleMateriaux=?1")
 	Optional<DetailAchatTravaux>  findByLibelleMateriaux(String libelleMateriaux);
