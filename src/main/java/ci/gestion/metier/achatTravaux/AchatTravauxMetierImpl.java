@@ -16,6 +16,7 @@ import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.AchatTravauxRepository;
 import ci.gestion.dao.detail.DetailAchatTravauxRepository;
 import ci.gestion.dao.detail.DetailStockRepository;
+import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
 import ci.gestion.entites.entreprise.DetailStock;
 import ci.gestion.entites.entreprise.Stock;
@@ -402,6 +403,20 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	public List<DetailAchatTravaux> findDetailAchatTravauxByIdTravaux(long id) {
 		// TODO Auto-generated method stub
 		return detailAchatTravauxRepository.findDetailAchatTravauxByIdTravaux(id);
+	}
+
+	@Override
+	public Double findDetailAchatTravauxMontantByIdTravaux(long id) {
+		
+			double somme = 0d;
+			List<DetailAchatTravaux> detailAchatTravauxs = detailAchatTravauxRepository.findAll();
+			for (DetailAchatTravaux detailAchatTravaux : detailAchatTravauxs) {
+				somme += detailAchatTravaux.getMontant();
+			}
+			System.out.println("voir la somme"+ somme);
+			// TODO Auto-generated method stub
+			return somme;
+		
 	}
 
 }

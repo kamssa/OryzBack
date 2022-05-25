@@ -125,5 +125,17 @@ private TravauxRepository travauxRepository;
 		return detailAutreAchatTravauxRepository.findDetailAutreAchatTravauxByIdTravaux(id);
 	}
 
+	@Override
+	public Double findDetailAutreAchatTravauxMontantByIdTravaux(long id) {
+		double somme = 0d;
+		List<DetailAutreAchatTravaux> detailAutreAchatTravauxs = detailAutreAchatTravauxRepository.findAll();
+		for (DetailAutreAchatTravaux detailAutreAchatTravaux : detailAutreAchatTravauxs) {
+			somme += detailAutreAchatTravaux.getMontant();
+		}
+		System.out.println("voir la somme"+ somme);
+		// TODO Auto-generated method stub
+		return somme;
+	}
+
 	
 }

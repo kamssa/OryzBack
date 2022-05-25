@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ci.gestion.dao.MainDoeuvreRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailMainOeuvreRepository;
+import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
 import ci.gestion.entites.mainoeuvre.MainOeuvre;
 import ci.gestion.entites.site.Travaux;
@@ -182,6 +183,18 @@ private TravauxRepository travauxRepository;
 	public List<DetailMainOeuvre> findDetailMainOeuvreByIdTravaux(long id) {
 		// TODO Auto-generated method stub
 		return detailMainOeuvreRepository.findDetailMainOeuvreByIdTravaux(id);
+	}
+
+	@Override
+	public Double findDetailMainOeuvreMontantByIdTravaux(long id) {
+		double somme = 0d;
+		List<DetailMainOeuvre> detailMainOeuvres = detailMainOeuvreRepository.findAll();
+		for (DetailMainOeuvre detailMainOeuvre : detailMainOeuvres) {
+			somme += detailMainOeuvre.getMontantVerser();
+		}
+		System.out.println("voir la somme"+ somme);
+		// TODO Auto-generated method stub
+		return somme;
 	}
 	
 }

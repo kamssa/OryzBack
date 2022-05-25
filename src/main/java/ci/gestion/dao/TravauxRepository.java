@@ -10,8 +10,8 @@ import org.springframework.data.repository.query.Param;
 import ci.gestion.entites.site.Travaux;
 
 public interface TravauxRepository extends JpaRepository<Travaux, Long>{
-	@Query("select travaux from Travaux travaux where travaux.libelle LIKE  %:x%")
-	List<Travaux> chercherTravauxParMc(@Param("x") String mc);
+	@Query("select travaux from Travaux travaux where travaux.libelle LIKE  %?1%  AND travaux.site.entreprise.nom=?2")
+	List<Travaux> chercherTravauxParMc(@Param("x") String mc, String nom);
 	@Query("select travaux from Travaux travaux where travaux.site.nomChantier LIKE %?1% AND travaux.site.entreprise.id=?2")
 	List<Travaux> chercherTravauxParSiteMc(@Param("nomChantier") String mc);
 	@Query("select tr from Travaux tr  where tr.site.id=?1")

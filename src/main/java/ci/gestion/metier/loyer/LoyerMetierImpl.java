@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ci.gestion.dao.LoyerRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailLoyerRepository;
+import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.location.LocationTravaux;
@@ -182,6 +183,18 @@ TravauxRepository travauxRepository;
 	public List<DetailLoyer> findDetailLoyerByIdTravaux(long id) {
 		// TODO Auto-generated method stub
 		return detailLoyerRepository.findDetailLoyerByIdTravaux(id);
+	}
+
+	@Override
+	public Double findDetailLoyerMontantByIdTravaux(long id) {
+		double somme = 0d;
+		List<DetailLoyer> detailLoyers = detailLoyerRepository.findAll();
+		for (DetailLoyer detailLoyer : detailLoyers) {
+			somme += detailLoyer.getMontant();
+		}
+		System.out.println("voir la somme"+ somme);
+		// TODO Auto-generated method stub
+		return somme;
 	}
 
 }

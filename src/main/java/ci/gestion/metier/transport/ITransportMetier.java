@@ -10,5 +10,7 @@ public interface ITransportMetier extends Imetier<Transport, Long>{
 	List<Transport> findTransportByIdTravaux(long id);
     boolean supprimerDetailTransport(Long idTransport, Long idDetail);
 	List<DetailTransport> findDetailTransportByIdTravaux(long id);
+	Double findDetailTransportMontantByIdTravaux(long id);
+
 
 }

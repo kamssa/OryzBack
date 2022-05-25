@@ -10,4 +10,6 @@ import ci.gestion.entites.transport.DetailTransport;
 public interface DetailTransportRepository extends JpaRepository<DetailTransport, Long>{
 	@Query("select detailTransport from DetailTransport detailTransport  where detailTransport.travauxId=?1")
 	List<DetailTransport> findDetailTransportByIdTravaux(long id);
+	@Query("select detailTransport from DetailTransport detailTransport  where detailTransport.travauxId=?1")
+	Double findDetailTransportMontantByIdTravaux(long id);
 }

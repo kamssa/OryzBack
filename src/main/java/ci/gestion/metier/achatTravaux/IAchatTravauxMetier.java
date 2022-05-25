@@ -10,4 +10,5 @@ public interface IAchatTravauxMetier extends Imetier<AchatTravaux, Long>{
 	List<AchatTravaux> findAchatByIdTravaux(long id);
     boolean supprimerDetailAchat(Long idAchat, Long idDetail);
     List<DetailAchatTravaux> findDetailAchatTravauxByIdTravaux(long id);
+	Double findDetailAchatTravauxMontantByIdTravaux(long id);
 }

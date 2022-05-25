@@ -10,6 +10,7 @@ import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
+import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
 import ci.gestion.entites.retraitStock.AchatTravaux;
 import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 import ci.gestion.entites.site.Travaux;
@@ -179,6 +180,18 @@ public boolean supprimerDetailTransport(Long idTransport, Long idDetail) {
 public List<DetailTransport> findDetailTransportByIdTravaux(long id) {
 	// TODO Auto-generated method stub
 	return detailTransportRepository.findDetailTransportByIdTravaux(id);
+}
+
+@Override
+public Double findDetailTransportMontantByIdTravaux(long id) {
+	double somme = 0d;
+	List<DetailTransport> detailTransports = detailTransportRepository.findAll();
+	for (DetailTransport detailTransport : detailTransports) {
+		somme += detailTransport.getMontant();
+	}
+	System.out.println("voir la somme"+ somme);
+	// TODO Auto-generated method stub
+	return somme;
 }
 	
 }

@@ -191,6 +191,21 @@ public class AchatTravauxController {
 			}
 			return jsonMapper.writeValueAsString(reponse);
 		}
+		// recuperer achat par id travaux
+		@GetMapping("/montantAchatTravaux/{idTravaux}")
+		public String getAchatMontantByIdTravaux(@PathVariable("idTravaux") long idTravaux) throws JsonProcessingException {
+			Reponse<Double> reponse;
+            
+			try {
+				Double achats = achatTravauxMetier.findDetailAchatTravauxMontantByIdTravaux(idTravaux);
+				reponse = new Reponse<Double>(0, null, achats);
+				System.out.println("voir la somme"+ achats);
+			} catch (Exception e) {
+
+				reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+			}
+			return jsonMapper.writeValueAsString(reponse);
+		}
 		
 }
  

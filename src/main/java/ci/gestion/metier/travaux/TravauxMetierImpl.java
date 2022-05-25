@@ -66,9 +66,9 @@ private TravauxRepository travauxRepository;
 	}
 
 	@Override
-	public List<Travaux> chercherTravauxParMc(String mc) {
+	public List<Travaux> chercherTravauxParMc(String mc, String nom) {
 		// TODO Auto-generated method stub
-		return travauxRepository.chercherTravauxParMc(mc);
+		return travauxRepository.chercherTravauxParMc(mc, nom);
 	}
 
 	@Override

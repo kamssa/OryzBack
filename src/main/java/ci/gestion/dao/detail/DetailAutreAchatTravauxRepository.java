@@ -10,4 +10,6 @@ import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 public interface DetailAutreAchatTravauxRepository extends JpaRepository<DetailAutreAchatTravaux, Long>{
 	@Query("select detailAutreAchatTravaux from DetailAutreAchatTravaux detailAutreAchatTravaux  where detailAutreAchatTravaux.travauxId=?1")
 	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByIdTravaux(long id);
+	@Query("select detailAutreAchatTravaux from DetailAutreAchatTravaux detailAutreAchatTravaux  where detailAutreAchatTravaux.travauxId=?1")
+	Double findDetailAutreAchatTravauxMontantByIdTravaux(long id);
 }

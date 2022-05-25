@@ -174,11 +174,11 @@ public class TravauxController {
 
 ////////rechercher un travail par mot cle
 	@GetMapping("/rechemc")
-	public String chercherTravauxByMc(@RequestParam(value = "mc") String mc) throws JsonProcessingException {
+	public String chercherTravauxByMc(@RequestParam(value = "mc") String mc, @RequestParam(value = "nom") String nom) throws JsonProcessingException {
 
 		Reponse<List<Travaux>> reponse;
 		try {
-			List<Travaux> travaux = travauxMetier.chercherTravauxParMc(mc);
+			List<Travaux> travaux = travauxMetier.chercherTravauxParMc(mc,nom);
 
 			if (!travaux.isEmpty()) {
 				reponse = new Reponse<List<Travaux>>(0, null, travaux);

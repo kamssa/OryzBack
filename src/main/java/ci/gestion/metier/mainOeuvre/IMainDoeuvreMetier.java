@@ -10,4 +10,6 @@ public interface IMainDoeuvreMetier extends Imetier<MainOeuvre, Long>{
 	List<MainOeuvre> findMainOeuvreByIdTravaux(long id);
     boolean supprimerDetailMainOeuvre(Long idMainOeuvre, Long idDetail);
     List<DetailMainOeuvre> findDetailMainOeuvreByIdTravaux(long id);
+	Double findDetailMainOeuvreMontantByIdTravaux(long id);
+
 }

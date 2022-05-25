@@ -11,5 +11,6 @@ public interface ILocationMetier extends Imetier<LocationTravaux, Long>{
 	List<LocationTravaux> findLocationByIdTravaux(long id);
     boolean supprimerDetailLocation(Long idLocation, Long idDetail);
 	List<DetailLocation> findDetailLocationByIdTravaux(long id);
+	Double findDetailLocationMontantByIdTravaux(long id);
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import ci.gestion.dao.LocationRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailLcationRepository;
+import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.location.DetailLocation;
 import ci.gestion.entites.location.LocationTravaux;
@@ -153,6 +154,20 @@ public boolean supprimerDetailLocation(Long idLocation, Long idDetail) {
 public List<DetailLocation> findDetailLocationByIdTravaux(long id) {
 	// TODO Auto-generated method stub
 	return detailLcationRepository.findDetailLocationByIdTravaux(id);
+}
+
+
+
+@Override
+public Double findDetailLocationMontantByIdTravaux(long id) {
+	double somme = 0d;
+	List<DetailLocation> detailLocations = detailLcationRepository.findAll();
+	for (DetailLocation detailLocation : detailLocations) {
+		somme += detailLocation.getMontant();
+	}
+	System.out.println("voir la somme"+ somme);
+	// TODO Auto-generated method stub
+	return somme;
 }
 
 

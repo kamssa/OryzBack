@@ -10,4 +10,6 @@ import ci.gestion.entites.location.DetailLocation;
 public interface DetailLcationRepository extends JpaRepository<DetailLocation, Long>{
 	@Query("select detailLocation from DetailLocation detailLocation  where detailLocation.travauxId=?1")
 	List<DetailLocation> findDetailLocationByIdTravaux(long id);
+	@Query("select detailLocation from DetailLocation detailLocation  where detailLocation.travauxId=?1")
+	Double findDetailLocationMontantByIdTravaux(long id);
 }

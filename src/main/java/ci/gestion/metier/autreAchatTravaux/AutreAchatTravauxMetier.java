@@ -10,5 +10,6 @@ import ci.gestion.metier.utilitaire.Imetier;
 public interface AutreAchatTravauxMetier extends Imetier<AutreAchatTravaux, Long>{
 	List<AutreAchatTravaux> getAutreAchatTravauxTravauxByIdTravaux(long id);
 	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByIdTravaux(long id);
+	Double findDetailAutreAchatTravauxMontantByIdTravaux(long id);
 
 }
