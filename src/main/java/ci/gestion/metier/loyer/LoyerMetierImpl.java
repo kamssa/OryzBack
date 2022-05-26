@@ -192,7 +192,7 @@ TravauxRepository travauxRepository;
 		for (DetailLoyer detailLoyer : detailLoyers) {
 			somme += detailLoyer.getMontant();
 		}
-		System.out.println("voir la somme"+ somme);
+		System.out.println("voir la somme LOYER&&&&&&&&&&&&&&&&&&&"+ somme);
 		// TODO Auto-generated method stub
 		return somme;
 	}

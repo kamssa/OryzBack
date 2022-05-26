@@ -188,7 +188,7 @@ public Double findDetailAutresMontantByIdTravaux(long id) {
 	for (DetailAutres detailAutre : detailAutres) {
 		somme += detailAutre.getMontant();
 	}
-	System.out.println("voir la somme"+ somme);
+	System.out.println("voir la somme5=====>"+ somme);
 	// TODO Auto-generated method stub
 	return somme;
 }

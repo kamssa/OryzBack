@@ -132,7 +132,7 @@ private TravauxRepository travauxRepository;
 		for (DetailAutreAchatTravaux detailAutreAchatTravaux : detailAutreAchatTravauxs) {
 			somme += detailAutreAchatTravaux.getMontant();
 		}
-		System.out.println("voir la somme"+ somme);
+		System.out.println("voir la somme autre achat ++++++"+ somme);
 		// TODO Auto-generated method stub
 		return somme;
 	}
