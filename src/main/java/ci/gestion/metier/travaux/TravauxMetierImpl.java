@@ -17,16 +17,7 @@ private TravauxRepository travauxRepository;
 	@Override
 	public Travaux creer(Travaux entity) throws InvalideOryzException {
 		
-		Optional<Travaux> travaux = null;
-
-		
-		  travaux = travauxRepository.findByLibelle(entity.getLibelle()); 
-		  if(travaux.isPresent()) { 
-			  throw new  InvalideOryzException("Ce nom est déjà utilisé"); 
-			  
-		  }
-		 
-		return travauxRepository.save(entity);
+        return travauxRepository.save(entity);
 	}
 
 	@Override

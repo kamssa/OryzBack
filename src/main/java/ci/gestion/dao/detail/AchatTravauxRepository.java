@@ -12,4 +12,5 @@ public interface AchatTravauxRepository extends JpaRepository<AchatTravaux, Long
 	List<AchatTravaux> getAchatTravauxByIdTravaux(long id);
 	@Query("select achatTravaux from AchatTravaux achatTravaux where achatTravaux.libelle=?1")
 	AchatTravaux getAchatTravauxBylibelle(String libelle);
+	
 }

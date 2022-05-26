@@ -1,5 +1,6 @@
 package ci.gestion.metier.achatTravaux;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import ci.gestion.entites.retraitStock.AchatTravaux;
@@ -11,4 +12,6 @@ public interface IAchatTravauxMetier extends Imetier<AchatTravaux, Long>{
     boolean supprimerDetailAchat(Long idAchat, Long idDetail);
     List<DetailAchatTravaux> findDetailAchatTravauxByIdTravaux(long id);
 	Double findDetailAchatTravauxMontantByIdTravaux(long id);
+	List<DetailAchatTravaux> findDetailAchatTravauxByDateIdTravaux(long id, LocalDateTime dateDebut, LocalDateTime dateFin);
+
 }

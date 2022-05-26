@@ -1,5 +1,6 @@
 package ci.gestion.dao.detail;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,4 +17,6 @@ public interface DetailAchatTravauxRepository extends JpaRepository<DetailAchatT
 	Double findDetailAchatTravauxMontantByIdTravaux(long id);
 	@Query("select detailAchatTravaux from DetailAchatTravaux detailAchatTravaux  where detailAchatTravaux.travauxId=?1")
 	List<DetailAchatTravaux> findDetailAchatTravauxByIdTravaux(long id);
+	@Query("select detailAchatTravaux from DetailAchatTravaux detailAchatTravaux  where detailAchatTravaux.travauxId=?1")
+	List<DetailAchatTravaux> findDetailAchatTravauxByDateIdTravaux(long id, LocalDateTime dateDebut, LocalDateTime dateFin);
 }

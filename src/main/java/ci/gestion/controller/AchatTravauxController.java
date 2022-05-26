@@ -1,7 +1,10 @@
 package ci.gestion.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -206,6 +210,29 @@ public class AchatTravauxController {
 			}
 			return jsonMapper.writeValueAsString(reponse);
 		}
-		
+		// recuperer Detail MainOeuvre par id travaux
+				@GetMapping("/detailAchatTravauxDate")
+				public String getDetailAchatTravauxByDateIdTravaux(
+						@RequestParam(value = "travauxId") long travauxId,
+						@RequestParam(value = "dateDebut") LocalDateTime dateDebut,
+						@RequestParam(value = "dateFin") LocalDateTime dateFin) throws JsonProcessingException {
+					Reponse<List<DetailAchatTravaux>> reponse;
+
+					try {
+						List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByDateIdTravaux(travauxId,dateDebut, dateFin);
+						if (!mainOeuvres.isEmpty()) {
+							reponse = new Reponse<List<DetailAchatTravaux>>(0, null, mainOeuvres);
+						} else {
+							List<String> messages = new ArrayList<>();
+							messages.add("Pas Autres enregistré");
+							reponse = new Reponse<List<DetailAchatTravaux>>(1, messages, new ArrayList<>());
+						}
+
+					} catch (Exception e) {
+
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+				}
 }
  

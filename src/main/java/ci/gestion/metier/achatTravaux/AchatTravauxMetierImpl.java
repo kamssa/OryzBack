@@ -1,5 +1,6 @@
 package ci.gestion.metier.achatTravaux;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -417,6 +418,13 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 			// TODO Auto-generated method stub
 			return somme;
 		
+	}
+
+	@Override
+	public List<DetailAchatTravaux> findDetailAchatTravauxByDateIdTravaux(long id, LocalDateTime dateDebut,
+			LocalDateTime dateFin) {
+		// TODO Auto-generated method stub
+		return detailAchatTravauxRepository.findDetailAchatTravauxByDateIdTravaux(id, dateDebut, dateFin);
 	}
 
 }
