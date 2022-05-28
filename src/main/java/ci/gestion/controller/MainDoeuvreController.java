@@ -36,7 +36,6 @@ public class MainDoeuvreController {
 // recuper mainOeuvre par identifiant
 	private Reponse<MainOeuvre> getLoyerTravauxById(Long id) {
 		MainOeuvre mainOeuvre = null;
-		System.out.println(MainOeuvre);
 
 		try {
 			mainOeuvre = mainDoeuvreMetier.findById(id);
