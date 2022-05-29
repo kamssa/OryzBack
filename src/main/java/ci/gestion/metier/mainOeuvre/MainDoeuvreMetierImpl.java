@@ -188,7 +188,7 @@ private TravauxRepository travauxRepository;
 	@Override
 	public Double findDetailMainOeuvreMontantByIdTravaux(long id) {
 		double somme = 0d;
-		List<DetailMainOeuvre> detailMainOeuvres = detailMainOeuvreRepository.findAll();
+		List<DetailMainOeuvre> detailMainOeuvres = detailMainOeuvreRepository.findDetailMainOeuvreMontantByIdTravaux(id);
 		for (DetailMainOeuvre detailMainOeuvre : detailMainOeuvres) {
 			somme += detailMainOeuvre.getMontantVerser();
 		}

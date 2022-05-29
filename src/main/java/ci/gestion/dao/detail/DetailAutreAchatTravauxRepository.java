@@ -11,5 +11,5 @@ public interface DetailAutreAchatTravauxRepository extends JpaRepository<DetailA
 	@Query("select detailAutreAchatTravaux from DetailAutreAchatTravaux detailAutreAchatTravaux  where detailAutreAchatTravaux.travauxId=?1")
 	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByIdTravaux(long id);
 	@Query("select detailAutreAchatTravaux from DetailAutreAchatTravaux detailAutreAchatTravaux  where detailAutreAchatTravaux.travauxId=?1")
-	Double findDetailAutreAchatTravauxMontantByIdTravaux(long id);
+	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxMontantByIdTravaux(long id);
 }

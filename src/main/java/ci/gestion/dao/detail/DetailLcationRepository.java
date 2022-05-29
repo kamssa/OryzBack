@@ -11,5 +11,5 @@ public interface DetailLcationRepository extends JpaRepository<DetailLocation, L
 	@Query("select detailLocation from DetailLocation detailLocation  where detailLocation.travauxId=?1")
 	List<DetailLocation> findDetailLocationByIdTravaux(long id);
 	@Query("select detailLocation from DetailLocation detailLocation  where detailLocation.travauxId=?1")
-	Double findDetailLocationMontantByIdTravaux(long id);
+	List<DetailLocation> findDetailLocationMontantByIdTravaux(long id);
 }

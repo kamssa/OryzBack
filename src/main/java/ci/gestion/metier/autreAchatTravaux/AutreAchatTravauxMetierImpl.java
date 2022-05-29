@@ -127,8 +127,8 @@ private TravauxRepository travauxRepository;
 
 	@Override
 	public Double findDetailAutreAchatTravauxMontantByIdTravaux(long id) {
-		double somme = 0d;
-		List<DetailAutreAchatTravaux> detailAutreAchatTravauxs = detailAutreAchatTravauxRepository.findAll();
+		Double somme = 0d;
+		List<DetailAutreAchatTravaux> detailAutreAchatTravauxs = detailAutreAchatTravauxRepository.findDetailAutreAchatTravauxMontantByIdTravaux(id);
 		for (DetailAutreAchatTravaux detailAutreAchatTravaux : detailAutreAchatTravauxs) {
 			somme += detailAutreAchatTravaux.getMontant();
 		}

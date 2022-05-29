@@ -11,5 +11,5 @@ public interface DetailLoyerRepository extends JpaRepository<DetailLoyer, Long>{
 	@Query("select detailLoyer from DetailLoyer detailLoyer  where detailLoyer.travauxId=?1")
 	List<DetailLoyer> findDetailLoyerByIdTravaux(long id);
 	@Query("select detailLoyer from DetailLoyer detailLoyer  where detailLoyer.travauxId=?1")
-	Double findDetailLoyerMontantByIdTravaux(long id);
+	List<DetailLoyer>findDetailLoyerMontantByIdTravaux(long id);
 }

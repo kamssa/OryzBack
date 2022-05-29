@@ -185,7 +185,7 @@ public List<DetailTransport> findDetailTransportByIdTravaux(long id) {
 @Override
 public Double findDetailTransportMontantByIdTravaux(long id) {
 	double somme = 0d;
-	List<DetailTransport> detailTransports = detailTransportRepository.findAll();
+	List<DetailTransport> detailTransports = detailTransportRepository.findDetailTransportMontantByIdTravaux(id);
 	for (DetailTransport detailTransport : detailTransports) {
 		somme += detailTransport.getMontant();
 	}

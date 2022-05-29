@@ -184,7 +184,7 @@ public List<DetailAutres> findDetailAutresByIdTravaux(long id) {
 @Override
 public Double findDetailAutresMontantByIdTravaux(long id) {
 	double somme = 0d;
-	List<DetailAutres> detailAutres = detailAutreRepository.findAll();
+	List<DetailAutres> detailAutres = detailAutreRepository.findDetailAutresMontantByIdTravaux(id);
 	for (DetailAutres detailAutre : detailAutres) {
 		somme += detailAutre.getMontant();
 	}

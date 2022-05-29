@@ -12,5 +12,5 @@ public interface DetailMainOeuvreRepository extends JpaRepository<DetailMainOeuv
 	@Query("select detailMainOeuvre from DetailMainOeuvre detailMainOeuvre  where detailMainOeuvre.travauxId=?1")
 	List<DetailMainOeuvre> findDetailMainOeuvreByIdTravaux(long id);
 	@Query("select detailMainOeuvre from DetailMainOeuvre detailMainOeuvre  where detailMainOeuvre.travauxId=?1")
-	Double findDetailMainOeuvreMontantByIdTravaux(long id);
+	List<DetailMainOeuvre> findDetailMainOeuvreMontantByIdTravaux(long id);
 }

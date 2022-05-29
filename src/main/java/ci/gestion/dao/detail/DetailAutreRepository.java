@@ -11,5 +11,5 @@ public interface DetailAutreRepository extends JpaRepository<DetailAutres, Long>
 	@Query("select detailAutres from DetailAutres detailAutres  where detailAutres.travauxId=?1")
 	List<DetailAutres> findDetailAutresByIdTravaux(long id);
 	@Query("select detailAutres from DetailAutres detailAutres  where detailAutres.travauxId=?1")
-	Double findDetailAutresMontantByIdTravaux(long id);
+	List<DetailAutres> findDetailAutresMontantByIdTravaux(long id);
 }

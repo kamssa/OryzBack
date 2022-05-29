@@ -161,7 +161,7 @@ public List<DetailLocation> findDetailLocationByIdTravaux(long id) {
 @Override
 public Double findDetailLocationMontantByIdTravaux(long id) {
 	double somme = 0d;
-	List<DetailLocation> detailLocations = detailLcationRepository.findAll();
+	List<DetailLocation> detailLocations = detailLcationRepository.findDetailLocationMontantByIdTravaux(id);
 	for (DetailLocation detailLocation : detailLocations) {
 		somme += detailLocation.getMontant();
 	}

@@ -188,7 +188,7 @@ TravauxRepository travauxRepository;
 	@Override
 	public Double findDetailLoyerMontantByIdTravaux(long id) {
 		double somme = 0d;
-		List<DetailLoyer> detailLoyers = detailLoyerRepository.findAll();
+		List<DetailLoyer> detailLoyers = detailLoyerRepository.findDetailLoyerMontantByIdTravaux(id);
 		for (DetailLoyer detailLoyer : detailLoyers) {
 			somme += detailLoyer.getMontant();
 		}
