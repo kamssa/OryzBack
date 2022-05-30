@@ -11,7 +11,7 @@ import ci.gestion.entites.site.Travaux;
 
 public interface TravauxRepository extends JpaRepository<Travaux, Long>{
 	@Query("select travaux from Travaux travaux where travaux.libelle LIKE  %:libelle%  AND travaux.site.entreprise.nom=?2")
-	List<Travaux> chercherTravauxParMc(@Param("libelle") String mc, String nom);
+	List<Travaux> chercherTravauxParMc(@Param("libelle") String libelle, String nom);
 	@Query("select travaux from Travaux travaux where travaux.site.nomChantier LIKE %?1% AND travaux.site.entreprise.id=?2")
 	List<Travaux> chercherTravauxParSiteMc(@Param("nomChantier") String mc);
 	@Query("select tr from Travaux tr  where tr.site.id=?1")
