@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -79,5 +80,21 @@ public class CaisseControlleur {
 					}
 					return jsonMapper.writeValueAsString(reponse);
 
+				}
+				// supprimer une caisse
+				@DeleteMapping("/caisse/{id}")
+				public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
+
+					Reponse<Boolean> reponse = null;
+
+					try {
+
+						reponse = new Reponse<Boolean>(0, null, caisseMetier.supprimer(id));
+
+					} catch (RuntimeException e1) {
+						reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
+					}
+
+					return jsonMapper.writeValueAsString(reponse);
 				}
 }
