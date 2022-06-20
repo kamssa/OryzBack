@@ -2,6 +2,7 @@ package ci.gestion.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -215,14 +216,15 @@ public class AchatTravauxController {
 				@GetMapping("/detailAchatTravauxDate")
 				public String getDetailAchatTravauxByDateIdTravaux(
 						@RequestParam(value = "travauxId") long travauxId,
-						@RequestParam(value = "dateDebut") LocalDate dateDebut,
-						@RequestParam(value = "dateFin") LocalDate dateFin) throws JsonProcessingException {
+						@RequestParam(value = "dateDebut") String dateDebut,
+						@RequestParam(value = "dateFin") String dateFin) throws JsonProcessingException {
 					Reponse<List<DetailAchatTravaux>> reponse;
-
-					
-					  try { List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByDateIdTravaux(travauxId,dateDebut,
-					  dateFin); if (!mainOeuvres.isEmpty()) { reponse = new
-					  Reponse<List<DetailAchatTravaux>>(0, null, mainOeuvres); } else {
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					LocalDate dateTime = LocalDate.parse(dateDebut, formatter);
+					LocalDate dateTime1 = LocalDate.parse(dateFin, formatter);
+					try { List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByDateIdTravaux(travauxId,dateTime,dateTime1); 
+					  if (!mainOeuvres.isEmpty()) { 
+						  reponse = new Reponse<List<DetailAchatTravaux>>(0, null, mainOeuvres); } else {
 					  List<String> messages = new ArrayList<>();
 					  messages.add("Pas Autres enregistré"); reponse = new
 					  Reponse<List<DetailAchatTravaux>>(1, messages, new ArrayList<>()); }
