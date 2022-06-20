@@ -1,5 +1,7 @@
 package ci.gestion.controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -175,4 +178,40 @@ public class LocationController {
 				}
 				return jsonMapper.writeValueAsString(reponse);
 			}
+			@GetMapping("/detailLocationDate")
+			public String chercherTravauxByMc(
+					@RequestParam(value = "travauxId") long travauxId,
+					@RequestParam(value = "dateDebut") String dateDebut, 
+			        @RequestParam(value = "dateFin") String dateFin) throws JsonProcessingException {
+				System.out.println("Date bebut:"+ dateDebut);
+				Reponse<List<DetailLocation>> reponse;
+				//String str = "2022-05-31 00:00:00"; 
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate dateTime = LocalDate.parse(dateDebut, formatter);
+				LocalDate dateTime1 = LocalDate.parse(dateFin, formatter);
+				//LocalDateTime dateTime1 = LocalDateTime.parse(dateTime, formatter);
+				//LocalDateTime dateTime = LocalDateTime.parse(dateDebut);
+				//LocalDateTime dateTime1 = LocalDateTime.parse(dateFin);
+			   System.out.println("Date convertie:"+ dateTime);
+			  // System.out.println("Date convertie1:"+ dateTime1);
+				    //Next parse the date from the @RequestParam, specifying the TO type as 
+				   
+				try {
+					List<DetailLocation> travaux = locationMetier.getDetailLocationBydate(travauxId,dateTime,dateTime1);
+		  
+					if (!travaux.isEmpty()) {
+						reponse = new Reponse<List<DetailLocation>>(0, null, travaux);
+					} else {
+						List<String> messages = new ArrayList<>();
+						messages.add("Pas d'enregistrement !");
+						reponse = new Reponse<List<DetailLocation>>(2, messages, new ArrayList<>());
+					}
+
+				} catch (Exception e) {
+					reponse = new Reponse<List<DetailLocation>>(1, Static.getErreursForException(e), new ArrayList<>());
+				}
+				return jsonMapper.writeValueAsString(reponse);
+
+			}
+			
 }

@@ -1,6 +1,9 @@
 package ci.gestion.metier.transport;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ci.gestion.dao.TransportRepository;
@@ -192,6 +195,16 @@ public Double findDetailTransportMontantByIdTravaux(long id) {
 	System.out.println("voir la somme"+ somme);
 	// TODO Auto-generated method stub
 	return somme;
+}
+
+@Override
+public List<DetailTransport> getDetailTransportBydate(long id, LocalDate dateDebut, LocalDate dateFin) {
+	List<DetailTransport> detailAutreAchatTravaux = null;
+	  
+	List<DetailTransport> detailTransports = detailTransportRepository.findDetailTransportByDateBetweenAndTravauxId(dateDebut,dateFin,id);
+	  
+	  
+	  return detailTransports;
 }
 	
 }

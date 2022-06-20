@@ -1,5 +1,6 @@
 package ci.gestion.entites.salaire;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ public class DetailSalaire extends DateAudit{
     
 	@Version
 	private Long version;
-	private LocalDateTime date;
+	private LocalDate date;
 	private String libelle;
 	private double montantVerse;
 	private double reste;
@@ -30,14 +31,33 @@ public class DetailSalaire extends DateAudit{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public DetailSalaire(LocalDateTime date, String libelle, double montantVerse, double reste, Long employeId) {
+	
+
+	public DetailSalaire(Long id, Long version, LocalDate date, String libelle, double montantVerse, double reste,
+			Long employeId) {
 		super();
+		this.id = id;
+		this.version = version;
 		this.date = date;
 		this.libelle = libelle;
 		this.montantVerse = montantVerse;
 		this.reste = reste;
 		this.employeId = employeId;
 	}
+
+
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+
 
 	public double getMontantVerse() {
 		return montantVerse;
@@ -49,12 +69,7 @@ public class DetailSalaire extends DateAudit{
 		return reste;
 	}
 	
-	public LocalDateTime getDate() {
-		return date;
-	}
-	public void setDate(LocalDateTime date) {
-		this.date = date;
-	}
+	
 	public String getLibelle() {
 		return libelle;
 	}

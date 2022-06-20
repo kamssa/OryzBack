@@ -1,5 +1,6 @@
 package ci.gestion.entites.caisse;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class CaisseDetail extends AbstractEntity{
     
 	private static final long serialVersionUID = 1L;
-	private LocalDateTime date;
+	private LocalDate date;
 	private String designation;
 	private Double prixUnitaire;
 	private Double quantite;

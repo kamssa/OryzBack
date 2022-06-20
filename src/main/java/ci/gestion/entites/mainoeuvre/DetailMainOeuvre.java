@@ -1,5 +1,6 @@
 package ci.gestion.entites.mainoeuvre;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -28,7 +29,7 @@ public class DetailMainOeuvre extends DateAudit {
 	private double montantVerser;
 	private double reste;
 	private Double nbreJours;
-	private LocalDateTime date;
+	private LocalDate date;
 	private Long travauxId;
 	private String libelle;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -36,10 +37,6 @@ public class DetailMainOeuvre extends DateAudit {
 
 	public DetailMainOeuvre() {
 		super();
-	}
-
-	public LocalDateTime getDate() {
-		return date;
 	}
 
 	
@@ -61,9 +58,16 @@ public class DetailMainOeuvre extends DateAudit {
 
 	
 	
-	public void setDate(LocalDateTime date) {
+	
+	public LocalDate getDate() {
+		return date;
+	}
+
+
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
+
 
 	public double getSalaire() {
 		return salaire;

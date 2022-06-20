@@ -1,5 +1,6 @@
 package ci.gestion.entites.autres;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class DetailAutres extends AbstractEntity{
 	
 	private static final long serialVersionUID = 1L;
-	private LocalDateTime date;
+	private LocalDate date;
 	private String designation;
 	private Double prixUnitaire;
 	private Double quantite;

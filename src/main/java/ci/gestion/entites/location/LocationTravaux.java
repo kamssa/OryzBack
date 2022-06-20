@@ -1,5 +1,6 @@
 package ci.gestion.entites.location;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class LocationTravaux extends DateAudit {
 	@Version
 	private Long version;
 	private String libelle;
-	private LocalDateTime date;
+	private LocalDate date;
 	private double montant=0d;
     private Long travauxId;
 	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
@@ -47,10 +48,11 @@ public class LocationTravaux extends DateAudit {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
-	public LocalDateTime getDate() {
+	
+	public LocalDate getDate() {
 		return date;
 	}
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 	public double getMontant() {

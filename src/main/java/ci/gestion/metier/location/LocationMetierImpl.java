@@ -1,6 +1,8 @@
 package ci.gestion.metier.location;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailLcationRepository;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.autres.Autres;
+import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.location.DetailLocation;
 import ci.gestion.entites.location.LocationTravaux;
 import ci.gestion.entites.site.Travaux;
@@ -169,6 +172,19 @@ public Double findDetailLocationMontantByIdTravaux(long id) {
 	// TODO Auto-generated method stub
 	return somme;
 }
+
+
+
+@Override
+public List<DetailLocation> getDetailLocationBydate(long id, LocalDate dateDebut, LocalDate dateFin) {
+	  
+	List<DetailLocation> detailLocations = detailLcationRepository.findDetailLocationByDateBetweenAndTravauxId(dateDebut, dateFin, id);
+	  
+	  
+	  return detailLocations;
+}
+	
+
 
 
 }

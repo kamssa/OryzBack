@@ -1,5 +1,6 @@
 package ci.gestion.entites.operation;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Operation extends AbstractEntity {
 
-	private Date date;
+	private LocalDate date;
 	private String libelle;
 	private Double montant;
 	private String motif;

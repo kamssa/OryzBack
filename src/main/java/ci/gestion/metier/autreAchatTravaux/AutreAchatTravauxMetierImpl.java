@@ -1,6 +1,9 @@
 package ci.gestion.metier.autreAchatTravaux;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -137,5 +140,14 @@ private TravauxRepository travauxRepository;
 		return somme;
 	}
 
+	@Override
+	public List<DetailAutreAchatTravaux> getDetailAutreAchatTravauxBydate(long travauxId, LocalDate startDate,
+			LocalDate endDate) {
+		  
+		 List<DetailAutreAchatTravaux>  detailAutreAchatTravaux = detailAutreAchatTravauxRepository.findDetailAutreAchatTravauxByDateBetweenAndTravauxId( startDate, endDate,travauxId);
+		  
+		  
+		  return detailAutreAchatTravaux;
+	}
 	
 }

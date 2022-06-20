@@ -1,5 +1,6 @@
 package ci.gestion.entites.loyer;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class DetailLoyer extends DateAudit{
 	private Long version;
 	private String libelle;
 	private double montant;
-	private LocalDateTime date;
+	private LocalDate date;
 	private Long travauxId;
 	public DetailLoyer() {
 		super();
@@ -34,11 +35,12 @@ public class DetailLoyer extends DateAudit{
 		this.montant = montant;
 	}
 
-	public LocalDateTime getDate() {
+	
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDateTime date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

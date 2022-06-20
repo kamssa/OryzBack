@@ -1,5 +1,6 @@
 package ci.gestion.entites.achat;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ public  class DetailAutreAchatTravaux extends AbstractEntity{
 	private double frais;
 	private double montant;
 	private String fournisseur;
-	private LocalDateTime date;
+	private LocalDate date;
     private Long travauxId;
 
 	}

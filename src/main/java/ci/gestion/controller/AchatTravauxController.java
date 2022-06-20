@@ -1,5 +1,6 @@
 package ci.gestion.controller;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -214,25 +215,23 @@ public class AchatTravauxController {
 				@GetMapping("/detailAchatTravauxDate")
 				public String getDetailAchatTravauxByDateIdTravaux(
 						@RequestParam(value = "travauxId") long travauxId,
-						@RequestParam(value = "dateDebut") LocalDateTime dateDebut,
-						@RequestParam(value = "dateFin") LocalDateTime dateFin) throws JsonProcessingException {
+						@RequestParam(value = "dateDebut") LocalDate dateDebut,
+						@RequestParam(value = "dateFin") LocalDate dateFin) throws JsonProcessingException {
 					Reponse<List<DetailAchatTravaux>> reponse;
 
-					try {
-						List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByDateIdTravaux(travauxId,dateDebut, dateFin);
-						if (!mainOeuvres.isEmpty()) {
-							reponse = new Reponse<List<DetailAchatTravaux>>(0, null, mainOeuvres);
-						} else {
-							List<String> messages = new ArrayList<>();
-							messages.add("Pas Autres enregistré");
-							reponse = new Reponse<List<DetailAchatTravaux>>(1, messages, new ArrayList<>());
-						}
-
-					} catch (Exception e) {
-
-						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
-					}
-					return jsonMapper.writeValueAsString(reponse);
+					
+					  try { List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByDateIdTravaux(travauxId,dateDebut,
+					  dateFin); if (!mainOeuvres.isEmpty()) { reponse = new
+					  Reponse<List<DetailAchatTravaux>>(0, null, mainOeuvres); } else {
+					  List<String> messages = new ArrayList<>();
+					  messages.add("Pas Autres enregistré"); reponse = new
+					  Reponse<List<DetailAchatTravaux>>(1, messages, new ArrayList<>()); }
+					  
+					  } catch (Exception e) {
+					  
+					  reponse = new Reponse<>(1, Static.getErreursForException(e), null); }
+					 
+					return jsonMapper.writeValueAsString(null);
 				}
 }
  

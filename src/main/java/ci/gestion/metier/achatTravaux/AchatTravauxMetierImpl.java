@@ -1,9 +1,11 @@
 package ci.gestion.metier.achatTravaux;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -18,6 +20,7 @@ import ci.gestion.dao.detail.AchatTravauxRepository;
 import ci.gestion.dao.detail.DetailAchatTravauxRepository;
 import ci.gestion.dao.detail.DetailStockRepository;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
+import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
 import ci.gestion.entites.entreprise.DetailStock;
 import ci.gestion.entites.entreprise.Stock;
@@ -410,7 +413,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	public Double findDetailAchatTravauxMontantByIdTravaux(long id) {
 		
 			double somme = 0d;
-			List<DetailAchatTravaux> detailAchatTravauxs = detailAchatTravauxRepository.findAll();
+			List<DetailAchatTravaux> detailAchatTravauxs = detailAchatTravauxRepository.findDetailAchatTravauxByIdTravaux(id);
 			for (DetailAchatTravaux detailAchatTravaux : detailAchatTravauxs) {
 				somme += detailAchatTravaux.getMontant();
 			}
@@ -421,10 +424,15 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	}
 
 	@Override
-	public List<DetailAchatTravaux> findDetailAchatTravauxByDateIdTravaux(long id, LocalDateTime dateDebut,
-			LocalDateTime dateFin) {
+	public List<DetailAchatTravaux> findDetailAchatTravauxByDateIdTravaux(long id, LocalDate dateDebut,
+			LocalDate dateFin) {
 		// TODO Auto-generated method stub
-		return detailAchatTravauxRepository.findDetailAchatTravauxByDateIdTravaux(id, dateDebut, dateFin);
+		 List<DetailAchatTravaux>  detailAutreAchatTravaux = detailAchatTravauxRepository.findDetailAchatTravauxByDateBetweenAndTravauxId( dateDebut, dateFin,id);
+		  
+		  
+		  return detailAutreAchatTravaux;
 	}
+
+	
 
 }

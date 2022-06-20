@@ -1,6 +1,8 @@
 package ci.gestion.metier.autres;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -191,6 +193,15 @@ public Double findDetailAutresMontantByIdTravaux(long id) {
 	System.out.println("voir la somme5=====>"+ somme);
 	// TODO Auto-generated method stub
 	return somme;
+}
+
+@Override
+public List<DetailAutres> getDetailAutreBydate(long idTravaux, LocalDate dateDebut, LocalDate dateFin) {
+	  
+	List<DetailAutres> detailAutres = detailAutreRepository.findDetailAutresByDateBetweenAndTravauxId(dateDebut, dateFin,idTravaux);
+	    
+	  
+	  return detailAutres;
 }
 }
 

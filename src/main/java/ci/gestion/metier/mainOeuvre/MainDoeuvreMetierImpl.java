@@ -1,6 +1,8 @@
 package ci.gestion.metier.mainOeuvre;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import ci.gestion.dao.MainDoeuvreRepository;
 import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.DetailMainOeuvreRepository;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
+import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
 import ci.gestion.entites.mainoeuvre.MainOeuvre;
 import ci.gestion.entites.site.Travaux;
@@ -195,6 +198,16 @@ private TravauxRepository travauxRepository;
 		System.out.println("voir la somme"+ somme);
 		// TODO Auto-generated method stub
 		return somme;
+	}
+
+	@Override
+	public List<DetailMainOeuvre> getDetailMainBydate(long id, LocalDate dateDebut, LocalDate dateFin) {
+		List<DetailMainOeuvre> detailAutreAchatTravaux = null;
+		  
+		List<DetailMainOeuvre> detailMainOeuvres = detailMainOeuvreRepository.findDetailMainOeuvreByDateBetweenAndTravauxId(dateDebut,dateFin,id);
+		  
+		  
+		  return detailMainOeuvres;
 	}
 	
 }

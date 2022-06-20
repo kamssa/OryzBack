@@ -1,6 +1,8 @@
 package ci.gestion.metier.loyer;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import ci.gestion.dao.detail.DetailLoyerRepository;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.autres.DetailAutres;
+import ci.gestion.entites.location.DetailLocation;
 import ci.gestion.entites.location.LocationTravaux;
 import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
@@ -195,6 +198,16 @@ TravauxRepository travauxRepository;
 		System.out.println("voir la somme LOYER&&&&&&&&&&&&&&&&&&&"+ somme);
 		// TODO Auto-generated method stub
 		return somme;
+	}
+
+	@Override
+	public List<DetailLoyer> getDetailLoyerBydate(long id, LocalDate dateDebut, LocalDate dateFin) {
+		List<DetailLoyer> detailAutreAchatTravaux = null;
+		  
+		List<DetailLoyer> detailLoyers = detailLoyerRepository.findDetailLoyerByDateBetweenAndTravauxId(dateDebut,dateFin, id);
+		  
+		  
+		  return detailLoyers;
 	}
 
 }

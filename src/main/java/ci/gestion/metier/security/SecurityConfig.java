@@ -85,7 +85,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/detailLocation/**","/api/detailLoye/**","/api/detailTransport/**",
             		"/api/montantAutreAchat/**","/api/montantLoyer/**","/api/montantMainDoeuvre/**",
             		"/api/montantTransport/**","/api/montantAchatTravaux/**","/api/montantAutre/**",
-            		"/api/montantLocation/**","api/detailAchatTravauxDate/**"
+            		"/api/montantLocation/**","/api/detailAutreAchatTravauxDate/**","/api/rechercheParDate/**",
+            		"/api/detailAutreDate/**","/api/detailLocationDate/**","/api/detailLoyerDate/**",
+            		"/api/detailMainDate/**","/api/detailTransportDate/**","/api/detailAchatTravauxDate/**"
             		).permitAll()
 	       .anyRequest().authenticated();
 	       
