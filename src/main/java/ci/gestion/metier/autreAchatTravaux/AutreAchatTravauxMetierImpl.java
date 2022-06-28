@@ -28,9 +28,7 @@ private DetailAutreAchatTravauxRepository detailAutreAchatTravauxRepository;
 private TravauxRepository travauxRepository;
 	@Override
 	public AutreAchatTravaux creer(AutreAchatTravaux entity) throws InvalideOryzException {
-		AutreAchatTravaux autreAchatTravaux = null;
 		AutreAchatTravaux autreAchat = null;
-		Travaux travau = null;
 		double montantD = 0;
 		double montantTravaux = 0;
 		double montantT = 0;
@@ -38,8 +36,8 @@ private TravauxRepository travauxRepository;
 		double reste = 0;
 		List<DetailAutreAchatTravaux> detaiAutrelAchats = entity.getDetailAutreAchatTravaux();
 		for (DetailAutreAchatTravaux detail : detaiAutrelAchats) {
-			
-		       montantD = ((detail.getPrixUnitaire() * detail.getQuantite())+ detail.getFrais());
+		      
+			montantD = ((detail.getPrixUnitaire() * detail.getQuantite())+ detail.getFrais());
 				detail.setMontant(montantD);
 				detail.setTravauxId(entity.getTravauxId());
 				sommeMontant = montantD;

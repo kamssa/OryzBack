@@ -1,12 +1,9 @@
 package ci.gestion.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -66,12 +63,11 @@ public class AchatTravauxController {
 	@PostMapping("/achat")
 	public String creer(@RequestBody AchatTravaux achat) throws JsonProcessingException {
 		Reponse<AchatTravaux> reponse;
-       
-		try {
+	try {
 
 			AchatTravaux t1 = achatTravauxMetier.creer(achat);
 			List<String> messages = new ArrayList<>();
-			messages.add(String.format("%s  à été créer avec succes", t1.getLibelle()));
+			messages.add(String.format("%s  à été créer avec succes", t1.getId()));
 			reponse = new Reponse<AchatTravaux>(0, messages, t1);
 
 		} catch (InvalideOryzException e) {
