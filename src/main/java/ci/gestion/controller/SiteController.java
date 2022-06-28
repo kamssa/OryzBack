@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ci.gestion.entites.site.Photo;
 import ci.gestion.entites.site.Site;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
@@ -98,6 +99,26 @@ public class SiteController {
 		}
 
 		return jsonMapper.writeValueAsString(reponse);
+	}
+	@GetMapping("/siteEntreprise/{nom}")
+	public String getAbonnementByIdPersonne(@PathVariable("nom") String nom)
+			throws JsonProcessingException, InvalideOryzException {
+		Reponse<List<Site>> reponse;
+		try {
+			List<Site> sites = siteMetier.siteParEntreprise(nom);
+			if (!sites.isEmpty()) {
+				reponse = new Reponse<List<Site>>(0, null, sites);
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add("Pas de sites enregistrés");
+				reponse = new Reponse<List<Site>>(1, messages, new ArrayList<>());
+			}
+
+		} catch (Exception e) {
+			reponse = new Reponse<List<Site>>(1, Static.getErreursForException(e), new ArrayList<>());
+		}
+		return jsonMapper.writeValueAsString(reponse);
+
 	}
 
 }

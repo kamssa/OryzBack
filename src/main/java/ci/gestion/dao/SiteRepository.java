@@ -8,6 +8,6 @@ import ci.gestion.entites.site.Site;
 
 public interface SiteRepository extends JpaRepository<Site, Long> {
 	Optional<Site> findByNomChantier(String nomChantier);
-	@Query("select site from Site site where site.entreprise.id=?1")
-	List<Site> siteParEntreprise(Long id);
+	@Query("select site from Site site where site.entreprise.nom=?1")
+	List<Site> siteParEntreprise(String nom);
 }

@@ -68,9 +68,9 @@ public class SiteMetierImpl implements ISiteMetier{
 	}
 
 	@Override
-	public List<Site> siteParEntreprise(Long id) {
+	public List<Site> siteParEntreprise(String nom) {
 		// TODO Auto-generated method stub
-		return siteRepository.siteParEntreprise(id);
+		return siteRepository.siteParEntreprise(nom);
 	}
 
 }
