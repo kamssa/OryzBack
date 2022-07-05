@@ -14,11 +14,13 @@ public interface TravauxRepository extends JpaRepository<Travaux, Long>{
 	List<Travaux> chercherTravauxParMc(@Param("libelle") String libelle, String nom);
 	@Query("select travaux from Travaux travaux where travaux.site.nomChantier LIKE %?1% AND travaux.site.entreprise.id=?2")
 	List<Travaux> chercherTravauxParSiteMc(@Param("nomChantier") String mc);
-	@Query("select tr from Travaux tr  where tr.site.id=?1")
+	@Query("select tr from Travaux tr  where tr.site.entreprise.id=?1")
 	List<Travaux> findTravauxByIdSite(long id);
 	@Query("select travaux from Travaux travaux where travaux.site.nomChantier LIKE %?1%")
 	List<Travaux> findTravauxByIdEntreprise(@Param("nomChantier") String mc);
 	Optional<Travaux> findByLibelle(String libelle);
+	@Query("select tr from Travaux tr  where tr.client.id=?1")
+	List<Travaux> findTravauxByIdClient(long id);
 
 	
 }

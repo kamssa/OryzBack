@@ -4,16 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,25 +14,26 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.shared.Personne;
+import ci.gestion.entites.shared.Role;
+import ci.gestion.entites.shared.RoleName;
 import ci.gestion.entites.site.Client;
 import ci.gestion.metier.client.ClientMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.personne.IPersonneMetier;
+import ci.gestion.metier.personne.IRoleMetier;
 import ci.gestion.metier.utilitaire.Static;
 
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/auth")
 @CrossOrigin
 public class ClientControlleur {
 	
@@ -48,7 +41,8 @@ public class ClientControlleur {
 	IPersonneMetier personneMetier;
 	@Autowired
 	private ClientMetier clientMetier;
-
+	@Autowired
+	IRoleMetier roleMetier;
 	@Autowired
 	private ObjectMapper jsonMapper;
 	@Autowired
@@ -84,6 +78,8 @@ public class ClientControlleur {
 		if (client != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
+				Role userRole = roleMetier.findByName(RoleName.ROLE_CLIENT).get();
+				modif.setRoles(Collections.singleton(userRole));
 				Client c = clientMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s a modifier avec succes", c.getId()));

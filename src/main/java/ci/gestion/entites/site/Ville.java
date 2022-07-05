@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class Ville extends AbstractEntity{
  public String nom;
  public String description;
+ 
 }

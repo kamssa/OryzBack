@@ -10,7 +10,9 @@ public enum RoleName {
 	    ROLE_DELETE,
 	    ROLE_COMPTABILITE,
 	    ROLE_ADMINISTRATION,
-	    ROLE_TECHNICIEN
+	    ROLE_TECHNICIEN,
+	    ROLE_CLIENT
+
 	    		
 	    
 }

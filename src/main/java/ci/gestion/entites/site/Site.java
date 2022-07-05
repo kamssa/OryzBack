@@ -25,6 +25,5 @@ public class Site extends AbstractEntity {
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "id_Entreprise")
 	private Entreprise entreprise;
-
 	
 }

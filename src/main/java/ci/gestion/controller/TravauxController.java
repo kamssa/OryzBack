@@ -236,6 +236,27 @@ public class TravauxController {
 
 	}
 
-	
+////////recuperer travail  par son id
+@GetMapping("/travauxByIdClient/{id}")
+public String travauxByIdClient(@PathVariable Long id) throws JsonProcessingException {
+	Reponse<List<Travaux>> reponse;
+	try {
+		List<Travaux> travaux = travauxMetier.findTravauxByIdClient(id);
+
+		if (!travaux.isEmpty()) {
+			reponse = new Reponse<List<Travaux>>(0, null, travaux);
+		} else {
+			List<String> messages = new ArrayList<>();
+			messages.add("Pas de travail info enregistrés");
+			reponse = new Reponse<List<Travaux>>(2, messages, new ArrayList<>());
+		}
+
+	} catch (Exception e) {
+		reponse = new Reponse<List<Travaux>>(1, Static.getErreursForException(e), new ArrayList<>());
+	}
+	return jsonMapper.writeValueAsString(reponse);
+
+}
+
 	
 }
