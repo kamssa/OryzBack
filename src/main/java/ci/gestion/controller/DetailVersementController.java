@@ -12,94 +12,94 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ci.gestion.entites.versement.DetailVersement;
 import ci.gestion.entites.versement.Versement;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;
-import ci.gestion.metier.versement.VersementMetier;
-
-
+import ci.gestion.metier.versement.DetailVersementMetier;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class VersementController {
-	
+public class DetailVersementController {
 	@Autowired
-	private VersementMetier versementMetier;
+	private DetailVersementMetier detailVersementMetier;
 	
 	@Autowired
 	private ObjectMapper jsonMapper;
 	
 	// recuper Ville par identifiant
-		private Reponse<Versement> getVersementById(Long id) {
-			Versement versement = null;
+		private Reponse<DetailVersement> getVersementById(Long id) {
+			DetailVersement versement = null;
 
 			try {
-				 versement= versementMetier.findById(id);
+				 versement= detailVersementMetier.findById(id);
 				if (versement == null) {
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format("Versement n'existe pas", id));
-					new Reponse<Versement>(2, messages, null);
+					new Reponse<DetailVersement>(2, messages, null);
 
 				}
 			} catch (RuntimeException e) {
-				new Reponse<Versement>(1, Static.getErreursForException(e), null);
+				new Reponse<DetailVersement>(1, Static.getErreursForException(e), null);
 			}
 
-			return new Reponse<Versement>(0, null, versement);
+			return new Reponse<DetailVersement>(0, null, versement);
 		}
 
 		//////////////////////////////////////////////////////////////////////////////////////////////
 		////////////////// enregistrer un versement dans la base de donnee
 		////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 
-		@PostMapping("/versement")
-		public String creer(@RequestBody Versement versement) throws JsonProcessingException {
-			Reponse<Versement> reponse;
-			System.out.println(versement);
+		@PostMapping("/detailVersement")
+		public String creer(@RequestParam(value = "detailVersement") DetailVersement detailVersement, 
+				@RequestParam(value = "id") long id) throws JsonProcessingException {
+			Reponse<DetailVersement> reponse;
+			System.out.println(detailVersement);
 			try {
 
-				Versement v = versementMetier.creer(versement);
+				DetailVersement v = detailVersementMetier.creer(detailVersement);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s  à été créer avec succes", v.getId()));
-				reponse = new Reponse<Versement>(0, messages, v);
+				reponse = new Reponse<DetailVersement>(0, messages, v);
 
 			} catch (InvalideOryzException e) {
 
-				reponse = new Reponse<Versement>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<DetailVersement>(1, Static.getErreursForException(e), null);
 			}
 			return jsonMapper.writeValueAsString(reponse);
 		}
 
-		@PutMapping("/versement")
-		public String update(@RequestBody Versement modif) throws JsonProcessingException {
+		@PutMapping("/detailVersement")
+		public String update(@RequestBody DetailVersement modif) throws JsonProcessingException {
 
-			Reponse<Versement> reponse = null;
-			Reponse<Versement> reponseCatsModif = null;
+			Reponse<DetailVersement> reponse = null;
+			Reponse<DetailVersement> reponseCatsModif = null;
 			// on recupere autre a modifier
 			System.out.println("modif recupere1:" + modif);
 			reponseCatsModif = getVersementById(modif.getId());
 			if (reponseCatsModif.getBody() != null) {
 				try {
 					System.out.println("modif recupere2:" + modif);
-					Versement v = versementMetier.modifier(modif);
+					DetailVersement v = detailVersementMetier.modifier(modif);
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format("%s a modifier avec succes", v.getId()));
-					reponse = new Reponse<Versement>(0, messages, v);
+					reponse = new Reponse<DetailVersement>(0, messages, v);
 				} catch (InvalideOryzException e) {
 
-					reponse = new Reponse<Versement>(1, Static.getErreursForException(e), null);
+					reponse = new Reponse<DetailVersement>(1, Static.getErreursForException(e), null);
 				}
 
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("Le versement n'existe pas"));
-				reponse = new Reponse<Versement>(3, messages, null);
+				reponse = new Reponse<DetailVersement>(3, messages, null);
 			}
 
 			return jsonMapper.writeValueAsString(reponse);
@@ -107,35 +107,35 @@ public class VersementController {
 		}
 
 		// recherche les Ville par id
-		@GetMapping("/versement/{id}")
-		public String getVersementByIdV(@PathVariable("id") Long id) throws JsonProcessingException {
+		@GetMapping("/detailVersement/{id}")
+		public String getDetailVersementByIdV(@PathVariable("id") Long id) throws JsonProcessingException {
 
-			Reponse<Versement> reponse;
+			Reponse<DetailVersement> reponse;
 
 			try {
 
-				Versement v = versementMetier.findById(id);
+				DetailVersement v = detailVersementMetier.findById(id);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format(" à été recupere avec succes"));
-				reponse = new Reponse<Versement>(0, messages, v);
+				reponse = new Reponse<DetailVersement>(0, messages, v);
 
 			} catch (Exception e) {
 
-				reponse = new Reponse<Versement>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<DetailVersement>(1, Static.getErreursForException(e), null);
 			}
 			return jsonMapper.writeValueAsString(reponse);
 		}
 
 		
 		// supprimer une ville
-		@DeleteMapping("/versement/{id}")
+		@DeleteMapping("/detailVersement/{id}")
 		public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
 
 			Reponse<Boolean> reponse = null;
 
 			try {
 
-				reponse = new Reponse<Boolean>(0, null, versementMetier.supprimer(id));
+				reponse = new Reponse<Boolean>(0, null, detailVersementMetier.supprimer(id));
 
 			} catch (RuntimeException e1) {
 				reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
@@ -145,17 +145,17 @@ public class VersementController {
 		}
 
 		// get all departement
-		@GetMapping("/versement")
+		@GetMapping("/detailVersement")
 		public String findAll() throws JsonProcessingException {
-			Reponse<List<Versement>> reponse;
+			Reponse<List<DetailVersement>> reponse;
 			try {
-				List<Versement> vs = versementMetier.findAll();
+				List<DetailVersement> vs = detailVersementMetier.findAll();
 				if (!vs.isEmpty()) {
-					reponse = new Reponse<List<Versement>>(0, null, vs);
+					reponse = new Reponse<List<DetailVersement>>(0, null, vs);
 				} else {
 					List<String> messages = new ArrayList<>();
 					messages.add("Pas de categorie enregistrés");
-					reponse = new Reponse<List<Versement>>(1, messages, new ArrayList<>());
+					reponse = new Reponse<List<DetailVersement>>(1, messages, new ArrayList<>());
 				}
 
 			} catch (Exception e) {
@@ -165,24 +165,24 @@ public class VersementController {
 
 		}
 		
-		// recherche une personne par son un mot cle
-				@GetMapping("/versementByIdTravaux/{id}")
-				public String getVersementByITravaux(@PathVariable("id") Long id) throws JsonProcessingException {
+		@GetMapping("/detailVersementByIdVersement/{id}")
+		public String getDetailVersementByITravaux(@PathVariable("id") Long id) throws JsonProcessingException {
 
-					Reponse<Versement> reponse;
+			Reponse<List<DetailVersement>> reponse;
 
-					try {
+			try {
 
-						Versement v = versementMetier.findVersementByIdTravaux(id);
-						List<String> messages = new ArrayList<>();
-						messages.add(String.format(" versement recuperé avec succes"));
-						reponse = new Reponse<Versement>(0, messages, v);
+				List<DetailVersement> v = detailVersementMetier.findDetailVersementByidVersement(id);
+				List<String> messages = new ArrayList<>();
+				messages.add(String.format(" versement recuperé avec succes"));
+				reponse = new Reponse<List<DetailVersement>>(0, messages, v);
 
-					} catch (Exception e) {
+			} catch (Exception e) {
 
-						reponse = new Reponse<Versement>(1, Static.getErreursForException(e), null);
-					}
-					return jsonMapper.writeValueAsString(reponse);
-				}
-			
+				reponse = new Reponse<List<DetailVersement>>(1, Static.getErreursForException(e), null);
+			}
+			return jsonMapper.writeValueAsString(reponse);
+		}
+	
+				
 }

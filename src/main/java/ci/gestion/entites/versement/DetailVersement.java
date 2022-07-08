@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import ci.gestion.entites.entreprise.Employe;
 import ci.gestion.entites.shared.AbstractEntity;
 import ci.gestion.entites.site.Client;
@@ -22,10 +24,8 @@ public class DetailVersement extends AbstractEntity {
 
 	private LocalDateTime date;
 	private double montantVerse;
-	@ManyToOne(fetch = FetchType.LAZY, cascade =CascadeType.MERGE)
+	private Long idVersement;
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Employe employe;
-	@ManyToOne(fetch = FetchType.EAGER, cascade =CascadeType.MERGE)
-	private Travaux travaux;
-	
 	
 	}

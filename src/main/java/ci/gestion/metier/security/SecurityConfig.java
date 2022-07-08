@@ -51,18 +51,28 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 @Override
 	protected void configure(HttpSecurity http) throws Exception {
 	        http
-            .cors()
-                .and()
-            .csrf()
-                .disable()
-            .exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler)
-                .and()
-            .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                
-            .authorizeRequests().antMatchers("/api/auth/**","/api/role/**","/api/siteEntreprise/**",
+	        .cors()
+            .and()
+        .csrf()
+            .disable()
+        .exceptionHandling()
+            .authenticationEntryPoint(unauthorizedHandler)
+            .and()
+        .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+        .authorizeRequests()
+            .antMatchers("/",
+                "/favicon.ico",
+                "/**/*.png",
+                "/**/*.gif",
+                "/**/*.svg",
+                "/**/*.jpg",
+                "/**/*.html",
+                "/**/*.css",
+                "/**/*.js")
+                .permitAll()
+                .antMatchers("/api/auth/**","/api/role/**","/api/siteEntreprise/**",
             		"/api/getPhoto/**","/api/travaux/**", "/api/rechemc/**",
             		"/api/getOperationByParam/**","/api/departement/**",
             		"/api/getDepartementByidEntreprise/**", "/api/autreAchat/**",
@@ -88,8 +98,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/montantLocation/**","/api/detailAutreAchatTravauxDate/**","/api/rechercheParDate/**",
             		"/api/detailAutreDate/**","/api/detailLocationDate/**","/api/detailLoyerDate/**",
             		"/api/detailMainDate/**","/api/detailTransportDate/**","/api/detailAchatTravauxDate/**",
-            		"/api/versement/**","/api/versementByIdTravaux/**","/api/vrsmentByIdTravaux/**",
-            		"/api/travauxByIdClient/**"
+            		"/api/versement/**","/api/versementByIdTravaux/**","/api/detailVersement/**",
+            		"/api/travauxByIdClient/**","/api/detailVersementByIdVersement/**"
             		).permitAll()
 	       .anyRequest().authenticated();
 	       

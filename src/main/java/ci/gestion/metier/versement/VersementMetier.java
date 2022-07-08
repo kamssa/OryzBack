@@ -1,6 +1,4 @@
-package ci.gestion.metier.client;
-
-import java.util.List;
+package ci.gestion.metier.versement;
 
 import ci.gestion.entites.versement.Versement;
 import ci.gestion.metier.utilitaire.Imetier;
