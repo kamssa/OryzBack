@@ -25,6 +25,13 @@ public class Entreprise extends AbstractEntity{
     private String nom;
 	private String description;
 	private Boolean suspendu;
+	private String lienFacebook;
+	private String lienLinkedIn;
+	private String lienTwitter;
+    private String lientInstagram;
+    private String logo;
+
+
 	
 	
 }
