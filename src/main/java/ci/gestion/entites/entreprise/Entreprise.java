@@ -30,6 +30,7 @@ public class Entreprise extends AbstractEntity{
 	private String lienTwitter;
     private String lientInstagram;
     private String logo;
+    private String siteWeb;
 
 
 	
