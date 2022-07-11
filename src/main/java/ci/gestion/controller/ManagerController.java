@@ -106,6 +106,7 @@ public class ManagerController {
 		Reponse<Manager> reponse = null;
 		Reponse<Manager> reponsePersModif = null;
 		Manager p = managerMetier.findById(modif.getId());
+		
 		if (p != null) {
 			try {
 				System.out.println("modif recupere2:"+ modif);
