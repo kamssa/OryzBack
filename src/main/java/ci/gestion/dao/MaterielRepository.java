@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import ci.gestion.entites.operation.Materiaux;
+import ci.gestion.entites.stock.Materiaux;
 
 public interface MaterielRepository extends JpaRepository<Materiaux, Long>{
 	@Query("select mat from Materiaux mat where mat.categorie.id=?1")

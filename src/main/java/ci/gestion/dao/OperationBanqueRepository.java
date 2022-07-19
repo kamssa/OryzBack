@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import ci.gestion.entites.operation.Operation;
+import ci.gestion.entites.banque.Operation;
 
 public interface OperationBanqueRepository extends JpaRepository<Operation, Long>{
 	// ramener tous les Operation par parametre

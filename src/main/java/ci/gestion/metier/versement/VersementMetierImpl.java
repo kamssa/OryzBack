@@ -1,15 +1,14 @@
 package ci.gestion.metier.versement;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import ci.gestion.dao.TravauxRepository;
+import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.VersementRepository;
 import ci.gestion.dao.detail.DetailVersementRepository;
-import ci.gestion.entites.site.Travaux;
+import ci.gestion.entites.site.Projet;
 import ci.gestion.entites.versement.DetailVersement;
 import ci.gestion.entites.versement.Versement;
 import ci.gestion.metier.exception.InvalideOryzException;
@@ -21,7 +20,7 @@ public class VersementMetierImpl implements VersementMetier{
 	private DetailVersementRepository detailVersementRepository;
 
 	private VersementRepository versementRepository;
-	private TravauxRepository travauxRepository;
+	private ProjetRepository projetRepository;
 	@Override
 	public Versement creer(Versement entity) throws InvalideOryzException {
 
@@ -29,7 +28,7 @@ public class VersementMetierImpl implements VersementMetier{
 		double solde = 0;
 		double montantVerse = 0;
 		double reste = 0;
-		Optional<Versement> versement = versementRepository.findVersementByIdTravaux(entity.getTravaux().getId());
+		Optional<Versement> versement = versementRepository.findVersementByIdProjet(entity.getProjet().getId());
 		if(versement.isPresent()) {
 			List<DetailVersement> detailVersements = entity.getDetailVersement();
 			for (DetailVersement detail : detailVersements) {
@@ -37,8 +36,8 @@ public class VersementMetierImpl implements VersementMetier{
 					 solde = versement.get().getSolde();
 					 solde += montantVerse;
 					
-					 Travaux tr = travauxRepository.findById(entity.getTravaux().getId()).get();
-						reste = tr.getBudget() - solde;
+					 Projet pr = projetRepository.findById(entity.getProjet().getId()).get();
+						reste = pr.getBudget() - solde;
 						versement.get().setSolde(solde);  
 						versement.get().setReste(reste);
 						//DetailVersement dv = detailVersementRepository.save(detail);
@@ -61,8 +60,8 @@ public class VersementMetierImpl implements VersementMetier{
 					 solde = entity.getSolde();
 					 solde = montantVerse;
 
-					 Travaux tr = travauxRepository.findById(entity.getTravaux().getId()).get();
-						reste = tr.getBudget() - solde;
+					 Projet pr = projetRepository.findById(entity.getProjet().getId()).get();
+						reste = pr.getBudget() - solde;
 						entity.setSolde(solde);
 						entity.setReste(reste);
 						DetailVersement dv = detailVersementRepository.save(detail);
@@ -118,7 +117,7 @@ public class VersementMetierImpl implements VersementMetier{
 	@Override
 	public Versement findVersementByIdTravaux(long id) {
 		// TODO Auto-generated method stub
-		return versementRepository.findVersementByIdTravaux(id).get();
+		return versementRepository.findVersementByIdProjet(id).get();
 	}
 
 }

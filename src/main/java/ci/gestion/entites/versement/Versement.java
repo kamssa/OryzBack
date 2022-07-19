@@ -8,18 +8,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import ci.gestion.entites.achat.DetailAutreAchatTravaux;
-import ci.gestion.entites.entreprise.Employe;
-import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
 import ci.gestion.entites.shared.AbstractEntity;
-import ci.gestion.entites.site.Travaux;
-import ci.gestion.entites.transport.DetailTransport;
+import ci.gestion.entites.site.Projet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +29,7 @@ public class Versement extends AbstractEntity {
 	@JoinColumn(name = "fk_Versement")
 	private List<DetailVersement> detailVersement = new ArrayList<>();
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	private Travaux travaux;
+	private Projet projet;
 	
 	
 	 

@@ -16,7 +16,5 @@ import lombok.NoArgsConstructor;
 public class Ville extends AbstractEntity{
  public String nom;
  public String description;
- @ManyToOne(cascade= CascadeType.ALL, fetch= FetchType.EAGER)
-private Projet projet;
  
-}
+ }

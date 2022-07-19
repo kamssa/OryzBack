@@ -36,7 +36,7 @@ public class UploadController {
 			Map result = cloudinaryService.upload(multipartFile);
 			System.out.println("Voir upload"+ result);
 			Photo im = new Photo();
-			im.setIdTravaux(id);
+			im.setIdProjet(id);
 			im.setImageUrl((String) result.get("url"));
 			imageSevice.save(im);
 			return new ResponseEntity(result, HttpStatus.OK);

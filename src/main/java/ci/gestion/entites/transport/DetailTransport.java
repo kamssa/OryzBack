@@ -20,7 +20,7 @@ public class DetailTransport {
 	private String libelle;
 	private double montant;
 	private LocalDate date;
-	private Long travauxId;
+	private Long projetId;
 	
 	public DetailTransport() {
 		super();
@@ -42,12 +42,13 @@ public class DetailTransport {
 		this.date = date;
 	}
 
-	public Long getTravauxId() {
-		return travauxId;
+	
+	public Long getProjetId() {
+		return projetId;
 	}
 
-	public void setTravauxId(Long travauxId) {
-		this.travauxId = travauxId;
+	public void setProjetId(Long projetId) {
+		this.projetId = projetId;
 	}
 
 	public String getLibelle() {
@@ -78,7 +79,10 @@ public class DetailTransport {
 
 	@Override
 	public String toString() {
-		return "DetailTransport [id=" + id + ", version=" + version + ", montant=" + montant + "]";
+		return "DetailTransport [id=" + id + ", version=" + version + ", libelle=" + libelle + ", montant=" + montant
+				+ ", date=" + date + ", projetId=" + projetId + "]";
 	}
+
+	
 	
 }

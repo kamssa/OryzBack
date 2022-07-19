@@ -1,12 +1,11 @@
-package ci.gestion.entites.site;
+package ci.gestion.entites.stock;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
-import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,14 +15,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Site extends AbstractEntity {
-
+public class Materiaux extends AbstractEntity{
 	
+
 	private static final long serialVersionUID = 1L;
-	private String nomChantier;
+	private String codeMateriaux;
+	private String libelle;
 	private String description;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-	@JoinColumn(name = "id_Entreprise")
-	private Entreprise entreprise;
+	private String unite;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+    @JoinColumn(name="categorie_id")
+    private Categorie categorie;
 	
 }

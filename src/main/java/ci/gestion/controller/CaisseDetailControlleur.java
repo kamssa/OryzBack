@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.caisse.Caisse;
 import ci.gestion.entites.caisse.CaisseDetail;
-import ci.gestion.entites.operation.Categorie;
+import ci.gestion.entites.stock.Categorie;
 import ci.gestion.metier.caisse.CaisseDetailMetier;
 import ci.gestion.metier.caisse.CaisseMetier;
 import ci.gestion.metier.exception.InvalideOryzException;

@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.MontantSockRepository;
-import ci.gestion.entites.entreprise.MontantStock;
+import ci.gestion.entites.stock.MontantStock;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

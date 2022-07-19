@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import ci.gestion.entites.achat.AutreAchatTravaux;
 
 public interface AutreAchatTravauxRepository extends JpaRepository<AutreAchatTravaux, Long> {
-	@Query("select achatTravaux from AutreAchatTravaux achatTravaux where achatTravaux.travauxId=?1")
-	List<AutreAchatTravaux> getAutreAchatTravauxTravauxByIdTravaux(long id);
+	@Query("select achatTravaux from AutreAchatTravaux achatTravaux where achatTravaux.projetId=?1")
+	List<AutreAchatTravaux> getAutreAchatTravauxTravauxByIdProjet(long id);
 }

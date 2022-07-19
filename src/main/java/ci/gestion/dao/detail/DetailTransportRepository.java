@@ -11,13 +11,13 @@ import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
 import ci.gestion.entites.transport.DetailTransport;
 
 public interface DetailTransportRepository extends JpaRepository<DetailTransport, Long>{
-	@Query("select detailTransport from DetailTransport detailTransport  where detailTransport.travauxId=?1")
-	List<DetailTransport> findDetailTransportByIdTravaux(long id);
-	@Query("select detailTransport from DetailTransport detailTransport  where detailTransport.travauxId=?1")
-	List<DetailTransport> findDetailTransportMontantByIdTravaux(long id);
-    List<DetailTransport> findDetailTransportByDateBetweenAndTravauxId(
+	@Query("select detailTransport from DetailTransport detailTransport  where detailTransport.projetId=?1")
+	List<DetailTransport> findDetailTransportByIdProjet(long id);
+	@Query("select detailTransport from DetailTransport detailTransport  where detailTransport.projetId=?1")
+	List<DetailTransport> findDetailTransportMontantByIdProjet(long id);
+    List<DetailTransport> findDetailTransportByDateBetweenAndProjetId(
 			
             @Param("date") LocalDate date,
             @Param("endDate") LocalDate endDate,
-            @Param("travauxId") Long travauxId);
+            @Param("projetId") Long projetId);
 }

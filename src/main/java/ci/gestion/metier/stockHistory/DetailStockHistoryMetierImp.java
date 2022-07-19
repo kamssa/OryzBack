@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.DetailStockHistoryRepository;
-import ci.gestion.entites.entreprise.DetailStockHistory;
+import ci.gestion.entites.stock.DetailStockHistory;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

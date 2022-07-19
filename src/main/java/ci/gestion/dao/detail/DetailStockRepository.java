@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import ci.gestion.entites.entreprise.DetailStock;
+import ci.gestion.entites.stock.DetailStock;
 
 public interface DetailStockRepository extends JpaRepository<DetailStock, Long>{
 	@Query("select ds from DetailStock ds where ds.categorie.id=?1")

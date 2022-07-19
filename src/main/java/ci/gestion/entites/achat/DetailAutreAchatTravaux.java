@@ -24,6 +24,6 @@ public  class DetailAutreAchatTravaux extends AbstractEntity{
 	private double montant;
 	private String fournisseur;
 	private LocalDate date;
-    private Long travauxId;
+    private Long projetId;
 
 	}

@@ -21,7 +21,7 @@ public  class DetailAchatTravaux extends AbstractEntity{
 	private double quantite;
 	private double prixUnitaire;
 	private double montant;
-	private Long travauxId;
+	private Long projetId;
 	private LocalDate date;
 	
 	

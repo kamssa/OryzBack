@@ -114,7 +114,7 @@ public class TransportController {
 			Reponse<List<Transport>> reponse;
 
 			try {
-				List<Transport> autres = transportMetier.findTransportByIdTravaux(idTravaux);
+				List<Transport> autres = transportMetier.findTransportByIdProjet(idTravaux);
 				if (!autres.isEmpty()) {
 					reponse = new Reponse<List<Transport>>(0, null, autres);
 				} else {
@@ -179,7 +179,7 @@ public class TransportController {
 						Reponse<List<DetailTransport>> reponse;
 
 						try {
-							List<DetailTransport> mainOeuvres = transportMetier.findDetailTransportByIdTravaux(idTravaux);
+							List<DetailTransport> mainOeuvres = transportMetier.findDetailTransportByIdProjet(idTravaux);
 							if (!mainOeuvres.isEmpty()) {
 								reponse = new Reponse<List<DetailTransport>>(0, null, mainOeuvres);
 							} else {
@@ -200,7 +200,7 @@ public class TransportController {
 						Reponse<Double> reponse;
 	                    
 						try {
-							Double achats = transportMetier.findDetailTransportMontantByIdTravaux(idTravaux);
+							Double achats = transportMetier.findDetailTransportMontantByIdProjet(idTravaux);
 							reponse = new Reponse<Double>(0, null, achats);
 							System.out.println("voir la somme"+ achats);
 						} catch (Exception e) {

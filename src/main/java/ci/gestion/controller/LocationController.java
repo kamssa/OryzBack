@@ -83,7 +83,7 @@ public class LocationController {
 				Reponse<List<LocationTravaux>> reponse;
 
 				try {
-					List<LocationTravaux> locations = locationMetier.findLocationByIdTravaux(idTravaux);
+					List<LocationTravaux> locations = locationMetier.findLocationByIdProjet(idTravaux);
 					if (!locations.isEmpty()) {
 						reponse = new Reponse<List<LocationTravaux>>(0, null, locations);
 					} else {
@@ -148,7 +148,7 @@ public class LocationController {
 				Reponse<List<DetailLocation>> reponse;
 
 				try {
-					List<DetailLocation> mainOeuvres = locationMetier.findDetailLocationByIdTravaux(idTravaux);
+					List<DetailLocation> mainOeuvres = locationMetier.findDetailLocationByIdProjet(idTravaux);
 					if (!mainOeuvres.isEmpty()) {
 						reponse = new Reponse<List<DetailLocation>>(0, null, mainOeuvres);
 					} else {
@@ -169,7 +169,7 @@ public class LocationController {
 				Reponse<Double> reponse;
                 
 				try {
-					Double achats = locationMetier.findDetailLocationMontantByIdTravaux(idTravaux);
+					Double achats = locationMetier.findDetailLocationMontantByIdProjet(idTravaux);
 					reponse = new Reponse<Double>(0, null, achats);
 					System.out.println("voir la somme"+ achats);
 				} catch (Exception e) {

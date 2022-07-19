@@ -12,7 +12,7 @@ public interface OperationTravauxRepository extends JpaRepository<AchatTravaux, 
 	Optional<AchatTravaux> findByLibelle(String libelle);
 
 	// recupere les achat par id travaux
-	@Query("select achat from AchatTravaux achat  where achat.travauxId=?1")
-	List<AchatTravaux> findAchatByIdTravaux(long id);
+	@Query("select achat from AchatTravaux achat  where achat.projetId=?1")
+	List<AchatTravaux> findAchatByIdProjet(long id);
 	
 }

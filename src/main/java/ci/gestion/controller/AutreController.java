@@ -111,7 +111,7 @@ public class AutreController {
 			Reponse<List<Autres>> reponse;
 
 			try {
-				List<Autres> autres = autresMetier.findAutresByIdTravaux(idTravaux);
+				List<Autres> autres = autresMetier.findAutresByIdProjet(idTravaux);
 				if (!autres.isEmpty()) {
 					reponse = new Reponse<List<Autres>>(0, null, autres);
 				} else {
@@ -176,7 +176,7 @@ public class AutreController {
 						Reponse<List<DetailAutres>> reponse;
 
 						try {
-							List<DetailAutres> mainOeuvres = autresMetier.findDetailAutresByIdTravaux(idTravaux);
+							List<DetailAutres> mainOeuvres = autresMetier.findDetailAutresByIdProjet(idTravaux);
 							if (!mainOeuvres.isEmpty()) {
 								reponse = new Reponse<List<DetailAutres>>(0, null, mainOeuvres);
 							} else {
@@ -197,7 +197,7 @@ public class AutreController {
 						Reponse<Double> reponse;
 			            
 						try {
-							Double achats = autresMetier.findDetailAutresMontantByIdTravaux(idTravaux);
+							Double achats = autresMetier.findDetailAutresMontantByIdProjet(idTravaux);
 							reponse = new Reponse<Double>(0, null, achats);
 							System.out.println("voir la somme"+ achats);
 						} catch (Exception e) {

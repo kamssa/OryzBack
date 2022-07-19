@@ -1,18 +1,13 @@
 package ci.gestion.metier.versement;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ci.gestion.dao.TravauxRepository;
-import ci.gestion.dao.VersementRepository;
 import ci.gestion.dao.detail.DetailVersementRepository;
-import ci.gestion.entites.site.Travaux;
 import ci.gestion.entites.versement.DetailVersement;
-import ci.gestion.entites.versement.Versement;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 

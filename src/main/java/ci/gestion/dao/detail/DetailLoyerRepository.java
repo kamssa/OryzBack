@@ -11,13 +11,13 @@ import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.loyer.DetailLoyer;
 
 public interface DetailLoyerRepository extends JpaRepository<DetailLoyer, Long>{
-	@Query("select detailLoyer from DetailLoyer detailLoyer  where detailLoyer.travauxId=?1")
-	List<DetailLoyer> findDetailLoyerByIdTravaux(long id);
-	@Query("select detailLoyer from DetailLoyer detailLoyer  where detailLoyer.travauxId=?1")
-	List<DetailLoyer>findDetailLoyerMontantByIdTravaux(long id);
-    List<DetailLoyer> findDetailLoyerByDateBetweenAndTravauxId(
+	@Query("select detailLoyer from DetailLoyer detailLoyer  where detailLoyer.projetId=?1")
+	List<DetailLoyer> findDetailLoyerByIdProjet(long id);
+	@Query("select detailLoyer from DetailLoyer detailLoyer  where detailLoyer.projetId=?1")
+	List<DetailLoyer>findDetailLoyerMontantByIdProjet(long id);
+    List<DetailLoyer> findDetailLoyerByDateBetweenAndProjetId(
 			
             @Param("date") LocalDate date,
             @Param("endDate") LocalDate endDate,
-            @Param("travauxId") Long travauxId);
+            @Param("projetId") Long projetId);
 }

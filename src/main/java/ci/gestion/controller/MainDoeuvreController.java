@@ -110,7 +110,7 @@ public class MainDoeuvreController {
 			Reponse<List<MainOeuvre>> reponse;
 
 			try {
-				List<MainOeuvre> mainOeuvres = mainDoeuvreMetier.findMainOeuvreByIdTravaux(idTravaux);
+				List<MainOeuvre> mainOeuvres = mainDoeuvreMetier.findMainOeuvreByIdProjet(idTravaux);
 				if (!mainOeuvres.isEmpty()) {
 					reponse = new Reponse<List<MainOeuvre>>(0, null, mainOeuvres);
 				} else {
@@ -175,7 +175,7 @@ public class MainDoeuvreController {
 					Reponse<List<DetailMainOeuvre>> reponse;
 
 					try {
-						List<DetailMainOeuvre> mainOeuvres = mainDoeuvreMetier.findDetailMainOeuvreByIdTravaux(idTravaux);
+						List<DetailMainOeuvre> mainOeuvres = mainDoeuvreMetier.findDetailMainOeuvreByIdProjet(idTravaux);
 						if (!mainOeuvres.isEmpty()) {
 							reponse = new Reponse<List<DetailMainOeuvre>>(0, null, mainOeuvres);
 						} else {
@@ -196,7 +196,7 @@ public class MainDoeuvreController {
 					Reponse<Double> reponse;
                     
 					try {
-						Double achats = mainDoeuvreMetier.findDetailMainOeuvreMontantByIdTravaux(idTravaux);
+						Double achats = mainDoeuvreMetier.findDetailMainOeuvreMontantByIdProjet(idTravaux);
 						reponse = new Reponse<Double>(0, null, achats);
 						System.out.println("voir la somme"+ achats);
 					} catch (Exception e) {

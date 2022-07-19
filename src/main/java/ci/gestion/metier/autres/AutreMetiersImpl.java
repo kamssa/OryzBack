@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.AutreRepository;
-import ci.gestion.dao.TravauxRepository;
+import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.detail.DetailAutreRepository;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.autres.Autres;
-import ci.gestion.entites.autres.DetailAutres; 
-import ci.gestion.entites.site.Travaux;
+import ci.gestion.entites.autres.DetailAutres;
+import ci.gestion.entites.site.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service
@@ -23,7 +23,7 @@ private AutreRepository autreRepository;
 @Autowired
 private DetailAutreRepository detailAutreRepository;
 @Autowired
-private TravauxRepository travauxRepository;
+private ProjetRepository projetRepository;
 
 @Override
 public Autres creer(Autres entity) throws InvalideOryzException {
@@ -35,21 +35,21 @@ public Autres creer(Autres entity) throws InvalideOryzException {
 	for(DetailAutres detail : detailAutres) {
 		montantD = ((detail.getPrixUnitaire() * detail.getQuantite()));
 		detail.setMontant(montantD);
-		detail.setTravauxId(entity.getTravauxId());
+		detail.setProjetId(entity.getProjetId());
 
 		}
 	entity.setMontant(montantD);
 	Autres autre= autreRepository.save(entity);
-	Travaux travaux = travauxRepository.findById(autre.getTravauxId()).get();
-    montantTravaux = travaux.getTotal();
+	Projet projet = projetRepository.findById(autre.getProjetId()).get();
+    montantTravaux = projet.getTotal();
 	montantT = montantTravaux + autre.getMontant();
-	travaux.setTotal(montantT);
-	Travaux tr =travauxRepository.save(travaux);
-		reste = (tr.getDebousserSec())-(tr.getTotal());
-		tr.setReste(reste);
-		double percent = 100*(tr.getTotal()/tr.getDebousserSec());
-		tr.setPercent(percent);
-		travauxRepository.save(tr);
+	projet.setTotal(montantT);
+	Projet pr =projetRepository.save(projet);
+		reste = (pr.getDebousserSec())-(pr.getTotal());
+		pr.setReste(reste);
+		double percent = 100*(pr.getTotal()/pr.getDebousserSec());
+		pr.setPercent(percent);
+		projetRepository.save(pr);
 	 return autre;
 }
 
@@ -61,8 +61,8 @@ public Autres modifier(Autres modif) throws InvalideOryzException {
 	double sommeMontant = 0;
 	double reste=0;
 	double montantModifie = 0;
-	Travaux travaux = travauxRepository.findById(modif.getTravauxId()).get();
-    montantTravaux = travaux.getTotal();
+	Projet projet = projetRepository.findById(modif.getProjetId()).get();
+    montantTravaux = projet.getTotal();
     montantModifie = montantTravaux - modif.getMontant();
     System.out.println(" le montant total  reduit"+montantModifie);
 	List<DetailAutres> detailAutres = modif.getDetailAutres();
@@ -76,11 +76,11 @@ public Autres modifier(Autres modif) throws InvalideOryzException {
          
     Autres autres= autreRepository.save(modif);
     montantT = montantModifie + autres.getMontant();
-	travaux.setTotal(montantT);
-	Travaux tr = travauxRepository.save(travaux);
-	reste = (tr.getBudget())-(tr.getTotal());
-	       tr.setReste(reste);
-	       travauxRepository.save(tr);
+	projet.setTotal(montantT);
+	Projet pr = projetRepository.save(projet);
+	reste = (pr.getBudget())-(pr.getTotal());
+	       pr.setReste(reste);
+	       projetRepository.save(pr);
 	 return autres;
 }
 
@@ -102,16 +102,16 @@ public boolean supprimer(Long id) {
 	double montantTravaux = 0;
 	double montantT = 0;
 	double reste=0;
-	Travaux travaux = travauxRepository.findById(autres.getTravauxId()).get();
-	montantTravaux = travaux.getTotal();
+	Projet projet = projetRepository.findById(autres.getProjetId()).get();
+	montantTravaux = projet.getTotal();
 	montantT = montantTravaux - autres.getMontant();
-	travaux.setTotal(montantT);
-	Travaux tr = travauxRepository.save(travaux);
-	reste = tr.getReste() + autres.getMontant();
-	tr.setReste(reste);
-	double percent = (tr.getDebousserSec()*tr.getTotal())/100;
-	tr.setPercent(percent);
-	travauxRepository.save(tr);
+	projet.setTotal(montantT);
+	Projet pr = projetRepository.save(projet);
+	reste = pr.getReste() + autres.getMontant();
+	pr.setReste(reste);
+	double percent = (pr.getDebousserSec()*pr.getTotal())/100;
+	pr.setPercent(percent);
+	projetRepository.save(pr);
 	autreRepository.deleteById(id);
             return true; 
 }
@@ -129,9 +129,9 @@ public boolean existe(Long id) {
 }
 
 @Override
-public List<Autres> findAutresByIdTravaux(long id) {
+public List<Autres> findAutresByIdProjet(long id) {
 	// TODO Auto-generated method stub
-	return autreRepository.findAutresByIdTravaux(id);
+	return autreRepository.findAutresByIdProjet(id);
 }
 
 @Override
@@ -148,8 +148,8 @@ public boolean supprimerDetailAutre(Long idAutre, Long idDetail) {
 	 Autres autre = findById(idAutre);
 	 montantAutre = autre.getMontant();
 	 
-     Travaux travaux = travauxRepository.findById(autre.getTravauxId()).get();
-	 montantTravaux = travaux.getTotal();
+     Projet projet = projetRepository.findById(autre.getProjetId()).get();
+	 montantTravaux = projet.getTotal();
 	 montant = montantTravaux - montantAutre;
 	
    	List<DetailAutres> detailAutres = autre.getDetailAutres();
@@ -164,11 +164,11 @@ public boolean supprimerDetailAutre(Long idAutre, Long idDetail) {
 	Autres autre1= autreRepository.save(autre);
    
 	montantT = montant + autre1.getMontant();
-	travaux.setTotal(montantT);
-	Travaux tr =travauxRepository.save(travaux);
-	reste = (tr.getBudget())-(tr.getTotal());
-	       tr.setReste(reste);
-	       travauxRepository.save(tr);
+	projet.setTotal(montantT);
+	Projet pr =projetRepository.save(projet);
+	reste = (pr.getBudget())-(pr.getTotal());
+	       pr.setReste(reste);
+	       projetRepository.save(pr);
 	       Autres autre2= autreRepository.findById(autre1.getId()).get();
 			  montant1 = autre2.getMontant();
 			  if (montant1 == 0) {
@@ -178,15 +178,15 @@ public boolean supprimerDetailAutre(Long idAutre, Long idDetail) {
 }
 
 @Override
-public List<DetailAutres> findDetailAutresByIdTravaux(long id) {
+public List<DetailAutres> findDetailAutresByIdProjet(long id) {
 	// TODO Auto-generated method stub
 	return detailAutreRepository.findDetailAutresByIdTravaux(id);
 }
 
 @Override
-public Double findDetailAutresMontantByIdTravaux(long id) {
+public Double findDetailAutresMontantByIdProjet(long id) {
 	double somme = 0d;
-	List<DetailAutres> detailAutres = detailAutreRepository.findDetailAutresMontantByIdTravaux(id);
+	List<DetailAutres> detailAutres = detailAutreRepository.findDetailAutresMontantByIdProjet(id);
 	for (DetailAutres detailAutre : detailAutres) {
 		somme += detailAutre.getMontant();
 	}
@@ -198,7 +198,7 @@ public Double findDetailAutresMontantByIdTravaux(long id) {
 @Override
 public List<DetailAutres> getDetailAutreBydate(long idTravaux, LocalDate dateDebut, LocalDate dateFin) {
 	  
-	List<DetailAutres> detailAutres = detailAutreRepository.findDetailAutresByDateBetweenAndTravauxId(dateDebut, dateFin,idTravaux);
+	List<DetailAutres> detailAutres = detailAutreRepository.findDetailAutresByDateBetweenAndProjetId(dateDebut, dateFin,idTravaux);
 	    
 	  
 	  return detailAutres;

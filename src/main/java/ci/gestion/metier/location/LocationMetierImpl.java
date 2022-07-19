@@ -2,20 +2,16 @@ package ci.gestion.metier.location;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.LocationRepository;
-import ci.gestion.dao.TravauxRepository;
+import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.detail.DetailLcationRepository;
-import ci.gestion.entites.achat.DetailAutreAchatTravaux;
-import ci.gestion.entites.autres.Autres;
-import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.location.DetailLocation;
 import ci.gestion.entites.location.LocationTravaux;
-import ci.gestion.entites.site.Travaux;
+import ci.gestion.entites.site.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 @Service
 public class LocationMetierImpl implements ILocationMetier{
@@ -24,7 +20,7 @@ private LocationRepository locationRepository;
 @Autowired
 private DetailLcationRepository detailLcationRepository;
 @Autowired
-private TravauxRepository travauxRepository;
+private ProjetRepository projetRepository;
 
 @Override
 public LocationTravaux creer(LocationTravaux entity) throws InvalideOryzException {
@@ -36,20 +32,20 @@ public LocationTravaux creer(LocationTravaux entity) throws InvalideOryzExceptio
 	for(DetailLocation detail : detailLocations) {
 		motantD = detail.getMontant();
 		detail.setMontant(motantD);
-		detail.setTravauxId(entity.getTravauxId());
+		detail.setProjetId(entity.getProjetId());
 		}
 	entity.setMontant(motantD);
 	LocationTravaux location= locationRepository.save(entity);
-	Travaux travaux = travauxRepository.findById(location.getTravauxId()).get();
-	 montantTravaux = travaux.getTotal();
+	Projet projet = projetRepository.findById(location.getProjetId()).get();
+	 montantTravaux = projet.getTotal();
 		montantT = montantTravaux + location.getMontant();
-		travaux.setTotal(montantT);
-		Travaux tr =travauxRepository.save(travaux);
-			reste = (tr.getDebousserSec())-(tr.getTotal());
-			tr.setReste(reste);
-			double percent = 100*(tr.getTotal()/tr.getDebousserSec());
-			tr.setPercent(percent);
-			travauxRepository.save(tr);
+		projet.setTotal(montantT);
+		Projet pr =projetRepository.save(projet);
+			reste = (pr.getDebousserSec())-(pr.getTotal());
+			pr.setReste(reste);
+			double percent = 100*(pr.getTotal()/pr.getDebousserSec());
+			pr.setPercent(percent);
+			projetRepository.save(pr);
 	 return location;
 	 
     }
@@ -77,16 +73,16 @@ public boolean supprimer(Long id) {
 	double montantTravaux = 0;
 	double montantT = 0;
 	double reste=0;
-	Travaux travaux = travauxRepository.findById(locationTravaux.getTravauxId()).get();
-	montantTravaux = travaux.getTotal();
+	Projet projet = projetRepository.findById(locationTravaux.getProjetId()).get();
+	montantTravaux = projet.getTotal();
 	montantT = montantTravaux - locationTravaux.getMontant();
-	travaux.setTotal(montantT);
-	Travaux tr = travauxRepository.save(travaux);
-	reste = tr.getReste() + locationTravaux.getMontant();
-	tr.setReste(reste);
-	double percent = (tr.getDebousserSec()*tr.getTotal())/100;
-	tr.setPercent(percent);
-	travauxRepository.save(tr);
+	projet.setTotal(montantT);
+	Projet pr = projetRepository.save(projet);
+	reste = pr.getReste() + locationTravaux.getMontant();
+	pr.setReste(reste);
+	double percent = (pr.getDebousserSec()*pr.getTotal())/100;
+	pr.setPercent(percent);
+	projetRepository.save(pr);
 	locationRepository.deleteById(id);
             return true; 
 }
@@ -102,8 +98,8 @@ public boolean existe(Long id) {
 }
 
 @Override
-public List<LocationTravaux> findLocationByIdTravaux(long id) {
-	return locationRepository.findLocationByIdTravaux(id);
+public List<LocationTravaux> findLocationByIdProjet(long id) {
+	return locationRepository.findLocationByIdProjet(id);
 }
 
 
@@ -122,8 +118,8 @@ public boolean supprimerDetailLocation(Long idLocation, Long idDetail) {
 	 LocationTravaux locationTravaux = findById(idLocation);
 	 montantLocationTravaux = locationTravaux.getMontant();
 	 
-     Travaux travaux = travauxRepository.findById(locationTravaux.getTravauxId()).get();
-	 montantTravaux = travaux.getTotal();
+     Projet projet = projetRepository.findById(locationTravaux.getProjetId()).get();
+	 montantTravaux = projet.getTotal();
 	 montant = montantTravaux - montantLocationTravaux;
 	
    	List<DetailLocation> detailLocations = locationTravaux.getDetailLocation();
@@ -138,11 +134,11 @@ public boolean supprimerDetailLocation(Long idLocation, Long idDetail) {
 	LocationTravaux location= locationRepository.save(locationTravaux);
    
 	montantT = montant + location.getMontant();
-	travaux.setTotal(montantT);
-	Travaux tr =travauxRepository.save(travaux);
-	reste = (tr.getBudget())-(tr.getTotal());
-	       tr.setReste(reste);
-	       travauxRepository.save(tr);
+	projet.setTotal(montantT);
+	Projet pr =projetRepository.save(projet);
+	reste = (pr.getBudget())-(pr.getTotal());
+	       pr.setReste(reste);
+	       projetRepository.save(pr);
 	       LocationTravaux location1= locationRepository.findById(location.getId()).get();
 			  montant1 = location1.getMontant();
 			  if (montant1 == 0) {
@@ -154,17 +150,17 @@ public boolean supprimerDetailLocation(Long idLocation, Long idDetail) {
 
 
 @Override
-public List<DetailLocation> findDetailLocationByIdTravaux(long id) {
+public List<DetailLocation> findDetailLocationByIdProjet(long id) {
 	// TODO Auto-generated method stub
-	return detailLcationRepository.findDetailLocationByIdTravaux(id);
+	return detailLcationRepository.findDetailLocationByIdProjet(id);
 }
 
 
 
 @Override
-public Double findDetailLocationMontantByIdTravaux(long id) {
+public Double findDetailLocationMontantByIdProjet(long id) {
 	double somme = 0d;
-	List<DetailLocation> detailLocations = detailLcationRepository.findDetailLocationMontantByIdTravaux(id);
+	List<DetailLocation> detailLocations = detailLcationRepository.findDetailLocationMontantByIdProjet(id);
 	for (DetailLocation detailLocation : detailLocations) {
 		somme += detailLocation.getMontant();
 	}
@@ -178,7 +174,7 @@ public Double findDetailLocationMontantByIdTravaux(long id) {
 @Override
 public List<DetailLocation> getDetailLocationBydate(long id, LocalDate dateDebut, LocalDate dateFin) {
 	  
-	List<DetailLocation> detailLocations = detailLcationRepository.findDetailLocationByDateBetweenAndTravauxId(dateDebut, dateFin, id);
+	List<DetailLocation> detailLocations = detailLcationRepository.findDetailLocationByDateBetweenAndProjetId(dateDebut, dateFin, id);
 	  
 	  
 	  return detailLocations;

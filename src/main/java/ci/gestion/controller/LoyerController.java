@@ -114,7 +114,7 @@ public class LoyerController {
 			Reponse<List<Loyer>> reponse;
 
 			try {
-				List<Loyer> loyers = loyerMetier.findLoyerByIdTravaux(idTravaux);
+				List<Loyer> loyers = loyerMetier.findLoyerByIdProjet(idTravaux);
 				if (!loyers.isEmpty()) {
 					reponse = new Reponse<List<Loyer>>(0, null, loyers);
 				} else {
@@ -179,7 +179,7 @@ public class LoyerController {
 						Reponse<List<DetailLoyer>> reponse;
 
 						try {
-							List<DetailLoyer> mainOeuvres = loyerMetier.findDetailLoyerByIdTravaux(idTravaux);
+							List<DetailLoyer> mainOeuvres = loyerMetier.findDetailLoyerByIdProjet(idTravaux);
 							if (!mainOeuvres.isEmpty()) {
 								reponse = new Reponse<List<DetailLoyer>>(0, null, mainOeuvres);
 							} else {
@@ -200,7 +200,7 @@ public class LoyerController {
 						Reponse<Double> reponse;
 		                
 						try {
-							Double achats = loyerMetier.findDetailLoyerMontantByIdTravaux(idTravaux);
+							Double achats = loyerMetier.findDetailLoyerMontantByIdProjet(idTravaux);
 							reponse = new Reponse<Double>(0, null, achats);
 							System.out.println("voir la somme"+ achats);
 						} catch (Exception e) {

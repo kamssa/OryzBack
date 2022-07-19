@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import ci.gestion.entites.loyer.Loyer;
 
 public interface LoyerRepository extends JpaRepository<Loyer, Long>{
-	@Query("select loyer from Loyer loyer  where loyer.travauxId=?1")
-	List<Loyer> findLoyerByIdTravaux(long id);
+	@Query("select loyer from Loyer loyer  where loyer.projetId=?1")
+	List<Loyer> findLoyerByIdProjet(long id);
 }

@@ -1,30 +1,25 @@
-package ci.gestion.entites.entreprise;
+package ci.gestion.entites.stock;
 
 import javax.persistence.CascadeType;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-import ci.gestion.entites.shared.Personne;
+import ci.gestion.entites.entreprise.Entreprise;
+import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Entity
-@DiscriminatorValue("MANAGER")
 @NoArgsConstructor @AllArgsConstructor
 @Data
-public class Manager extends Personne {
+public class MontantStock extends AbstractEntity{
 
-	
 	private static final long serialVersionUID = 1L;
-	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_Entreprise")
+    private Double montant =0d;
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "id_entreprise")
 	private Entreprise entreprise;
-	private Boolean actevated;
-	
-	
 }

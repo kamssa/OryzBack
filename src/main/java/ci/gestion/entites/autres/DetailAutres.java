@@ -22,5 +22,5 @@ public class DetailAutres extends AbstractEntity{
 	private Double quantite;
 	private double montant;
 	private String nomPrenom;
-	private Long travauxId;
-}
+	private Long projetId;
+	}

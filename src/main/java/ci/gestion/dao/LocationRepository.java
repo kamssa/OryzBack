@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import ci.gestion.entites.location.LocationTravaux;
 
 public interface LocationRepository extends JpaRepository<LocationTravaux, Long>{
-	@Query("select location from LocationTravaux location  where location.travauxId=?1")
-	List<LocationTravaux> findLocationByIdTravaux(long id);
+	@Query("select location from LocationTravaux location  where location.projetId=?1")
+	List<LocationTravaux> findLocationByIdProjet(long id);
 }

@@ -30,7 +30,7 @@ public class DetailMainOeuvre extends DateAudit {
 	private double reste;
 	private Double nbreJours;
 	private LocalDate date;
-	private Long travauxId;
+	private Long projetId;
 	private String libelle;
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Journalier journalier;
@@ -48,17 +48,16 @@ public class DetailMainOeuvre extends DateAudit {
 		this.libelle = libelle;
 	}
 
-	public Long getTravauxId() {
-		return travauxId;
+	public Long getProjetId() {
+		return projetId;
 	}
 
-	public void setTravauxId(Long travauxId) {
-		this.travauxId = travauxId;
+
+	public void setProjetId(Long projetId) {
+		this.projetId = projetId;
 	}
 
-	
-	
-	
+
 	public LocalDate getDate() {
 		return date;
 	}

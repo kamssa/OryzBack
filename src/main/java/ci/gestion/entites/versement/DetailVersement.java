@@ -11,8 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import ci.gestion.entites.entreprise.Employe;
 import ci.gestion.entites.shared.AbstractEntity;
-import ci.gestion.entites.site.Client;
-import ci.gestion.entites.site.Travaux;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

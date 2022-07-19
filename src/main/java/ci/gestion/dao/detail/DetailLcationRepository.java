@@ -11,13 +11,13 @@ import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.entites.location.DetailLocation;
 
 public interface DetailLcationRepository extends JpaRepository<DetailLocation, Long>{
-	@Query("select detailLocation from DetailLocation detailLocation  where detailLocation.travauxId=?1")
-	List<DetailLocation> findDetailLocationByIdTravaux(long id);
-	@Query("select detailLocation from DetailLocation detailLocation  where detailLocation.travauxId=?1")
-	List<DetailLocation> findDetailLocationMontantByIdTravaux(long id);
-    List<DetailLocation> findDetailLocationByDateBetweenAndTravauxId(
+	@Query("select detailLocation from DetailLocation detailLocation  where detailLocation.projetId=?1")
+	List<DetailLocation> findDetailLocationByIdProjet(long id);
+	@Query("select detailLocation from DetailLocation detailLocation  where detailLocation.projetId=?1")
+	List<DetailLocation> findDetailLocationMontantByIdProjet(long id);
+    List<DetailLocation> findDetailLocationByDateBetweenAndProjetId(
 			
             @Param("date") LocalDate date,
             @Param("endDate") LocalDate endDate,
-            @Param("travauxId") Long travauxId);
+            @Param("projetId") Long projetId);
 }

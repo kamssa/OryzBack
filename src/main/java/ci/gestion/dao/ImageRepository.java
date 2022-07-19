@@ -12,7 +12,7 @@ import ci.gestion.entites.site.Photo;
 public interface ImageRepository extends JpaRepository<Photo, Long> {
 	List<Photo> findByOrderById();
 
-	@Query("select image from Photo image  where image.idTravaux=?1")
-	Photo findImageByIdTravaux(Long id);
+	@Query("select image from Photo image  where image.idProjet=?1")
+	Photo findImageByIdProjet(Long id);
 
 }

@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.StockRepository;
 import ci.gestion.dao.detail.DetailStockRepository;
-import ci.gestion.entites.entreprise.DetailStock;
-import ci.gestion.entites.entreprise.Stock;
+import ci.gestion.entites.stock.DetailStock;
+import ci.gestion.entites.stock.Stock;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

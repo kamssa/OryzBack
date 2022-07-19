@@ -30,7 +30,7 @@ public class AchatTravaux extends DateAudit{
 	private double montant=0d;
 	private double quantite=0d;
 
-    private Long travauxId;
+	private Long projetId;
 	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
 	@JoinColumn(name = "fk_achatTravaux")
 	private List<DetailAchatTravaux> detailAchatTravaux = new ArrayList<>();
@@ -88,12 +88,14 @@ public double getMontant() {
 		this.montant = montant;
 	}
 
-public Long getTravauxId() {
-		return travauxId;
+
+
+	public Long getProjetId() {
+		return projetId;
 	}
 
-	public void setTravauxId(Long travauxId) {
-		this.travauxId = travauxId;
+	public void setProjetId(Long projetId) {
+		this.projetId = projetId;
 	}
 
 	public List<DetailAchatTravaux> getDetailAchatTravaux() {
@@ -107,10 +109,11 @@ public Long getTravauxId() {
 	@Override
 	public String toString() {
 		return "AchatTravaux [id=" + id + ", version=" + version + ", libelle=" + libelle + ", date=" + date
-				+ ", montant=" + montant + ", travauxId=" + travauxId + ", detailAchatTravaux=" + detailAchatTravaux
-				+ "]";
+				+ ", montant=" + montant + ", quantite=" + quantite + ", projetId=" + projetId + ", detailAchatTravaux="
+				+ detailAchatTravaux + "]";
 	}
 
+	
 
 	
 }

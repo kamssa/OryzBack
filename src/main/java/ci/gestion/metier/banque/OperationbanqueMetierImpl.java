@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.OperationBanqueRepository;
-import ci.gestion.entites.operation.Operation;
+import ci.gestion.entites.banque.Operation;
 import ci.gestion.metier.exception.InvalideOryzException;
 @Service
 public class OperationbanqueMetierImpl implements IOperationBanqueMetier {

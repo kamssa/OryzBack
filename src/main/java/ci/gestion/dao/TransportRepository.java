@@ -8,6 +8,6 @@ import ci.gestion.entites.transport.Transport;
 
 
 public interface TransportRepository extends JpaRepository<Transport, Long>{
-	@Query("select transport from Transport transport  where transport.travauxId=?1")
-	List<Transport> findTransportByIdTravaux(long id);
+	@Query("select transport from Transport transport  where transport.projetId=?1")
+	List<Transport> findTransportByIdProjet(long id);
 }

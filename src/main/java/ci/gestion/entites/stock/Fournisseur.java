@@ -1,4 +1,4 @@
-package ci.gestion.entites.operation;
+package ci.gestion.entites.stock;
 
 import java.io.Serializable;
 

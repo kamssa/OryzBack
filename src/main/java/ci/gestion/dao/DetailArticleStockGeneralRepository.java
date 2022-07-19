@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
+import ci.gestion.entites.stock.DetailAticleStockGeneral;
 
 
 public interface DetailArticleStockGeneralRepository extends JpaRepository<DetailAticleStockGeneral, Long>{

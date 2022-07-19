@@ -9,11 +9,11 @@ import ci.gestion.entites.autres.DetailAutres;
 import ci.gestion.metier.utilitaire.Imetier;
 
 public interface IAutresMetier extends Imetier<Autres, Long>{
-	List<Autres> findAutresByIdTravaux(long id);
+	List<Autres> findAutresByIdProjet(long id);
     boolean supprimerDetailAutre(Long idAutre, Long idDetail);
-	List<DetailAutres> findDetailAutresByIdTravaux(long id);
-	Double findDetailAutresMontantByIdTravaux(long id);
-    List<DetailAutres> getDetailAutreBydate(long idTravaux,LocalDate dateDebut, LocalDate dateFin);
+	List<DetailAutres> findDetailAutresByIdProjet(long id);
+	Double findDetailAutresMontantByIdProjet(long id);
+    List<DetailAutres> getDetailAutreBydate(long projetId,LocalDate dateDebut, LocalDate dateFin);
 
 
 }

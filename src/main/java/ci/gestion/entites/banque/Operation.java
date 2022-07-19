@@ -1,4 +1,4 @@
-package ci.gestion.entites.operation;
+package ci.gestion.entites.banque;
 
 import java.time.LocalDate;
 import java.util.Date;

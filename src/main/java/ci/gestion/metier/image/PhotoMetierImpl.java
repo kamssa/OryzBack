@@ -55,9 +55,9 @@ private PhotoRepository photoRepository;
 	}
 
 	@Override
-	public List<Photo> findPhotoByIdTravaux(long idTravaux) {
+	public List<Photo> findPhotoByIdProjet(long idTravaux) {
 		// TODO Auto-generated method stub
-		return photoRepository.findByIdTravaux(idTravaux);
+		return photoRepository.findByIdProjet(idTravaux);
 	}
 
 }

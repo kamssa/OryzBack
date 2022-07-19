@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.CategorieRepository;
 import ci.gestion.dao.MaterielRepository;
-import ci.gestion.entites.operation.Categorie;
-import ci.gestion.entites.operation.Materiaux;
+import ci.gestion.entites.stock.Categorie;
+import ci.gestion.entites.stock.Materiaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

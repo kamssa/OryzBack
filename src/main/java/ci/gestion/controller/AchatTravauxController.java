@@ -128,7 +128,7 @@ public class AchatTravauxController {
 			Reponse<List<AchatTravaux>> reponse;
 
 			try {
-				List<AchatTravaux> achats = achatTravauxMetier.findAchatByIdTravaux(idTravaux);
+				List<AchatTravaux> achats = achatTravauxMetier.findAchatByIdProjet(idTravaux);
 				if (!achats.isEmpty()) {
 					reponse = new Reponse<List<AchatTravaux>>(0, null, achats);
 				} else {
@@ -178,7 +178,7 @@ public class AchatTravauxController {
 			Reponse<List<DetailAchatTravaux>> reponse;
 
 			try {
-				List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByIdTravaux(idTravaux);
+				List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByIdProjet(idTravaux);
 				if (!mainOeuvres.isEmpty()) {
 					reponse = new Reponse<List<DetailAchatTravaux>>(0, null, mainOeuvres);
 				} else {
@@ -199,7 +199,7 @@ public class AchatTravauxController {
 			Reponse<Double> reponse;
             
 			try {
-				Double achats = achatTravauxMetier.findDetailAchatTravauxMontantByIdTravaux(idTravaux);
+				Double achats = achatTravauxMetier.findDetailAchatTravauxMontantByIdProjet(idTravaux);
 				reponse = new Reponse<Double>(0, null, achats);
 				System.out.println("voir la somme"+ achats);
 			} catch (Exception e) {
@@ -218,7 +218,7 @@ public class AchatTravauxController {
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					LocalDate dateTime = LocalDate.parse(dateDebut, formatter);
 					LocalDate dateTime1 = LocalDate.parse(dateFin, formatter);
-					try { List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByDateIdTravaux(travauxId,dateTime,dateTime1); 
+					try { List<DetailAchatTravaux> mainOeuvres = achatTravauxMetier.findDetailAchatTravauxByDateIdProjet(travauxId,dateTime,dateTime1); 
 					  if (!mainOeuvres.isEmpty()) { 
 						  reponse = new Reponse<List<DetailAchatTravaux>>(0, null, mainOeuvres); } else {
 					  List<String> messages = new ArrayList<>();

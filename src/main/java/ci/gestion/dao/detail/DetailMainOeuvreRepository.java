@@ -12,13 +12,13 @@ import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
 import ci.gestion.entites.mainoeuvre.MainOeuvre;
 
 public interface DetailMainOeuvreRepository extends JpaRepository<DetailMainOeuvre, Long> {
-	@Query("select detailMainOeuvre from DetailMainOeuvre detailMainOeuvre  where detailMainOeuvre.travauxId=?1")
-	List<DetailMainOeuvre> findDetailMainOeuvreByIdTravaux(long id);
-	@Query("select detailMainOeuvre from DetailMainOeuvre detailMainOeuvre  where detailMainOeuvre.travauxId=?1")
-	List<DetailMainOeuvre> findDetailMainOeuvreMontantByIdTravaux(long id);
-    List<DetailMainOeuvre> findDetailMainOeuvreByDateBetweenAndTravauxId(
+	@Query("select detailMainOeuvre from DetailMainOeuvre detailMainOeuvre  where detailMainOeuvre.projetId=?1")
+	List<DetailMainOeuvre> findDetailMainOeuvreByIdProjet(long id);
+	@Query("select detailMainOeuvre from DetailMainOeuvre detailMainOeuvre  where detailMainOeuvre.projetId=?1")
+	List<DetailMainOeuvre> findDetailMainOeuvreMontantByIdProjet(long id);
+    List<DetailMainOeuvre> findDetailMainOeuvreByDateBetweenAndProjetId(
 			
             @Param("date") LocalDate date,
             @Param("endDate") LocalDate endDate,
-            @Param("travauxId") Long travauxId);
+            @Param("projetId") Long projetId);
 }

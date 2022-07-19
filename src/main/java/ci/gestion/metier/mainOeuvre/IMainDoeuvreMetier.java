@@ -9,10 +9,10 @@ import ci.gestion.entites.mainoeuvre.MainOeuvre;
 import ci.gestion.metier.utilitaire.Imetier;
 
 public interface IMainDoeuvreMetier extends Imetier<MainOeuvre, Long>{
-	List<MainOeuvre> findMainOeuvreByIdTravaux(long id);
+	List<MainOeuvre> findMainOeuvreByIdProjet(long id);
     boolean supprimerDetailMainOeuvre(Long idMainOeuvre, Long idDetail);
-    List<DetailMainOeuvre> findDetailMainOeuvreByIdTravaux(long id);
-	Double findDetailMainOeuvreMontantByIdTravaux(long id);
+    List<DetailMainOeuvre> findDetailMainOeuvreByIdProjet(long id);
+	Double findDetailMainOeuvreMontantByIdProjet(long id);
     List<DetailMainOeuvre> getDetailMainBydate(long idTravaux,LocalDate dateDebut, LocalDate dateFin);
 
 

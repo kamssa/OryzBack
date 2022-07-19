@@ -27,7 +27,7 @@ public class AutreAchatTravaux extends AbstractEntity{
 	private double montant=0d;
 	private double quantite=0d;
     private LocalDateTime date;
-	private Long travauxId;
+    private Long projetId;
     @OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
 	@JoinColumn(name = "fk_achatTravaux")
 	private List<DetailAutreAchatTravaux> detailAutreAchatTravaux = new ArrayList<>();

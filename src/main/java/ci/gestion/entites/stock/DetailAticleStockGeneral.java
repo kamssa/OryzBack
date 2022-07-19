@@ -1,4 +1,4 @@
-package ci.gestion.entites.entreprise;
+package ci.gestion.entites.stock;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -6,19 +6,24 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@NoArgsConstructor @AllArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
-public class MontantStock extends AbstractEntity{
+public class DetailAticleStockGeneral extends AbstractEntity{
 
 	private static final long serialVersionUID = 1L;
-    private Double montant =0d;
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	private String libelleMateriaux;
+	private Double prixUnitaire;
+	private Double quantite;
+	private Double montant;
+	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "id_entreprise")
 	private Entreprise entreprise;
 }

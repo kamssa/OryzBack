@@ -33,7 +33,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import ci.gestion.entites.admin.Admin;
 import ci.gestion.entites.entreprise.Employe;
-import ci.gestion.entites.entreprise.Manager;
+import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.entites.site.Client;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -47,9 +47,9 @@ import lombok.NoArgsConstructor;
 @DiscriminatorColumn(name = "TYPE_PERSONNE", discriminatorType = DiscriminatorType.STRING, length = 10)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({ @Type(name = "ADMIN", value = Admin.class), 
-	         @Type(name = "MANAGER", value = Manager.class),
-		    @Type(name = "EMPLOYE", value = Employe.class),
-		    @Type(name = "CLIENT", value = Client.class)
+	         @Type(name = "EMPLOYE", value = Employe.class),
+		     @Type(name = "CLIENT", value = Client.class),
+		     @Type(name = "ENTREPRISE", value = Entreprise.class)
            })
 @NoArgsConstructor @AllArgsConstructor
 @Data
@@ -78,7 +78,8 @@ public class Personne extends AbstractEntity {
 	private String password;
 	private String fonction;
 	private String nomComplet;
-
+	private boolean suspendu;
+    private  boolean actevated;
 	@Embedded
 	private Adresse adresse;
 

@@ -72,7 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/*.css",
                 "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/auth/**","/api/role/**","/api/siteEntreprise/**",
+                .antMatchers("/api/auth/**","/api/role/**","/api/siteEntreprise/**","/api/projet/**"
+                		,"/api/rechercheProjetmc/**","/api/projetByIdClient/**","/api/projetByIdEntreprise/**",
             		"/api/getPhoto/**","/api/travaux/**", "/api/rechemc/**",
             		"/api/getOperationByParam/**","/api/departement/**",
             		"/api/getDepartementByidEntreprise/**", "/api/autreAchat/**",
@@ -99,7 +100,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             		"/api/detailAutreDate/**","/api/detailLocationDate/**","/api/detailLoyerDate/**",
             		"/api/detailMainDate/**","/api/detailTransportDate/**","/api/detailAchatTravauxDate/**",
             		"/api/versement/**","/api/versementByIdTravaux/**","/api/detailVersement/**",
-            		"/api/travauxByIdClient/**","/api/detailVersementByIdVersement/**", "/api/operation/**"
+            		"/api/travauxByIdClient/**","/api/detailVersementByIdVersement/**", "/api/operation/**","/api/entreprise/**"
             		).permitAll()
 	       .anyRequest().authenticated();
 	       

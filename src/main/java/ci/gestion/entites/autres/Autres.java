@@ -29,7 +29,7 @@ public class Autres extends DateAudit{
 	private String libelle;
 	private double montant=0d;
 	private LocalDateTime date;
-    private Long travauxId;
+    private Long projetId;
 	@OneToMany(fetch= FetchType.EAGER, cascade= CascadeType.ALL)
 	@JoinColumn(name = "fk_Autres")
 	private List<DetailAutres> detailAutres = new ArrayList<>();
@@ -39,7 +39,7 @@ public class Autres extends DateAudit{
 		super();
 	}
 	
-	public Autres(Long id, Long version, String libelle, double montant, LocalDateTime date, Long travauxId,
+	public Autres(Long id, Long version, String libelle, double montant, LocalDateTime date, Long projetId,
 			List<DetailAutres> detailAutres) {
 		super();
 		this.id = id;
@@ -47,7 +47,7 @@ public class Autres extends DateAudit{
 		this.libelle = libelle;
 		this.montant = montant;
 		this.date = date;
-		this.travauxId = travauxId;
+		this.projetId = projetId;
 		this.detailAutres = detailAutres;
 	}
 
@@ -69,12 +69,15 @@ public class Autres extends DateAudit{
 	public void setDate(LocalDateTime date) {
 		this.date = date;
 	}
-	public Long getTravauxId() {
-		return travauxId;
+	
+	public Long getProjetId() {
+		return projetId;
 	}
-	public void setTravauxId(Long travauxId) {
-		this.travauxId = travauxId;
+
+	public void setProjetId(Long projetId) {
+		this.projetId = projetId;
 	}
+
 	public List<DetailAutres> getDetailAutres() {
 		return detailAutres;
 	}

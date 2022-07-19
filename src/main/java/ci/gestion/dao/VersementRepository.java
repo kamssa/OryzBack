@@ -9,6 +9,6 @@ import ci.gestion.entites.versement.Versement;
 
 
 public interface VersementRepository extends JpaRepository<Versement, Long>{
-	@Query("select v from Versement v  where v.travaux.id=?1")
-	Optional<Versement> findVersementByIdTravaux(long id);
+	@Query("select v from Versement v  where v.projet.id=?1")
+	Optional<Versement> findVersementByIdProjet(long id);
 }

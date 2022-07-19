@@ -14,19 +14,21 @@ import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.DetailArticleStockGeneralRepository;
 import ci.gestion.dao.OperationTravauxRepository;
+import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.StockRepository;
-import ci.gestion.dao.TravauxRepository;
 import ci.gestion.dao.detail.AchatTravauxRepository;
 import ci.gestion.dao.detail.DetailAchatTravauxRepository;
 import ci.gestion.dao.detail.DetailStockRepository;
+import ci.gestion.dao.entreprise.EntrepriseRepository;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.autres.DetailAutres;
-import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
-import ci.gestion.entites.entreprise.DetailStock;
-import ci.gestion.entites.entreprise.Stock;
+import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.entites.retraitStock.AchatTravaux;
 import ci.gestion.entites.retraitStock.DetailAchatTravaux;
-import ci.gestion.entites.site.Travaux;
+import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.stock.DetailAticleStockGeneral;
+import ci.gestion.entites.stock.DetailStock;
+import ci.gestion.entites.stock.Stock;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service
@@ -42,7 +44,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	@Autowired
 	private DetailAchatTravauxRepository detailAchatTravauxRepository;
 	@Autowired
-	private TravauxRepository travauxRepository;
+	private ProjetRepository projetRepository;
 	@Autowired
 	private DetailArticleStockGeneralRepository detailArticleStockGeneralRepository;
 	
@@ -57,12 +59,12 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		double montantT = 0;
 		double sommeMontant = 0;
 		double reste = 0;
-		Travaux travaux = null;
+		Projet projet = null;
 		List<DetailAchatTravaux> detailAchats = entity.getDetailAchatTravaux();
 		for (DetailAchatTravaux detail : detailAchats) {
-			 travaux = travauxRepository.findById(entity.getTravauxId()).get();
+			 projet = projetRepository.findById(entity.getProjetId()).get();
 			
-				List<Stock> ts = stockRepository.getStockByIdEntreprise(travaux.getSite().getEntreprise().getId());
+				List<Stock> ts = stockRepository.getStockByIdEntreprise(projet.getEntreprise().getId());
 				for (Stock stoc : ts) {
 					if (stoc.getLibelle().equals(entity.getLibelle())) {
 						// detail stock
@@ -80,15 +82,15 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
                                 achat = achaTravauxRepository.save(entity);
                                  
                                // Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
-                				montantTravaux = travaux.getTotal();
+                				montantTravaux = projet.getTotal();
                 				montantT = montantTravaux + achat.getMontant();
-                				travaux.setTotal(montantT);
-                				Travaux tr =travauxRepository.save(travaux);
-                				reste = (tr.getDebousserSec())-(tr.getTotal());
-                				tr.setReste(reste);
-                				double percent = 100*(tr.getTotal()/tr.getDebousserSec());
-                				tr.setPercent(percent);
-                				travauxRepository.save(tr);
+                				projet.setTotal(montantT);
+                				Projet pr =projetRepository.save(projet);
+                				reste = (pr.getDebousserSec())-(pr.getTotal());
+                				pr.setReste(reste);
+                				double percent = 100*(pr.getTotal()/pr.getDebousserSec());
+                				pr.setPercent(percent);
+                				projetRepository.save(pr);
 								quantite -= detail.getQuantite();
 								double prixUnitaire = detail.getPrixUnitaire();
 								montantD = ((quantite * prixUnitaire));
@@ -108,7 +110,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 								// detailArticleStockGeneral
 								List<DetailAticleStockGeneral> dasg = detailArticleStockGeneralRepository
 										.getDetailArticleStockGeneralByIdEntreprise(
-												tr.getSite().getEntreprise().getId());
+												pr.getEntreprise().getId());
 								if (!dasg.isEmpty()) {
 									for (DetailAticleStockGeneral detailSG : dasg) {
 										if (detailSG.getLibelleMateriaux().equals(detail.getLibelleMateriaux())) {
@@ -146,8 +148,8 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		double sommeMontant = 0;
 		double reste = 0;
 		double montantModifie = 0;
-		Travaux travaux = travauxRepository.findById(modif.getTravauxId()).get();
-		montantTravaux = travaux.getTotal();
+		Projet projet = projetRepository.findById(modif.getProjetId()).get();
+		montantTravaux = projet.getTotal();
 		montantModifie = montantTravaux - modif.getMontant();
 		System.out.println(" le montant total  reduit" + montantModifie);
 		List<DetailAchatTravaux> detailAchats = modif.getDetailAchatTravaux();
@@ -160,11 +162,11 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 
 		AchatTravaux achat = achatTravauxRepository.save(modif);
 		montantT = montantModifie + achat.getMontant();
-		travaux.setTotal(montantT);
-		Travaux tr = travauxRepository.save(travaux);
+		projet.setTotal(montantT);
+		Projet tr = projetRepository.save(projet);
 		reste = (tr.getBudget()) - (tr.getTotal());
 		tr.setReste(reste);
-		travauxRepository.save(tr);
+		projetRepository.save(tr);
 		return achat;
 	}
 
@@ -186,17 +188,17 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		double montantTravaux = 0;
 		double montantT = 0;
 		double reste = 0;
-		Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
-		montantTravaux = travaux.getTotal();
+		Projet projet = projetRepository.findById(achat.getProjetId()).get();
+		montantTravaux = projet.getTotal();
 		montantT = montantTravaux - achat.getMontant();
-		travaux.setTotal(montantT);
-		Travaux tr = travauxRepository.save(travaux);
-		reste = tr.getReste() + achat.getMontant();
-		tr.setReste(reste);
-		double percent = (tr.getDebousserSec()*tr.getTotal())/100;
-		tr.setPercent(percent);
-		travauxRepository.save(tr);
-		List<Stock> ts = stockRepository.getStockByIdEntreprise(tr.getSite().getEntreprise().getId());
+		projet.setTotal(montantT);
+		Projet pr = projetRepository.save(projet);
+		reste = pr.getReste() + achat.getMontant();
+		pr.setReste(reste);
+		double percent = (pr.getDebousserSec()*pr.getTotal())/100;
+		pr.setPercent(percent);
+		projetRepository.save(pr);
+		List<Stock> ts = stockRepository.getStockByIdEntreprise(pr.getEntreprise().getId());
 		for (Stock stoc : ts) {
 			if (stoc.getLibelle().equals(achat.getLibelle())) {
 				// detail stock
@@ -223,7 +225,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 					// detailArticleStockGeneral
 					List<DetailAticleStockGeneral> dasg = detailArticleStockGeneralRepository
 							.getDetailArticleStockGeneralByIdEntreprise(
-									tr.getSite().getEntreprise().getId());
+									pr.getEntreprise().getId());
 					if (!dasg.isEmpty()) {
 						for (DetailAticleStockGeneral detailSG : dasg) {
 							if (detailSG.getLibelleMateriaux().equals(achat.getLibelle())) {
@@ -259,9 +261,9 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	}
 
 	@Override
-	public List<AchatTravaux> findAchatByIdTravaux(long id) {
+	public List<AchatTravaux> findAchatByIdProjet(long id) {
 		// TODO Auto-generated method stub
-		return achatTravauxRepository.findAchatByIdTravaux(id);
+		return achatTravauxRepository.findAchatByIdProjet(id);
 	}
 
 	@Override
@@ -278,8 +280,8 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		AchatTravaux achat = findById(idAchat);
 		montantAchat = achat.getMontant();
 		System.out.println("Voir montant Achat" + montantAchat);
-		Travaux travaux = travauxRepository.findById(achat.getTravauxId()).get();
-		montantTravaux = travaux.getTotal();
+		Projet projet = projetRepository.findById(achat.getProjetId()).get();
+		montantTravaux = projet.getTotal();
 		montant = montantTravaux - montantAchat;
 
 		List<DetailAchatTravaux> detailAchats = achat.getDetailAchatTravaux();
@@ -294,11 +296,11 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		AchatTravaux achat1 = achatTravauxRepository.save(achat);
 
 		montantT = montant + achat1.getMontant();
-		travaux.setTotal(montantT);
-		Travaux tr = travauxRepository.save(travaux);
-		reste = (tr.getBudget()) - (tr.getTotal());
-		tr.setReste(reste);
-		travauxRepository.save(tr);
+		projet.setTotal(montantT);
+		Projet pr = projetRepository.save(projet);
+		reste = (pr.getBudget()) - (pr.getTotal());
+		pr.setReste(reste);
+		projetRepository.save(pr);
 		AchatTravaux achat2 = achatTravauxRepository.findById(achat1.getId()).get();
 		montant1 = achat2.getMontant();
 		if (montant1 == 0) {
@@ -308,16 +310,16 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	}
 
 	@Override
-	public List<DetailAchatTravaux> findDetailAchatTravauxByIdTravaux(long id) {
+	public List<DetailAchatTravaux> findDetailAchatTravauxByIdProjet(long id) {
 		// TODO Auto-generated method stub
-		return detailAchatTravauxRepository.findDetailAchatTravauxByIdTravaux(id);
+		return detailAchatTravauxRepository.findDetailAchatTravauxByIdProjet(id);
 	}
 
 	@Override
-	public Double findDetailAchatTravauxMontantByIdTravaux(long id) {
+	public Double findDetailAchatTravauxMontantByIdProjet(long id) {
 		
 			double somme = 0d;
-			List<DetailAchatTravaux> detailAchatTravauxs = detailAchatTravauxRepository.findDetailAchatTravauxByIdTravaux(id);
+			List<DetailAchatTravaux> detailAchatTravauxs = detailAchatTravauxRepository.findDetailAchatTravauxByIdProjet(id);
 			for (DetailAchatTravaux detailAchatTravaux : detailAchatTravauxs) {
 				somme += detailAchatTravaux.getMontant();
 			}
@@ -328,10 +330,10 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 	}
 
 	@Override
-	public List<DetailAchatTravaux> findDetailAchatTravauxByDateIdTravaux(long id, LocalDate dateDebut,
+	public List<DetailAchatTravaux> findDetailAchatTravauxByDateIdProjet(long id, LocalDate dateDebut,
 			LocalDate dateFin) {
 		// TODO Auto-generated method stub
-		 List<DetailAchatTravaux>  detailAutreAchatTravaux = detailAchatTravauxRepository.findDetailAchatTravauxByDateBetweenAndTravauxId( dateDebut, dateFin,id);
+		 List<DetailAchatTravaux>  detailAutreAchatTravaux = detailAchatTravauxRepository.findDetailAchatTravauxByDateBetweenAndProjetId( dateDebut, dateFin,id);
 		  
 		  
 		  return detailAutreAchatTravaux;

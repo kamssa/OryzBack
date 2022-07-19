@@ -6,8 +6,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import ci.gestion.entites.entreprise.DetailStockHistory;
-import ci.gestion.entites.entreprise.Stock;
+import ci.gestion.entites.stock.DetailStockHistory;
+import ci.gestion.entites.stock.Stock;
 
 public interface DetailStockHistoryRepository extends JpaRepository<DetailStockHistory, Long>{
 	@Query("select ds from DetailStockHistory ds where ds.libelleMateriaux=?1")

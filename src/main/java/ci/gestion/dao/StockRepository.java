@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import ci.gestion.entites.entreprise.Stock;
+import ci.gestion.entites.stock.Stock;
 
 public interface StockRepository extends JpaRepository<Stock, Long>{
 	@Query("select stock from Stock stock where stock.entreprise.id=?1")

@@ -5,12 +5,9 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.CaisseRepository;
-import ci.gestion.dao.TravauxRepository;
-import ci.gestion.entites.autres.Autres;
-import ci.gestion.entites.autres.DetailAutres;
+import ci.gestion.dao.ProjetRepository;
 import ci.gestion.entites.caisse.Caisse;
 import ci.gestion.entites.caisse.CaisseDetail;
-import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 
@@ -18,7 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class CaisseMetierImpl implements CaisseMetier{
 private CaisseRepository caisseRepository;
-private TravauxRepository travauxRepository;
+private ProjetRepository projetRepository;
 
 	@Override
 	public Caisse creer(Caisse entity) throws InvalideOryzException {

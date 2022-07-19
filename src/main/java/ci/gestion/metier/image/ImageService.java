@@ -34,7 +34,7 @@ public class ImageService {
 		return imageRepository.existsById(id);
 	}
 	public Photo findImageByIdTravaux(Long id) {
-		return imageRepository.findImageByIdTravaux(id);
+		return imageRepository.findImageByIdProjet(id);
 	}
 
 }

@@ -1,7 +1,7 @@
 package ci.gestion.entites.site;
 
 import java.time.LocalDateTime;
-
+import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public class Livraison extends DateAudit{
 	private Long version;
 	private LocalDateTime dateLivraison;
 	@ManyToOne
-	private Travaux travaux;
+	private Projet projet;
 	public Livraison() {
 		super();
 	}
@@ -38,14 +38,20 @@ public class Livraison extends DateAudit{
 	public void setVersion(Long version) {
 		this.version = version;
 	}
-	public Travaux getTravaux() {
-		return travaux;
-	}
-	public void setTravaux(Travaux travaux) {
-		this.travaux = travaux;
-	}
 	
 	
+	public Projet getProjet() {
+		return projet;
+	}
+
+
+
+	public void setProjet(Projet projet) {
+		this.projet = projet;
+	}
+
+
+
 	public LocalDateTime getDateLivraison() {
 		return dateLivraison;
 	}
@@ -60,13 +66,11 @@ public class Livraison extends DateAudit{
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((travaux == null) ? 0 : travaux.hashCode());
-		result = prime * result + ((version == null) ? 0 : version.hashCode());
-		return result;
+		return Objects.hash(dateLivraison, id, projet, version);
 	}
+
+
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -76,27 +80,20 @@ public class Livraison extends DateAudit{
 		if (getClass() != obj.getClass())
 			return false;
 		Livraison other = (Livraison) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (travaux == null) {
-			if (other.travaux != null)
-				return false;
-		} else if (!travaux.equals(other.travaux))
-			return false;
-		if (version == null) {
-			if (other.version != null)
-				return false;
-		} else if (!version.equals(other.version))
-			return false;
-		return true;
+		return Objects.equals(dateLivraison, other.dateLivraison) && Objects.equals(id, other.id)
+				&& Objects.equals(projet, other.projet) && Objects.equals(version, other.version);
 	}
+
+
+
 	@Override
 	public String toString() {
-		return "Livraison [id=" + id + ", version=" + version + ", travaux=" + travaux + "]";
+		return "Livraison [id=" + id + ", version=" + version + ", dateLivraison=" + dateLivraison + ", projet="
+				+ projet + "]";
 	}
+
+
+
 	
 	
 }

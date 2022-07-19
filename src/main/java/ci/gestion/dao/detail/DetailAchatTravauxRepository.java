@@ -15,13 +15,13 @@ import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 public interface DetailAchatTravauxRepository extends JpaRepository<DetailAchatTravaux, Long>{
 	@Query("select ds from DetailAchatTravaux ds where ds.libelleMateriaux=?1")
 	Optional<DetailAchatTravaux>  findByLibelleMateriaux(String libelleMateriaux);
-	@Query("select detailAchatTravaux from DetailAchatTravaux detailAchatTravaux  where detailAchatTravaux.travauxId=?1")
-	Double findDetailAchatTravauxMontantByIdTravaux(long id);
-	@Query("select detailAchatTravaux from DetailAchatTravaux detailAchatTravaux  where detailAchatTravaux.travauxId=?1")
-	List<DetailAchatTravaux> findDetailAchatTravauxByIdTravaux(long id);
-	 List<DetailAchatTravaux> findDetailAchatTravauxByDateBetweenAndTravauxId(
+	@Query("select detailAchatTravaux from DetailAchatTravaux detailAchatTravaux  where detailAchatTravaux.projetId=?1")
+	Double findDetailAchatTravauxMontantByIdProjet(long id);
+	@Query("select detailAchatTravaux from DetailAchatTravaux detailAchatTravaux  where detailAchatTravaux.projetId=?1")
+	List<DetailAchatTravaux> findDetailAchatTravauxByIdProjet(long id);
+	 List<DetailAchatTravaux> findDetailAchatTravauxByDateBetweenAndProjetId(
 				
 	            @Param("date") LocalDate date,
 	            @Param("endDate") LocalDate endDate,
-	            @Param("travauxId") Long travauxId);
+	            @Param("projetId") Long projetId);
 }

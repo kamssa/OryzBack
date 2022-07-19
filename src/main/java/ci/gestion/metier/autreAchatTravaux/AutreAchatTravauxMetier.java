@@ -10,8 +10,8 @@ import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 import ci.gestion.metier.utilitaire.Imetier;
 
 public interface AutreAchatTravauxMetier extends Imetier<AutreAchatTravaux, Long>{
-	List<AutreAchatTravaux> getAutreAchatTravauxTravauxByIdTravaux(long id);
-	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByIdTravaux(long id);
-	Double findDetailAutreAchatTravauxMontantByIdTravaux(long id);
-	List<DetailAutreAchatTravaux>  getDetailAutreAchatTravauxBydate(long travauxId,LocalDate startDate, LocalDate endDate);
+	List<AutreAchatTravaux> getAutreAchatTravauxTravauxByIdProjet(long id);
+	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByIdProjet(long id);
+	Double findDetailAutreAchatTravauxMontantByIdProjet(long id);
+	List<DetailAutreAchatTravaux>  getDetailAutreAchatTravauxBydate(long projetId,LocalDate startDate, LocalDate endDate);
 }

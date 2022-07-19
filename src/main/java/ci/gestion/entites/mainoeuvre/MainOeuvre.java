@@ -3,6 +3,7 @@ package ci.gestion.entites.mainoeuvre;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -30,7 +31,7 @@ public class MainOeuvre extends DateAudit {
 	private String libelle;
 	private double montant = 0d;
 	private LocalDateTime date;
-	private Long travauxId;
+	private Long projetId;
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_DetailMainOeuvre")
 	private List<DetailMainOeuvre> detailMainOeuvre = new ArrayList<>();
@@ -39,13 +40,13 @@ public class MainOeuvre extends DateAudit {
 		super();
 	}
 
-	public MainOeuvre(String libelle, double montant, LocalDateTime date, Long travauxId,
+	public MainOeuvre(String libelle, double montant, LocalDateTime date, Long projetId,
 			List<DetailMainOeuvre> detailMainOeuvre) {
 		super();
 		this.libelle = libelle;
 		this.montant = montant;
 		this.date = date;
-		this.travauxId = travauxId;
+		this.projetId = projetId;
 		this.detailMainOeuvre = detailMainOeuvre;
 	}
 
@@ -73,12 +74,12 @@ public class MainOeuvre extends DateAudit {
 		this.date = date;
 	}
 
-	public Long getTravauxId() {
-		return travauxId;
+	public Long getProjetId() {
+		return projetId;
 	}
 
-	public void setTravauxId(Long travauxId) {
-		this.travauxId = travauxId;
+	public void setProjetId(Long projetId) {
+		this.projetId = projetId;
 	}
 
 	public List<DetailMainOeuvre> getDetailMainOeuvre() {
@@ -98,9 +99,30 @@ public class MainOeuvre extends DateAudit {
 	}
 
 	@Override
-	public String toString() {
-		return "MainOeuvre [id=" + id + ", version=" + version + ", libelle=" + libelle + ", montant=" + montant
-				+ ", date=" + date + ", travauxId=" + travauxId + ", detailMainOeuvre=" + detailMainOeuvre + "]";
+	public int hashCode() {
+		return Objects.hash(date, detailMainOeuvre, id, libelle, montant, projetId, version);
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MainOeuvre other = (MainOeuvre) obj;
+		return Objects.equals(date, other.date) && Objects.equals(detailMainOeuvre, other.detailMainOeuvre)
+				&& Objects.equals(id, other.id) && Objects.equals(libelle, other.libelle)
+				&& Double.doubleToLongBits(montant) == Double.doubleToLongBits(other.montant)
+				&& Objects.equals(projetId, other.projetId) && Objects.equals(version, other.version);
+	}
+
+	@Override
+	public String toString() {
+		return "MainOeuvre [id=" + id + ", version=" + version + ", libelle=" + libelle + ", montant=" + montant
+				+ ", date=" + date + ", projetId=" + projetId + ", detailMainOeuvre=" + detailMainOeuvre + "]";
+	}
+
+	
 }

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.DetailArticleStockGeneralRepository;
-import ci.gestion.entites.entreprise.DetailAticleStockGeneral;
+import ci.gestion.entites.stock.DetailAticleStockGeneral;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

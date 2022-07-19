@@ -1,9 +1,7 @@
 package ci.gestion.controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +22,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.achat.AutreAchatTravaux;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
-import ci.gestion.entites.mainoeuvre.DetailMainOeuvre;
-import ci.gestion.entites.retraitStock.AchatTravaux;
-import ci.gestion.entites.site.Travaux;
 import ci.gestion.metier.autreAchatTravaux.AutreAchatTravauxMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
@@ -144,7 +139,7 @@ public class AutreAchatTravauxControlleur {
 				Reponse<List<AutreAchatTravaux>> reponse;
 
 				try {
-					List<AutreAchatTravaux> achats = autreAchatTravauxMetier.getAutreAchatTravauxTravauxByIdTravaux(idTravaux);
+					List<AutreAchatTravaux> achats = autreAchatTravauxMetier.getAutreAchatTravauxTravauxByIdProjet(idTravaux);
 					if (!achats.isEmpty()) {
 						reponse = new Reponse<List<AutreAchatTravaux>>(0, null, achats);
 					} else {
@@ -165,7 +160,7 @@ public class AutreAchatTravauxControlleur {
 				Reponse<List<DetailAutreAchatTravaux>> reponse;
 
 				try {
-					List<DetailAutreAchatTravaux> mainOeuvres = autreAchatTravauxMetier.findDetailAutreAchatTravauxByIdTravaux(idTravaux);
+					List<DetailAutreAchatTravaux> mainOeuvres = autreAchatTravauxMetier.findDetailAutreAchatTravauxByIdProjet(idTravaux);
 					if (!mainOeuvres.isEmpty()) {
 						reponse = new Reponse<List<DetailAutreAchatTravaux>>(0, null, mainOeuvres);
 					} else {
@@ -186,7 +181,7 @@ public class AutreAchatTravauxControlleur {
 							Reponse<Double> reponse;
                             
 							try {
-								Double achats = autreAchatTravauxMetier.findDetailAutreAchatTravauxMontantByIdTravaux(idTravaux);
+								Double achats = autreAchatTravauxMetier.findDetailAutreAchatTravauxMontantByIdProjet(idTravaux);
 								reponse = new Reponse<Double>(0, null, achats);
 								System.out.println("voir la somme"+ achats);
 							} catch (Exception e) {

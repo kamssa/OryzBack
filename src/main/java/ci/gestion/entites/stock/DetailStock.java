@@ -1,4 +1,4 @@
-package ci.gestion.entites.entreprise;
+package ci.gestion.entites.stock;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -6,8 +6,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import ci.gestion.entites.operation.Categorie;
-import ci.gestion.entites.operation.Fournisseur;
 import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -16,10 +16,10 @@ import ci.gestion.dao.personne.EmployeRepository;
 import ci.gestion.dao.personne.RoleRepository;
 import ci.gestion.entites.entreprise.Departement;
 import ci.gestion.entites.entreprise.Employe;
-import ci.gestion.entites.operation.Categorie;
-import ci.gestion.entites.operation.Materiaux;
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
+import ci.gestion.entites.stock.Categorie;
+import ci.gestion.entites.stock.Materiaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 

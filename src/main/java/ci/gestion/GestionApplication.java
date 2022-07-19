@@ -14,8 +14,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.security.web.firewall.DefaultHttpFirewall;
 import org.springframework.security.web.firewall.HttpFirewall;
 
-import ci.gestion.dao.SiteRepository;
-import ci.gestion.dao.TravauxRepository;
+
 import ci.gestion.dao.detail.DetailAchatTravauxRepository;
 
 
@@ -26,10 +25,7 @@ import ci.gestion.dao.detail.DetailAchatTravauxRepository;
 })
 public class GestionApplication implements CommandLineRunner{
 	 private static final Logger logger = LoggerFactory.getLogger(GestionApplication.class);
-	 @Autowired
-	 private SiteRepository siteRepo;
-	 @Autowired
-	 private TravauxRepository travauxRepository;
+	 
 	 @Autowired
 	 private DetailAchatTravauxRepository detailAchatTravauxRepository;
 	public static void main(String[] args) {

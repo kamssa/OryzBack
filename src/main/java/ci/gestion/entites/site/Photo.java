@@ -16,7 +16,7 @@ public class Photo extends DateAudit{
 	
 	@Version
 	private Long version;
-	private Long idTravaux;
+	private Long idProjet;
 	private String imageUrl;
 	private String imageId;
 
@@ -26,11 +26,11 @@ public Photo() {
 }
 
 
-public Photo(Long id, Long version, Long idTravaux, String imageUrl, String imageId) {
+public Photo(Long id, Long version, Long idProjet, String imageUrl, String imageId) {
 	super();
 	this.id = id;
 	this.version = version;
-	this.idTravaux = idTravaux;
+	this.idProjet = idProjet;
 	this.imageUrl = imageUrl;
 	this.imageId = imageId;
 }
@@ -45,14 +45,13 @@ public void setVersion(Long version) {
 	this.version = version;
 }
 
-
-public Long getIdTravaux() {
-	return idTravaux;
+public Long getIdProjet() {
+	return idProjet;
 }
 
 
-public void setIdTravaux(Long idTravaux) {
-	this.idTravaux = idTravaux;
+public void setIdProjet(Long idProjet) {
+	this.idProjet = idProjet;
 }
 
 

@@ -11,14 +11,14 @@ import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 
 public interface DetailAutreAchatTravauxRepository extends JpaRepository<DetailAutreAchatTravaux, Long>{
-	@Query("select detailAutreAchatTravaux from DetailAutreAchatTravaux detailAutreAchatTravaux  where detailAutreAchatTravaux.travauxId=?1")
-	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByIdTravaux(long id);
-	@Query("select detailAutreAchatTravaux from DetailAutreAchatTravaux detailAutreAchatTravaux  where detailAutreAchatTravaux.travauxId=?1")
-	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxMontantByIdTravaux(long id);
+	@Query("select detailAutreAchatTravaux from DetailAutreAchatTravaux detailAutreAchatTravaux  where detailAutreAchatTravaux.projetId=?1")
+	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByIdProjet(long id);
+	@Query("select detailAutreAchatTravaux from DetailAutreAchatTravaux detailAutreAchatTravaux  where detailAutreAchatTravaux.projetId=?1")
+	List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxMontantByIdProjet(long id);
 	// @Query("select t from DetailAutreAchatTravaux t where t.travauxId =?1 t.date BETWEEN :date AND :endDate")
-           List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByDateBetweenAndTravauxId(
+           List<DetailAutreAchatTravaux> findDetailAutreAchatTravauxByDateBetweenAndProjetId(
 			
             @Param("date") LocalDate date,
             @Param("endDate") LocalDate endDate,
-            @Param("travauxId") Long travauxId);
+            @Param("projetId") Long projetId);
 }

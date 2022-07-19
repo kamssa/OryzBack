@@ -1,4 +1,4 @@
-package ci.gestion.entites.operation;
+package ci.gestion.entites.stock;
 
 import javax.persistence.Entity;
 
@@ -11,11 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Categorie extends AbstractEntity{
-	
-	private static final long serialVersionUID = 1L;
+public class Unite extends AbstractEntity{
 	private String  libelle;
 	private String description;
-	private Long idEntreprise;
-	
 }

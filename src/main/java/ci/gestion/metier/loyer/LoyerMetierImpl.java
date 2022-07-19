@@ -2,24 +2,16 @@ package ci.gestion.metier.loyer;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.LoyerRepository;
-import ci.gestion.dao.TravauxRepository;
+import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.detail.DetailLoyerRepository;
-import ci.gestion.entites.achat.DetailAutreAchatTravaux;
-import ci.gestion.entites.autres.Autres;
-import ci.gestion.entites.autres.DetailAutres;
-import ci.gestion.entites.location.DetailLocation;
-import ci.gestion.entites.location.LocationTravaux;
 import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
-import ci.gestion.entites.retraitStock.AchatTravaux;
-import ci.gestion.entites.retraitStock.DetailAchatTravaux;
-import ci.gestion.entites.site.Travaux;
+import ci.gestion.entites.site.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service
@@ -29,7 +21,7 @@ LoyerRepository loyerRepository;
 @Autowired 
 DetailLoyerRepository detailLoyerRepository;
 @Autowired
-TravauxRepository travauxRepository;
+ProjetRepository projetRepository;
 	@Override
 	public Loyer creer(Loyer entity) throws InvalideOryzException {
 		double motantD = 0;
@@ -40,20 +32,20 @@ TravauxRepository travauxRepository;
 		for(DetailLoyer detail : detailLoyers) {
 			motantD = detail.getMontant();
 			detail.setMontant(motantD);
-			detail.setTravauxId(entity.getTravauxId());
+			detail.setProjetId(entity.getProjetId());
 			}
 		entity.setMontant(motantD);
 		Loyer loyer= loyerRepository.save(entity);
-		Travaux travaux = travauxRepository.findById(loyer.getTravauxId()).get();
-		montantTravaux = travaux.getTotal();
+		Projet projet = projetRepository.findById(loyer.getProjetId()).get();
+		montantTravaux = projet.getTotal();
 		montantT = montantTravaux + loyer.getMontant();
-		travaux.setTotal(montantT);
-		Travaux tr =travauxRepository.save(travaux);
-			reste = (tr.getDebousserSec())-(tr.getTotal());
-			tr.setReste(reste);
-			double percent = 100*(tr.getTotal()/tr.getDebousserSec());
-			tr.setPercent(percent);
-			travauxRepository.save(tr);
+		projet.setTotal(montantT);
+		Projet pr =projetRepository.save(projet);
+			reste = (pr.getDebousserSec())-(pr.getTotal());
+			pr.setReste(reste);
+			double percent = 100*(pr.getTotal()/pr.getDebousserSec());
+			pr.setPercent(percent);
+			projetRepository.save(pr);
 		 return loyer;
 		 
 	}
@@ -66,8 +58,8 @@ TravauxRepository travauxRepository;
 		double sommeMontant = 0;
 		double reste=0;
 		double montantModifie = 0;
-		Travaux travaux = travauxRepository.findById(modif.getTravauxId()).get();
-	    montantTravaux = travaux.getTotal();
+		Projet projet = projetRepository.findById(modif.getProjetId()).get();
+	    montantTravaux = projet.getTotal();
 	    montantModifie = montantTravaux - modif.getMontant();
 	    System.out.println(" le montant total  reduit"+montantModifie);
 		List<DetailLoyer> detailLoyers = modif.getDetailLoyer();
@@ -81,11 +73,11 @@ TravauxRepository travauxRepository;
 	         
 	    Loyer loyer= loyerRepository.save(modif);
 	    montantT = montantModifie + loyer.getMontant();
-		travaux.setTotal(montantT);
-		Travaux tr = travauxRepository.save(travaux);
-		reste = (tr.getBudget())-(tr.getTotal());
-		       tr.setReste(reste);
-		       travauxRepository.save(tr);
+		projet.setTotal(montantT);
+		Projet pr = projetRepository.save(projet);
+		reste = (pr.getBudget())-(pr.getTotal());
+		       pr.setReste(reste);
+		       projetRepository.save(pr);
 		 return loyer;
 	}
 
@@ -107,16 +99,16 @@ TravauxRepository travauxRepository;
 		double montantTravaux = 0;
 		double montantT = 0;
 		double reste=0;
-		Travaux travaux = travauxRepository.findById(loyer.getTravauxId()).get();
-		montantTravaux = travaux.getTotal();
+		Projet projet = projetRepository.findById(loyer.getProjetId()).get();
+		montantTravaux = projet.getTotal();
 		montantT = montantTravaux - loyer.getMontant();
-		travaux.setTotal(montantT);
-		Travaux tr = travauxRepository.save(travaux);
-		reste = tr.getReste() + loyer.getMontant();
-		tr.setReste(reste);
-		double percent = (tr.getDebousserSec()*tr.getTotal())/100;
-		tr.setPercent(percent);
-		travauxRepository.save(tr);
+		projet.setTotal(montantT);
+		Projet pr = projetRepository.save(projet);
+		reste = pr.getReste() + loyer.getMontant();
+		pr.setReste(reste);
+		double percent = (pr.getDebousserSec()*pr.getTotal())/100;
+		pr.setPercent(percent);
+		projetRepository.save(pr);
 				loyerRepository.deleteById(id);
                 return true; 
 	}
@@ -134,9 +126,9 @@ TravauxRepository travauxRepository;
 	}
 
 	@Override
-	public List<Loyer> findLoyerByIdTravaux(long id) {
+	public List<Loyer> findLoyerByIdProjet(long id) {
 		// TODO Auto-generated method stub
-		return loyerRepository.findLoyerByIdTravaux(id);
+		return loyerRepository.findLoyerByIdProjet(id);
 	}
 
 	@Override
@@ -153,8 +145,8 @@ TravauxRepository travauxRepository;
 		 Loyer loyer = findById(idLoyer);
 		 montantLoyer = loyer.getMontant();
 		 
-	     Travaux travaux = travauxRepository.findById(loyer.getTravauxId()).get();
-		 montantTravaux = travaux.getTotal();
+	     Projet projet = projetRepository.findById(loyer.getProjetId()).get();
+		 montantTravaux = projet.getTotal();
 		 montant = montantTravaux - montantLoyer;
 		
 	   	List<DetailLoyer> detailLoyers = loyer.getDetailLoyer();
@@ -169,11 +161,11 @@ TravauxRepository travauxRepository;
 		Loyer loyer1= loyerRepository.save(loyer);
 	   
 		montantT = montant + loyer1.getMontant();
-		travaux.setTotal(montantT);
-		Travaux tr =travauxRepository.save(travaux);
-		reste = (tr.getBudget())-(tr.getTotal());
-		       tr.setReste(reste);
-		       travauxRepository.save(tr);
+		projet.setTotal(montantT);
+		Projet pr =projetRepository.save(projet);
+		reste = (pr.getBudget())-(pr.getTotal());
+		       pr.setReste(reste);
+		       projetRepository.save(pr);
 		       Loyer loyer2= loyerRepository.findById(loyer1.getId()).get();
 				  montant1 = loyer2.getMontant();
 				  if (montant1 == 0) {
@@ -183,15 +175,15 @@ TravauxRepository travauxRepository;
 	}
 
 	@Override
-	public List<DetailLoyer> findDetailLoyerByIdTravaux(long id) {
+	public List<DetailLoyer> findDetailLoyerByIdProjet(long id) {
 		// TODO Auto-generated method stub
-		return detailLoyerRepository.findDetailLoyerByIdTravaux(id);
+		return detailLoyerRepository.findDetailLoyerByIdProjet(id);
 	}
 
 	@Override
-	public Double findDetailLoyerMontantByIdTravaux(long id) {
+	public Double findDetailLoyerMontantByIdProjet(long id) {
 		double somme = 0d;
-		List<DetailLoyer> detailLoyers = detailLoyerRepository.findDetailLoyerMontantByIdTravaux(id);
+		List<DetailLoyer> detailLoyers = detailLoyerRepository.findDetailLoyerMontantByIdProjet(id);
 		for (DetailLoyer detailLoyer : detailLoyers) {
 			somme += detailLoyer.getMontant();
 		}
@@ -204,7 +196,7 @@ TravauxRepository travauxRepository;
 	public List<DetailLoyer> getDetailLoyerBydate(long id, LocalDate dateDebut, LocalDate dateFin) {
 		List<DetailLoyer> detailAutreAchatTravaux = null;
 		  
-		List<DetailLoyer> detailLoyers = detailLoyerRepository.findDetailLoyerByDateBetweenAndTravauxId(dateDebut,dateFin, id);
+		List<DetailLoyer> detailLoyers = detailLoyerRepository.findDetailLoyerByDateBetweenAndProjetId(dateDebut,dateFin, id);
 		  
 		  
 		  return detailLoyers;

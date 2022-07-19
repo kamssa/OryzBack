@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
-import ci.gestion.entites.operation.Fournisseur;
-import ci.gestion.entites.operation.Materiaux;
+import ci.gestion.entites.stock.Fournisseur;
+import ci.gestion.entites.stock.Materiaux;
 import ci.gestion.metier.model.DateAudit;
 
 @Entity
@@ -32,7 +32,7 @@ public class DetailLocation extends DateAudit{
 	private Materiaux materiaux;
 	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	private Fournisseur fournisseur;
-	private Long travauxId;
+	private Long projetId;
 	public DetailLocation() {
 		super();
 	}
@@ -62,11 +62,12 @@ public class DetailLocation extends DateAudit{
 		this.materiaux = materiaux;
 	}
 	
-	public Long getTravauxId() {
-		return travauxId;
+	
+	public Long getProjetId() {
+		return projetId;
 	}
-	public void setTravauxId(Long travauxId) {
-		this.travauxId = travauxId;
+	public void setProjetId(Long projetId) {
+		this.projetId = projetId;
 	}
 	public Fournisseur getFournisseur() {
 		return fournisseur;

@@ -25,7 +25,8 @@ public class DetailLoyer extends DateAudit{
 	private String libelle;
 	private double montant;
 	private LocalDate date;
-	private Long travauxId;
+	private Long projetId;
+
 	public DetailLoyer() {
 		super();
 	}
@@ -44,12 +45,14 @@ public class DetailLoyer extends DateAudit{
 		this.date = date;
 	}
 
-	public Long getTravauxId() {
-		return travauxId;
+	
+
+	public Long getProjetId() {
+		return projetId;
 	}
 
-	public void setTravauxId(Long travauxId) {
-		this.travauxId = travauxId;
+	public void setProjetId(Long projetId) {
+		this.projetId = projetId;
 	}
 
 	public String getLibelle() {
