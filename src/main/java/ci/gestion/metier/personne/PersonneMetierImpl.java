@@ -42,7 +42,8 @@ public class PersonneMetierImpl implements IPersonneMetier{
 
 	@Override
 	public Personne modifier(Personne modif) throws InvalideOryzException {
-		modif.setPassword(passwordEncoder.encode(modif.getPassword()));
+		Personne pers =personneReposiory.findById(modif.getId()).get();
+		modif.setPassword(pers.getPassword());
 		return personneReposiory.save(modif);
 
 	}

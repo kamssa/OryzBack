@@ -28,7 +28,8 @@ public class Projet extends AbstractEntity{
 	
 	private static final long serialVersionUID = 1L;
 	private String libelle;
-	private String numeroBon;
+	private String description;
+    private String numeroBon;
 	private String numeroPojet;
 	private double accompte;
 	private double budget;

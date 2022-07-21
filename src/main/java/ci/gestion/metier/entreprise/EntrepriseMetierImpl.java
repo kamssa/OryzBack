@@ -38,15 +38,11 @@ public class EntrepriseMetierImpl implements EntrepriseMetier{
 
 	@Override
 	public Entreprise modifier(Entreprise entity) throws InvalideOryzException {
-		System.out.println("entite a modifier"+ entity);
-		if ((entity.getPassword() == null) || (entity.getPassword() == "")) {
+		
 		Entreprise entreprise =	entrepriseRepository.findById(entity.getId()).get();
-			entity.setPassword(entreprise.getPassword());
-	        }else {
-	        entity.setPassword(passwordEncoder.encode(entity.getPassword()));
-	        }
-	
-		return entrepriseRepository.save(entity);
+		entity.setPassword(entreprise.getPassword());
+	       
+	  return entrepriseRepository.save(entity);
 		}
 
 	@Override

@@ -61,7 +61,8 @@ PasswordEncoder passwordEncoder;
 	public Employe modifier(Employe modif) throws InvalideOryzException {
 		 String nomComplet = modif.getNom() + " " + modif.getPrenom();
 		 modif.setNomComplet(nomComplet);
-	     modif.setPassword(passwordEncoder.encode(modif.getPassword()));
+		 Employe empl = employeRepository.findById(modif.getId()).get();
+	     modif.setPassword(empl.getPassword());
          Role userRole = roleRepository.findByName(RoleName.ROLE_EMPLOYE).get();
          modif.setRoles(Collections.singleton(userRole));
          return employeRepository.save(modif);
