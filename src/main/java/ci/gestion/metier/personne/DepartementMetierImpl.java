@@ -1,7 +1,7 @@
 package ci.gestion.metier.personne;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +21,20 @@ private DepartementRepository departementRepository;
 		if ((entity.getLibelle().equals(null)) || (entity.getLibelle() == "")) {
 			throw new InvalideOryzException("Le libelle ne peut etre null");
 		}
+		List<Departement> deps =departementRepository.getDepByIdEntreprise(entity.getEntreprise().getId());
+		for (Departement dep: deps) {
+			String libelle = dep.getLibelle();
+			List<String> lang = new ArrayList<>();
+	         lang.add(libelle);
+	         for (String i : lang) {
+	             if (i.contains(entity.getLibelle())) {
+	     			throw new InvalideOryzException("Ce département existe déjà");
+
+	             }
+	         }
+			
+		}
+		
 		return departementRepository.save(entity);
 	}
 
