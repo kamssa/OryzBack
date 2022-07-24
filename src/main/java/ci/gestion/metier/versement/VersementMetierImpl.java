@@ -37,7 +37,7 @@ public class VersementMetierImpl implements VersementMetier{
 					 solde += montantVerse;
 					
 					 Projet pr = projetRepository.findById(entity.getProjet().getId()).get();
-						reste = pr.getBudget() - solde;
+						reste = versement.get().getReste() - solde;
 						versement.get().setSolde(solde);  
 						versement.get().setReste(reste);
 						//DetailVersement dv = detailVersementRepository.save(detail);
@@ -61,13 +61,26 @@ public class VersementMetierImpl implements VersementMetier{
 					 solde = montantVerse;
 
 					 Projet pr = projetRepository.findById(entity.getProjet().getId()).get();
-						reste = pr.getBudget() - solde;
-						entity.setSolde(solde);
-						entity.setReste(reste);
-						DetailVersement dv = detailVersementRepository.save(detail);
-					vers = versementRepository.save(entity);
-					detail.setIdVersement(vers.getId());
-					detailVersementRepository.save(dv);
+							 if(pr.getAccompte()==0) {
+									reste = pr.getBudget() - solde;
+									entity.setSolde(solde);
+									entity.setReste(reste);
+									DetailVersement dv = detailVersementRepository.save(detail);
+								vers = versementRepository.save(entity);
+								detail.setIdVersement(vers.getId());
+								detailVersementRepository.save(dv);
+			                    
+							 }else {
+								 double budgetMoinsAccount = pr.getBudget()- pr.getAccompte();
+									reste = budgetMoinsAccount - solde;
+									entity.setSolde(solde);
+									entity.setReste(reste);
+									DetailVersement dv = detailVersementRepository.save(detail);
+								vers = versementRepository.save(entity);
+								detail.setIdVersement(vers.getId());
+								detailVersementRepository.save(dv);
+							 }
+					   
                    
 }
 			    
