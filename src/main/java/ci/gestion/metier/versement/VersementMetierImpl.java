@@ -35,8 +35,29 @@ public class VersementMetierImpl implements VersementMetier{
 			      montantVerse = detail.getMontantVerse();
 					 solde = versement.get().getSolde();
 					 solde += montantVerse;
-					
-						reste = versement.get().getReste() - montantVerse;
+					 Projet pr = projetRepository.findById(entity.getProjet().getId()).get();
+					 if(pr.getAccompte() == 0) {
+							reste = pr.getBudget() - solde;
+							versement.get().setSolde(solde);  
+							versement.get().setReste(reste);
+							
+						   vers = versementRepository.save(versement.get());
+						   detail.setIdVersement(vers.getId());
+							detailVersementRepository.save(detail);
+					 }else {
+						 double budgetMoinsAccount = pr.getBudget()- pr.getAccompte();
+							reste = budgetMoinsAccount - solde;
+							versement.get().setSolde(solde);  
+							versement.get().setReste(reste);
+							
+						   vers = versementRepository.save(versement.get());
+						   detail.setIdVersement(vers.getId());
+							detailVersementRepository.save(detail);
+								
+					 }
+                      
+					 double budgetMoinsAccount = pr.getBudget()- pr.getAccompte();
+						reste = budgetMoinsAccount - solde;
 						versement.get().setSolde(solde);  
 						versement.get().setReste(reste);
 						
@@ -44,7 +65,6 @@ public class VersementMetierImpl implements VersementMetier{
 					   detail.setIdVersement(vers.getId());
 						detailVersementRepository.save(detail);
 							
-
 					}
 			 
 			
