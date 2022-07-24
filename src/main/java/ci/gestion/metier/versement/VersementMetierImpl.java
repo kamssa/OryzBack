@@ -36,11 +36,9 @@ public class VersementMetierImpl implements VersementMetier{
 					 solde = versement.get().getSolde();
 					 solde += montantVerse;
 					
-					 Projet pr = projetRepository.findById(entity.getProjet().getId()).get();
-						reste = versement.get().getReste() - solde;
+						reste = versement.get().getReste() - montantVerse;
 						versement.get().setSolde(solde);  
 						versement.get().setReste(reste);
-						//DetailVersement dv = detailVersementRepository.save(detail);
 						
 					   vers = versementRepository.save(versement.get());
 					   detail.setIdVersement(vers.getId());
