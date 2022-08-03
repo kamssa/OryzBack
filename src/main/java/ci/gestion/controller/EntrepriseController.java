@@ -79,7 +79,7 @@ public class EntrepriseController {
 			entreprise.setRoles(Collections.singleton(userRole));
 			entre = entrepriseMetier.creer(entreprise);
 			List<String> messages = new ArrayList<>();
-			messages.add(String.format("%s  a été créé avec succès", entre.getId()));
+			messages.add(String.format("%s a été créé avec succès", entre.getNom()));
 			reponse = new Reponse<Entreprise>(0, messages, entre);
 
 		} catch (InvalideOryzException e) {
@@ -170,30 +170,6 @@ public class EntrepriseController {
 				return jsonMapper.writeValueAsString(reponse);
 	
 			}
-			// obtenir un manager par son email
-			@GetMapping("/auth/personneByEmail/{email}")
-			public String getById(@PathVariable String email) throws JsonProcessingException {
-				Reponse<Personne> reponse;
-				try {
-					Personne personne = personneMetier.findByEmail(email).get();
-					reponse = new Reponse<Personne>(0, null, personne);
-				} catch (Exception e) {
-					reponse = new Reponse<>(1, Static.getErreursForException(e), null);
-				}
-				return jsonMapper.writeValueAsString(reponse);
-
-			}
-			// obtenir une personne par son id
-			@GetMapping("/auth/getPersonneById/{id}")
-			public String getPersonneById(@PathVariable Long id) throws JsonProcessingException {
-				Reponse<Personne> reponse;
-				try {
-					Personne personne = personneMetier.findById(id);
-					reponse = new Reponse<Personne>(0, null, personne);
-				} catch (Exception e) {
-					reponse = new Reponse<>(1, Static.getErreursForException(e), null);
-				}
-				return jsonMapper.writeValueAsString(reponse);
-
-			}
+			
+			
 }

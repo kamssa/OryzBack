@@ -118,19 +118,19 @@ public class VersementMetierImpl implements VersementMetier{
 	@Override
 	public List<Versement> findAll() {
 		// TODO Auto-generated method stub
-		return null;
+		return versementRepository.findAll();
 	}
 
 	@Override
 	public Versement findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return versementRepository.findById(id).get();
 	}
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		versementRepository.deleteById(id);
+		return true;
 	}
 
 	@Override

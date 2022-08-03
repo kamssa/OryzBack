@@ -72,35 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/*.css",
                 "/**/*.js")
                 .permitAll()
-                .antMatchers("/api/auth/**","/api/role/**","/api/siteEntreprise/**","/api/projet/**"
-                		,"/api/rechercheProjetmc/**","/api/projetByIdClient/**","/api/projetByIdEntreprise/**",
-            		"/api/getPhoto/**","/api/travaux/**", "/api/rechemc/**",
-            		"/api/getOperationByParam/**","/api/departement/**",
-            		"/api/getDepartementByidEntreprise/**", "/api/autreAchat/**",
-            		"/api/banque/**","/api/getStockGenralByidEntreprise/**",
-            		"/api/achat/**","/api/achats/**","/api/autreAchatTravaux/**",
-            		"/api/DeleteDetail/**","/api/listStockParEntreprise/**",
-            		"/api/autres/**","/api/autre/**","/api/DeleteDetailAutre/**",
-            		"/api/upload/**","/api/travauxByIdSite/**","/api/categorie/**",
-            		"/api/transport/**","/api/transports/**","/api/listMatParEntreprise/**",
-            		"/api/mainOeuvre/**","/api/mainOeuvres/**","/api/loyer/**","/api/loye/**","/api/detailSalaire/",
-            		"/api/mainOeuvres/**","/api/DeleteDetailMain/**","/api/categorie/**",
-            		"/api/getCategorieByidEntreprise/**","/api/stock/**",
-            		"/api/getStockByidEntreprise/**","/api/detailStock/**",
-            		"/api/materiel/**","/api/getMaterielByidCategorie/**",
-            		"/api/montantStock/**","/api/detailStockHistory/**","/api/caisse/**",
-            		"/api/getMontantStockByidEntreprise/**","/api/caisseDetail/**","/api/site/**",
-            		"/api/detailAticleStockGeneral/**","/api/getCaisseDetailByIdEntreprise/**",
-            		"/api/locations/**","/api/location/**","/api/evolution/**","/api/detailMainOeuvre/**",
-            		"/api/detailAchatTravaux/**","/api/detailAutreAchatTravaux/**","/api/detailAutre/**",
-            		"/api/detailLocation/**","/api/detailLoye/**","/api/detailTransport/**",
-            		"/api/montantAutreAchat/**","/api/montantLoyer/**","/api/montantMainDoeuvre/**",
-            		"/api/montantTransport/**","/api/montantAchatTravaux/**","/api/montantAutre/**",
-            		"/api/montantLocation/**","/api/detailAutreAchatTravauxDate/**","/api/rechercheParDate/**",
-            		"/api/detailAutreDate/**","/api/detailLocationDate/**","/api/detailLoyerDate/**",
-            		"/api/detailMainDate/**","/api/detailTransportDate/**","/api/detailAchatTravauxDate/**",
-            		"/api/versement/**","/api/versementByIdTravaux/**","/api/detailVersement/**",
-            		"/api/travauxByIdClient/**","/api/detailVersementByIdVersement/**", "/api/operation/**","/api/entreprise/**"
+					.antMatchers(
+							"/api/auth/**"									 
             		).permitAll()
 	       .anyRequest().authenticated();
 	       

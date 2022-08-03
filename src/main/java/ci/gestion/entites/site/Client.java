@@ -14,4 +14,5 @@ import lombok.Data;
 public class Client extends Personne{
 	
 	private static final long serialVersionUID = 1L;
+	private String libelle;
 }

@@ -31,7 +31,7 @@ public class PersonneMetierImpl implements IPersonneMetier{
 
 		pers = personneReposiory.findByEmail(p.getEmail());
 		if (pers.isPresent()) {
-			throw new InvalideOryzException("Ce mail est deja utilise");
+			throw new InvalideOryzException("Cet email est déjà utilisé");
 		}
 
 	p.setPassword(passwordEncoder.encode(p.getPassword()));

@@ -30,7 +30,7 @@ public class EntrepriseMetierImpl implements EntrepriseMetier{
 
 		pers = entrepriseRepository.findByNom(entity.getNom());
 		if (pers.isPresent()) {
-			throw new InvalideOryzException("Ce nom est deja utilise");
+			throw new InvalideOryzException("Ce nom est déjà utilisé");
 		}
 		entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 		return entrepriseRepository.save(entity);

@@ -45,7 +45,7 @@ import ci.gestion.metier.utilitaire.Static;
 
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api")
 @CrossOrigin
 public class EmployeController {
 	@Autowired
@@ -162,25 +162,7 @@ public class EmployeController {
 		return jsonMapper.writeValueAsString(reponse);
 
 	}
-	@GetMapping("/getEmployeByidEntreprise/{id}")
-	public String getEmplEntreprise(@PathVariable Long id) throws JsonProcessingException {
-		Reponse<List<Employe>> reponse;
-		try {
-			List<Employe> empl = employeMetier.getDepByIdEntreprise(id);
-			if (!empl.isEmpty()) {
-				reponse = new Reponse<List<Employe>>(0, null, empl);
-			} else {
-				List<String> messages = new ArrayList<>();
-				messages.add("Pas de Employe enregistrés");
-				reponse = new Reponse<List<Employe>>(1, messages, new ArrayList<>());
-			}
-
-		} catch (Exception e) {
-			reponse = new Reponse<>(1, Static.getErreursForException(e), null);
-		}
-		return jsonMapper.writeValueAsString(reponse);
-
-	}
+	
 	// get all employe
 	@GetMapping("/employe")
 	public String findAll() throws JsonProcessingException {

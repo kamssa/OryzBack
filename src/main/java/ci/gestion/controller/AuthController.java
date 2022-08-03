@@ -13,6 +13,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -87,4 +89,30 @@ public class AuthController {
 		}
 		return jsonMapper.writeValueAsString(reponse);
 	}
+	// obtenir un manager par son email
+				@GetMapping("/personneByEmail/{email}")
+				public String getByEmail(@PathVariable String email) throws JsonProcessingException {
+					Reponse<Personne> reponse;
+					try {
+						Personne personne = personneMetier.findByEmail(email).get();
+						reponse = new Reponse<Personne>(0, null, personne);
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
+				// obtenir une personne par son id
+				@GetMapping("/getPersonneById/{id}")
+				public String getPersonneById(@PathVariable Long id) throws JsonProcessingException {
+					Reponse<Personne> reponse;
+					try {
+						Personne personne = personneMetier.findById(id);
+						reponse = new Reponse<Personne>(0, null, personne);
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
 }
