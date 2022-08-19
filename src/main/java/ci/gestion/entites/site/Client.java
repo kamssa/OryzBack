@@ -6,10 +6,11 @@ import javax.persistence.Entity;
 import ci.gestion.entites.shared.Personne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @DiscriminatorValue("CLIENT")
- @AllArgsConstructor
+@NoArgsConstructor @AllArgsConstructor
 @Data
 public class Client extends Personne{
 	

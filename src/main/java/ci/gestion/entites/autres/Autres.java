@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Version;
 
-import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.metier.model.DateAudit;
 
 @Entity

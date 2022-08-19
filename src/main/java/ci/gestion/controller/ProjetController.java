@@ -175,6 +175,8 @@ public class ProjetController {
 ////////rechercher un travail par mot cle
 	@GetMapping("/rechercheProjetmc")
 	public String chercherTravauxByMc(@RequestParam(value = "mc") String mc, @RequestParam(value = "nom") String nom) throws JsonProcessingException {
+ System.out.println(mc);
+ System.out.println(nom);
 
 		Reponse<List<Projet>> reponse;
 		try {

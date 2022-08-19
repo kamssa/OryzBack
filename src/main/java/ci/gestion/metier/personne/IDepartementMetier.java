@@ -9,4 +9,6 @@ import ci.gestion.metier.utilitaire.Imetier;
 public interface IDepartementMetier extends Imetier<Departement, Long>{
 	List<Departement> getDepByIdEntreprise(Long id);
 	public Departement findDepartementByLibelle(String libelle);
+	List<Departement> chercherDepParMc(String mc, String nom);
+
 }

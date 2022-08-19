@@ -1,7 +1,6 @@
 package ci.gestion.entites.achat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import javax.persistence.Entity;
 

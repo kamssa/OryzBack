@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -172,4 +173,26 @@ public class DepartementController {
 
 			return jsonMapper.writeValueAsString(reponse);
 		}
+		////////rechercher un travail par mot cle
+	@GetMapping("/rechercheDepmc")
+	public String chercherDepByMc(@RequestParam(value = "mc") String mc, @RequestParam(value = "nom") String nom) throws JsonProcessingException {
+
+		Reponse<List<Departement>> reponse;
+		try {
+			List<Departement> travaux = departementMetier.chercherDepParMc(mc,nom);
+  
+			if (!travaux.isEmpty()) {
+				reponse = new Reponse<List<Departement>>(0, null, travaux);
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add("Pas de travail info enregistrés");
+				reponse = new Reponse<List<Departement>>(2, messages, new ArrayList<>());
+			}
+
+		} catch (Exception e) {
+			reponse = new Reponse<List<Departement>>(1, Static.getErreursForException(e), new ArrayList<>());
+		}
+		return jsonMapper.writeValueAsString(reponse);
+
+	}
 }

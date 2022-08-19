@@ -40,19 +40,16 @@ private DepartementRepository departementRepository;
 
 	@Override
 	public Departement modifier(Departement entity) throws InvalideOryzException {
-		// TODO Auto-generated method stub
 		return departementRepository.save(entity);
 	}
 
 	@Override
 	public List<Departement> findAll() {
-		// TODO Auto-generated method stub
 		return departementRepository.findAll();
 	}
 
 	@Override
 	public Departement findById(Long id) {
-		// TODO Auto-generated method stub
 		return departementRepository.findById(id).get();
 	}
 
@@ -64,25 +61,27 @@ private DepartementRepository departementRepository;
 
 	@Override
 	public boolean supprimer(List<Departement> entites) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean existe(Long id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public List<Departement> getDepByIdEntreprise(Long id) {
-		// TODO Auto-generated method stub
 		return departementRepository.getDepByIdEntreprise(id);
 	}
 
 	@Override
 	public Departement findDepartementByLibelle(String libelle) {
 		return departementRepository.getDepByLibelle(libelle);
+	}
+
+	@Override
+	public List<Departement> chercherDepParMc(String mc, String nom) {
+		return departementRepository.chercherProjetParMc(libelle, nom);
 	}
 
 	
