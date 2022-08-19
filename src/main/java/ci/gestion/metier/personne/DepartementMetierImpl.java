@@ -80,8 +80,8 @@ private DepartementRepository departementRepository;
 	}
 
 	@Override
-	public List<Departement> chercherDepParMc(String libelle, String nom) {
-		return departementRepository.chercherDepParMc(libelle, nom);
+	public List<Departement> chercherDepParMc(String mc, String nom) {
+		return departementRepository.chercherDepParMc(mc, nom);
 	}
 
 	
