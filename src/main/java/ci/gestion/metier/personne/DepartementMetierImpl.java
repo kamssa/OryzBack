@@ -79,10 +79,7 @@ private DepartementRepository departementRepository;
 		return departementRepository.getDepByLibelle(libelle);
 	}
 
-	@Override
-	public List<Departement> chercherDepParMc(String mc, String nom) {
-		return departementRepository.chercherDepParMc(mc, nom);
-	}
+	
 
 	
 }
