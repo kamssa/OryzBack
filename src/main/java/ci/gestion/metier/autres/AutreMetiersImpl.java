@@ -13,7 +13,7 @@ import ci.gestion.dao.detail.DetailAutreRepository;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.autres.DetailAutres;
-import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service

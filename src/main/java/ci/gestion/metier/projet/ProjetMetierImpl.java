@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.entreprise.EntrepriseRepository;
-import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

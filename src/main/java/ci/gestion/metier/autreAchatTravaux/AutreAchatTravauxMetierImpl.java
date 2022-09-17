@@ -10,7 +10,7 @@ import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.detail.DetailAutreAchatTravauxRepository;
 import ci.gestion.entites.achat.AutreAchatTravaux;
 import ci.gestion.entites.achat.DetailAutreAchatTravaux;
-import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

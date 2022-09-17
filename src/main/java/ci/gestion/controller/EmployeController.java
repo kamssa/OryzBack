@@ -28,11 +28,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ci.gestion.entites.article.Materiaux;
 import ci.gestion.entites.entreprise.Employe;
 import ci.gestion.entites.shared.Personne;
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
-import ci.gestion.entites.stock.Materiaux;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.JwtAuthenticationResponse;
 import ci.gestion.metier.model.Reponse;

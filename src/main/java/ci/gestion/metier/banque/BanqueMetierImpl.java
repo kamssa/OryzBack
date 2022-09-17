@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.BanqueRepository;
-import ci.gestion.entites.site.Banque;
+import ci.gestion.entites.banque.Banque;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service
@@ -34,13 +34,13 @@ private BanqueRepository banqueRepository;
 	@Override
 	public Banque findById(Long id) {
 		// TODO Auto-generated method stub
-		return null;
+		return banqueRepository.findById(id).get();
 	}
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		banqueRepository.deleteById(id);	
+		return true;
 	}
 
 	@Override

@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.projet.Projet;
 
 public interface ProjetRepository extends JpaRepository<Projet, Long>{
 	@Query("select pr from Projet pr where pr.libelle LIKE  %?1%  AND pr.entreprise.nom=?2")

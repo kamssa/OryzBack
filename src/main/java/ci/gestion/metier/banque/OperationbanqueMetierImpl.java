@@ -57,8 +57,8 @@ private OperationBanqueRepository operationBanqueRepository;
 	}
 
 	@Override
-	public List<Operation> findOperationByParam(Date startDay, Date endDay, String libelle, String nom) {
-		return operationBanqueRepository.findOperationByParam(startDay, endDay, libelle, nom);
+	public List<Operation> findOperationByParam(Date startDay, Date endDay,  String nom) {
+		return operationBanqueRepository.findOperationByParam(startDay, endDay, nom);
 	}
 	
 }

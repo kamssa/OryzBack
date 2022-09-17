@@ -11,8 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.entites.shared.AbstractEntity;
-import ci.gestion.entites.site.Projet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -6,6 +6,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import ci.gestion.entites.article.Categorie;
+import ci.gestion.entites.fournisseur.Fournisseur;
 import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.site.Banque;
+import ci.gestion.entites.banque.Banque;
 import ci.gestion.metier.banque.IBanqueMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
@@ -143,5 +144,21 @@ public class BanqueController {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
+		// supprimer un achat
+				@DeleteMapping("/banque/{id}")
+				public String supprimer(@PathVariable("id") Long id) throws JsonProcessingException {
+
+					Reponse<Boolean> reponse = null;
+
+					try {
+
+						reponse = new Reponse<Boolean>(0, null, banqueMetier.supprimer(id));
+
+					} catch (RuntimeException e1) {
+						reponse = new Reponse<>(3, Static.getErreursForException(e1), null);
+					}
+		 
+					return jsonMapper.writeValueAsString(reponse);
+				}
 
 }

@@ -11,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Version;
 
-import ci.gestion.entites.stock.Fournisseur;
-import ci.gestion.entites.stock.Materiaux;
+import ci.gestion.entites.article.Materiaux;
+import ci.gestion.entites.fournisseur.Fournisseur;
 import ci.gestion.metier.model.DateAudit;
 
 @Entity

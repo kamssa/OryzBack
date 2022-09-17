@@ -60,12 +60,12 @@ public class OperationBanqueController {
 		@PostMapping("/operation")
 		public String creer(@RequestBody Operation op) throws JsonProcessingException {
 			Reponse<Operation> reponse;
-	        System.out.println("Voir la date operation:" + op.getDate());
+	        System.out.println("Voir la date operation:");
 			try {
 
 				Operation t1 = operationBanqueMetier.creer(op);
 				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s  à été créer avec succes", t1.getLibelle()));
+				messages.add(String.format("%s  à été créer avec succes"));
 				reponse = new Reponse<Operation>(0, messages, t1);
 
 			} catch (InvalideOryzException e) {
@@ -154,7 +154,7 @@ public class OperationBanqueController {
 				return jsonMapper.writeValueAsString(reponse);
 			}
 			// recherche avec plusieurs parametre
-			@GetMapping("/getOperationByParam/{dateDebut}/{dateFin}/{libelle}/{nom}")
+			@GetMapping("/getOperationByParam/{dateDebut}/{dateFin}/{nom}")
 			public String rechercherOperationParParam(
 					@PathVariable("dateDebut") Date dateDebut,
 					@PathVariable("dateFin") Date dateFin,
@@ -162,7 +162,7 @@ public class OperationBanqueController {
 					@PathVariable("nom")   String nom) throws JsonProcessingException {
 				Reponse<List<Operation>> reponse;
 				try {
-					List<Operation> db = operationBanqueMetier.findOperationByParam(dateDebut, dateFin, libelle, nom);
+					List<Operation> db = operationBanqueMetier.findOperationByParam(dateDebut, dateFin, nom);
 					reponse = new Reponse<List<Operation>>(0, null, db);
 				} catch (Exception e) {
 					reponse = new Reponse<List<Operation>>(1, Static.getErreursForException(e), null);

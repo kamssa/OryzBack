@@ -17,8 +17,8 @@ import ci.gestion.entites.autres.Autres;
 import ci.gestion.entites.location.LocationTravaux;
 import ci.gestion.entites.loyer.Loyer;
 import ci.gestion.entites.mainoeuvre.MainOeuvre;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.entites.retraitStock.AchatTravaux;
-import ci.gestion.entites.site.Projet;
 import ci.gestion.entites.transport.Transport;
 import lombok.AllArgsConstructor;
 

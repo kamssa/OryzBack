@@ -1,4 +1,4 @@
-package ci.gestion.entites.site;
+package ci.gestion.entites.projet;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import ci.gestion.entites.client.Client;
 import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.entites.shared.AbstractEntity;
 import ci.gestion.entites.shared.Role;

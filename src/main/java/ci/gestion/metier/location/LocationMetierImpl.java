@@ -11,7 +11,7 @@ import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.detail.DetailLcationRepository;
 import ci.gestion.entites.location.DetailLocation;
 import ci.gestion.entites.location.LocationTravaux;
-import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 @Service
 public class LocationMetierImpl implements ILocationMetier{

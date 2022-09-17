@@ -11,11 +11,10 @@ import ci.gestion.entites.banque.Operation;
 
 public interface OperationBanqueRepository extends JpaRepository<Operation, Long>{
 	// ramener tous les Operation par parametre
-		@Query("SELECT o FROM Operation o WHERE o.date BETWEEN :from AND :to OR o.libelle = :libelle OR o.banque.nom = :nom")
+		@Query("SELECT o FROM Operation o WHERE o.dateOperation BETWEEN :from AND :to OR o.banque.nom = :nom")
 		List<Operation> findOperationByParam(
 				@Param("from") Date startDay,
                 @Param("to") Date endDay,
-                @Param("libelle") String libelle,
                 @Param("nom") String nom);
 
 }

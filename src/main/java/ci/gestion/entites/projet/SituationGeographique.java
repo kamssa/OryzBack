@@ -1,4 +1,4 @@
-package ci.gestion.entites.site;
+package ci.gestion.entites.projet;
 
 import javax.persistence.Entity;
 

@@ -8,9 +8,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.personne.ClientRepository;
+import ci.gestion.entites.client.Client;
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
-import ci.gestion.entites.site.Client;
 import ci.gestion.metier.exception.InvalideOryzException;
 import lombok.AllArgsConstructor;
 

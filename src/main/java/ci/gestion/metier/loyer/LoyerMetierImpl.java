@@ -11,7 +11,7 @@ import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.detail.DetailLoyerRepository;
 import ci.gestion.entites.loyer.DetailLoyer;
 import ci.gestion.entites.loyer.Loyer;
-import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 
 @Service

@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.site.Photo;
-import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.projet.Photo;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.image.IPhotoMetier;
 import ci.gestion.metier.model.Reponse;

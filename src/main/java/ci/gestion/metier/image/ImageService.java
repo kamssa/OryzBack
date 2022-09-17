@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ci.gestion.dao.ImageRepository;
-import ci.gestion.entites.site.Photo;
+import ci.gestion.entites.projet.Photo;
 
 
 @Service

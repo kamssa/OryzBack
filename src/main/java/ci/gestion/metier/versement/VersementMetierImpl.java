@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import ci.gestion.dao.ProjetRepository;
 import ci.gestion.dao.VersementRepository;
 import ci.gestion.dao.detail.DetailVersementRepository;
-import ci.gestion.entites.site.Projet;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.entites.versement.DetailVersement;
 import ci.gestion.entites.versement.Versement;
 import ci.gestion.metier.exception.InvalideOryzException;

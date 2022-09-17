@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import ci.gestion.entites.article.Categorie;
 import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
