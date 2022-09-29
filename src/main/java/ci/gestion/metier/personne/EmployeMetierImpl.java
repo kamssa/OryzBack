@@ -137,6 +137,12 @@ PasswordEncoder passwordEncoder;
         return employeRepository.save(emp);
 	}
 
+	@Override
+	public List<Employe> chercherEmployeParMc(String nomEmploye, String nom) {
+		// TODO Auto-generated method stub
+		return employeRepository.chercherEmployeParMc(nomEmploye, nom);
+	}
+
 	
 	
 }

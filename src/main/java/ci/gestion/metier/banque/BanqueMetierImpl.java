@@ -55,4 +55,10 @@ private BanqueRepository banqueRepository;
 		return false;
 	}
 
+	@Override
+	public List<Banque> getBanqueByIdEntreprise(long id) {
+		// TODO Auto-generated method stub
+		return banqueRepository.getBanqueByIdEntreprise(id);
+	}
+
 }

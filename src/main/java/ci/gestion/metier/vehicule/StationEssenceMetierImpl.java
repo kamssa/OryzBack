@@ -27,7 +27,7 @@ public class StationEssenceMetierImpl implements StationEssenceMetier{
 
 	@Override
 	public List<StationEssence> findAll() {
-		// TODO Auto-generated method stub
+		
 		return stationEssenceRepository.findAll();
 	}
 
@@ -39,8 +39,8 @@ public class StationEssenceMetierImpl implements StationEssenceMetier{
 
 	@Override
 	public boolean supprimer(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		stationEssenceRepository.deleteById(id);
+		return true;
 	}
 
 	@Override

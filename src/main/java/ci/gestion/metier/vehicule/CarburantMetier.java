@@ -8,5 +8,9 @@ import ci.gestion.entites.vehicule.Vehicule;
 import ci.gestion.metier.utilitaire.Imetier;
 
 public interface CarburantMetier extends Imetier<Carburant, Long>{
-	  List<Carburant>findCarburantByDateBetweenAndEntreprise(Vehicule vehicule, LocalDate dateDebut, LocalDate dateFin);
+	  List<Carburant>findCarburantByDateBetweenAndVehicule(long idVehicule,LocalDate startDate, LocalDate endDate);
+		List<Carburant> getCarburantVehicule(long id);
+		List<Carburant> getCarburantByEntreprise(long id);
+
+
 }

@@ -22,8 +22,7 @@ import lombok.NoArgsConstructor;
 public class Employe extends Personne{
 	
 	private static final long serialVersionUID = 1L;
-    private Boolean activated;
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+   @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
 	@JoinColumn(name = "id_Depatement")
 	private Departement departement;
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)

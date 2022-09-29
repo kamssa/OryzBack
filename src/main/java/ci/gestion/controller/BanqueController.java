@@ -18,6 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.banque.Banque;
+import ci.gestion.entites.vehicule.StationEssence;
 import ci.gestion.metier.banque.IBanqueMetier;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
@@ -159,6 +160,25 @@ public class BanqueController {
 					}
 		 
 					return jsonMapper.writeValueAsString(reponse);
+				}
+				@GetMapping("/getBanqueByIdEntreprise/{id}")
+				public String getBanqueByEntreprise(@PathVariable Long id) throws JsonProcessingException {
+					Reponse<List<Banque>> reponse;
+					try {
+						List<Banque> pers = banqueMetier.getBanqueByIdEntreprise(id);
+						if (!pers.isEmpty()) {
+							reponse = new Reponse<List<Banque>>(0, null, pers);
+						} else {
+							List<String> messages = new ArrayList<>();
+							messages.add("Pas de Banque(s) enregistré(s)");
+							reponse = new Reponse<List<Banque>>(1, messages, new ArrayList<>());
+						}
+
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
 				}
 
 }

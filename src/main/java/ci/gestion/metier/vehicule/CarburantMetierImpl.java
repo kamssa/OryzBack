@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ci.gestion.dao.vehicule.CarburantRepository;
+import ci.gestion.entites.achat.DetailAutreAchatTravaux;
 import ci.gestion.entites.vehicule.Carburant;
 import ci.gestion.entites.vehicule.Vehicule;
 import ci.gestion.metier.exception.InvalideOryzException;
@@ -61,11 +62,25 @@ public class CarburantMetierImpl implements CarburantMetier{
 		return false;
 	}
 
+	
 	@Override
-	public List<Carburant> findCarburantByDateBetweenAndEntreprise(Vehicule vehicule, LocalDate dateDebut,
-			LocalDate dateFin) {
+	public List<Carburant> findCarburantByDateBetweenAndVehicule(long idVehicule, LocalDate startDate,
+			LocalDate endDate) {
 		// TODO Auto-generated method stub
-		return carburantRepository.findCarburantByDateBetweenAndVehicule(vehicule, dateDebut, dateFin);
+
+		return carburantRepository.findCarburantByDateBetweenAndVehicule(startDate, endDate, idVehicule);
+	}
+
+	@Override
+	public List<Carburant> getCarburantVehicule(long id) {
+		// TODO Auto-generated method stub
+		return carburantRepository.getCarburantVehicule(id);
+	}
+
+	@Override
+	public List<Carburant> getCarburantByEntreprise(long id) {
+		// TODO Auto-generated method stub
+		return carburantRepository.getCarburantByEntreprise(id);
 	}
 
 }

@@ -168,24 +168,69 @@ public class CarburantController {
 				// recuperer Detail MainOeuvre par id travaux
 				@GetMapping("/carburantDateParVehicule")
 				public String getCarburantDateParVehicule(
-						@RequestParam(value = "vehicule") Vehicule vehicule,
-						@RequestParam(value = "dateDebut") String dateDebut,
-						@RequestParam(value = "dateFin") String dateFin) throws JsonProcessingException {
+						@RequestParam(value = "idVehicule") long idVehicule,
+						@RequestParam(value = "dateDebut") String dateDebut, 
+				        @RequestParam(value = "dateFin") String dateFin) throws JsonProcessingException {
+					System.out.println("id de vehicule:"+ idVehicule);
 					Reponse<List<Carburant>> reponse;
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					LocalDate dateTime = LocalDate.parse(dateDebut, formatter);
 					LocalDate dateTime1 = LocalDate.parse(dateFin, formatter);
-					try { List<Carburant> mainOeuvres = carburantMetier.findCarburantByDateBetweenAndEntreprise(vehicule,dateTime,dateTime1); 
-					  if (!mainOeuvres.isEmpty()) { 
-						  reponse = new Reponse<List<Carburant>>(0, null, mainOeuvres); } else {
+					System.out.println("Date convertie:"+ dateTime);
+					   System.out.println(" idVehicule:"+ idVehicule);
+					try { List<Carburant> carburants = carburantMetier.findCarburantByDateBetweenAndVehicule(idVehicule,dateTime,dateTime1); 
+					  if (!carburants.isEmpty()) { 
+						  reponse = new Reponse<List<Carburant>>(0, null, carburants); 
+						  System.out.println(reponse);
+						  } else 
+						  {
 					  List<String> messages = new ArrayList<>();
-					  messages.add("Pas Autres enregistré"); reponse = new
-					  Reponse<List<Carburant>>(1, messages, new ArrayList<>()); }
-					  
+					  messages.add("Pas Autres enregistré"); 
+					  reponse = new Reponse<List<Carburant>>(1, messages, new ArrayList<>()); }
+					  System.out.println(reponse);
 					  } catch (Exception e) {
 					  
-					  reponse = new Reponse<>(1, Static.getErreursForException(e), null); }
+					  reponse = new Reponse<>(2, Static.getErreursForException(e), null); 
+					  }
 					 
-					return jsonMapper.writeValueAsString(null);
+					return jsonMapper.writeValueAsString(reponse);
+				}
+				@GetMapping("/getCarburantByVehicule/{id}")
+				public String getDepByEntreprise(@PathVariable Long id) throws JsonProcessingException {
+					Reponse<List<Carburant>> reponse;
+					try {
+						List<Carburant> pers = carburantMetier.getCarburantVehicule(id);
+						if (!pers.isEmpty()) {
+							reponse = new Reponse<List<Carburant>>(0, null, pers);
+						} else {
+							List<String> messages = new ArrayList<>();
+							messages.add("Pas de véhicule(s) enregistré(s)");
+							reponse = new Reponse<List<Carburant>>(1, messages, new ArrayList<>());
+						}
+
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
+				}
+				@GetMapping("/getCarburantByEntreprise/{id}")
+				public String getCarburantByEntreprise(@PathVariable Long id) throws JsonProcessingException {
+					Reponse<List<Carburant>> reponse;
+					try {
+						List<Carburant> pers = carburantMetier.getCarburantByEntreprise(id);
+						if (!pers.isEmpty()) {
+							reponse = new Reponse<List<Carburant>>(0, null, pers);
+						} else {
+							List<String> messages = new ArrayList<>();
+							messages.add("Pas de carburant(s) enregistré(s)");
+							reponse = new Reponse<List<Carburant>>(1, messages, new ArrayList<>());
+						}
+
+					} catch (Exception e) {
+						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
+					}
+					return jsonMapper.writeValueAsString(reponse);
+
 				}
 }

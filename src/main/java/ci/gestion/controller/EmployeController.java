@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.article.Materiaux;
 import ci.gestion.entites.entreprise.Employe;
+import ci.gestion.entites.projet.Projet;
 import ci.gestion.entites.shared.Personne;
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
@@ -235,4 +236,27 @@ public class EmployeController {
 			return jsonMapper.writeValueAsString(reponse);
 
 		}
+////////rechercher un travail par mot cle
+	@GetMapping("/rechercheEmployemc")
+	public String chercherEmployeByMc(@RequestParam(value = "mc") String mc, @RequestParam(value = "nom") String nom) throws JsonProcessingException {
+ 
+		Reponse<List<Employe>> reponse;
+		try {
+			List<Employe> travaux = employeMetier.chercherEmployeParMc(mc,nom);
+  
+			if (!travaux.isEmpty()) {
+				reponse = new Reponse<List<Employe>>(0, null, travaux);
+			} else {
+				List<String> messages = new ArrayList<>();
+				messages.add("Pas de travail info enregistrés");
+				reponse = new Reponse<List<Employe>>(2, messages, new ArrayList<>());
+			}
+
+		} catch (Exception e) {
+			reponse = new Reponse<List<Employe>>(1, Static.getErreursForException(e), new ArrayList<>());
+		}
+		return jsonMapper.writeValueAsString(reponse);
+
+	}
+
 }
