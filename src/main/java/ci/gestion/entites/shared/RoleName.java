@@ -11,7 +11,8 @@ public enum RoleName {
 	    ROLE_TECHNICIEN,
 	    ROLE_CLIENT,
 	    ROLE_COMMERCIAL,
-	    ROLE_ENTREPRISE
+	    ROLE_ENTREPRISE,
+	    ROLE_GESTIONNAIRE_STOCK
 	    		
 	    
 }
