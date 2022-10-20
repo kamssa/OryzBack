@@ -136,7 +136,7 @@ public boolean supprimerDetailLocation(Long idLocation, Long idDetail) {
 	montantT = montant + location.getMontant();
 	projet.setTotal(montantT);
 	Projet pr =projetRepository.save(projet);
-	reste = (pr.getBudget())-(pr.getTotal());
+	reste = (pr.getMontantFacture())-(pr.getTotal());
 	       pr.setReste(reste);
 	       projetRepository.save(pr);
 	       LocationTravaux location1= locationRepository.findById(location.getId()).get();

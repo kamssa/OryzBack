@@ -37,7 +37,7 @@ public class VersementMetierImpl implements VersementMetier{
 					 solde += montantVerse;
 					 Projet pr = projetRepository.findById(entity.getProjet().getId()).get();
 					 if(pr.getAccompte() == 0) {
-							reste = pr.getBudget() - solde;
+							reste = pr.getMontantFacture() - solde;
 							versement.get().setSolde(solde);  
 							versement.get().setReste(reste);
 							
@@ -45,7 +45,7 @@ public class VersementMetierImpl implements VersementMetier{
 						   detail.setIdVersement(vers.getId());
 							detailVersementRepository.save(detail);
 					 }else {
-						 double budgetMoinsAccount = pr.getBudget()- pr.getAccompte();
+						 double budgetMoinsAccount = pr.getMontantFacture()- pr.getAccompte();
 							reste = budgetMoinsAccount - solde;
 							versement.get().setSolde(solde);  
 							versement.get().setReste(reste);
@@ -56,7 +56,7 @@ public class VersementMetierImpl implements VersementMetier{
 								
 					 }
                       
-					 double budgetMoinsAccount = pr.getBudget()- pr.getAccompte();
+					 double budgetMoinsAccount = pr.getMontantFacture()- pr.getAccompte();
 						reste = budgetMoinsAccount - solde;
 						versement.get().setSolde(solde);  
 						versement.get().setReste(reste);
@@ -80,7 +80,7 @@ public class VersementMetierImpl implements VersementMetier{
 
 					 Projet pr = projetRepository.findById(entity.getProjet().getId()).get();
 							 if(pr.getAccompte()==0) {
-									reste = pr.getBudget() - solde;
+									reste = pr.getMontantFacture() - solde;
 									entity.setSolde(solde);
 									entity.setReste(reste);
 									DetailVersement dv = detailVersementRepository.save(detail);
@@ -89,7 +89,7 @@ public class VersementMetierImpl implements VersementMetier{
 								detailVersementRepository.save(dv);
 			                    
 							 }else {
-								 double budgetMoinsAccount = pr.getBudget()- pr.getAccompte();
+								 double budgetMoinsAccount = pr.getMontantFacture()- pr.getAccompte();
 									reste = budgetMoinsAccount - solde;
 									entity.setSolde(solde);
 									entity.setReste(reste);

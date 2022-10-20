@@ -9,8 +9,6 @@ import org.springframework.data.repository.query.Param;
 
 import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.entites.vehicule.Carburant;
-import ci.gestion.entites.vehicule.StationEssence;
-import ci.gestion.entites.vehicule.Vehicule;
 
 
 public interface CarburantRepository extends JpaRepository<Carburant, Long>{
@@ -20,10 +18,7 @@ public interface CarburantRepository extends JpaRepository<Carburant, Long>{
 	@Query("select carburant from Carburant carburant where carburant.idVehicule=?1")
 	List<Carburant> getCarburantVehicule(long id);
 	
-	  List<Carburant> findCarburantByDateBetweenAndVehicule(
-			    @Param("date") LocalDate date,
-	            @Param("endDate") LocalDate endDate,
-	            @Param("idVehicule") long idVehicule); 
+	 
 	 
 	  List<Carburant>
 	  findCarburantByDateBetweenAndEntreprise(

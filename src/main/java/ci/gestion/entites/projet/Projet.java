@@ -34,7 +34,6 @@ public class Projet extends AbstractEntity{
 	private String numeroPojet;
 	private Double montantFacture;
     private double accompte;
-	private double budget;
 	private double reste;
 	private double total;
 	private double debousserSec;

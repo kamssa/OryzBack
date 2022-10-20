@@ -81,7 +81,7 @@ public Transport modifier(Transport modif) throws InvalideOryzException {
     montantT = montantModifie + transport.getMontant();
 	projet.setTotal(montantT);
 	Projet pr = projetRepository.save(projet);
-	reste = (pr.getBudget())-(pr.getTotal());
+	reste = (pr.getMontantFacture())-(pr.getTotal());
 	       pr.setReste(reste);
 	       projetRepository.save(pr);
 	 return transport;
@@ -169,7 +169,7 @@ public boolean supprimerDetailTransport(Long idTransport, Long idDetail) {
 	montantT = montant + transport1.getMontant();
 	projet.setTotal(montantT);
 	Projet pr = projetRepository.save(projet);
-	reste = (pr.getBudget())-(pr.getTotal());
+	reste = (pr.getMontantFacture())-(pr.getTotal());
 	       pr.setReste(reste);
 	       projetRepository.save(pr);
 	       Transport transport2= transportRepository.findById(transport1.getId()).get();

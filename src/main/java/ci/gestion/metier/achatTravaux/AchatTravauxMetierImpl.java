@@ -164,7 +164,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		montantT = montantModifie + achat.getMontant();
 		projet.setTotal(montantT);
 		Projet tr = projetRepository.save(projet);
-		reste = (tr.getBudget()) - (tr.getTotal());
+		reste = (tr.getMontantFacture()) - (tr.getTotal());
 		tr.setReste(reste);
 		projetRepository.save(tr);
 		return achat;
@@ -298,7 +298,7 @@ public class AchatTravauxMetierImpl implements IAchatTravauxMetier {
 		montantT = montant + achat1.getMontant();
 		projet.setTotal(montantT);
 		Projet pr = projetRepository.save(projet);
-		reste = (pr.getBudget()) - (pr.getTotal());
+		reste = (pr.getMontantFacture()) - (pr.getTotal());
 		pr.setReste(reste);
 		projetRepository.save(pr);
 		AchatTravaux achat2 = achatTravauxRepository.findById(achat1.getId()).get();

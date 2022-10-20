@@ -78,7 +78,7 @@ public Autres modifier(Autres modif) throws InvalideOryzException {
     montantT = montantModifie + autres.getMontant();
 	projet.setTotal(montantT);
 	Projet pr = projetRepository.save(projet);
-	reste = (pr.getBudget())-(pr.getTotal());
+	reste = (pr.getMontantFacture())-(pr.getTotal());
 	       pr.setReste(reste);
 	       projetRepository.save(pr);
 	 return autres;
@@ -166,7 +166,7 @@ public boolean supprimerDetailAutre(Long idAutre, Long idDetail) {
 	montantT = montant + autre1.getMontant();
 	projet.setTotal(montantT);
 	Projet pr =projetRepository.save(projet);
-	reste = (pr.getBudget())-(pr.getTotal());
+	reste = (pr.getMontantFacture())-(pr.getTotal());
 	       pr.setReste(reste);
 	       projetRepository.save(pr);
 	       Autres autre2= autreRepository.findById(autre1.getId()).get();

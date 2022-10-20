@@ -36,9 +36,9 @@ private ProjetRepository projetRepository;
 				detail.setMontant(montantD);
 				detail.setProjetId(entity.getProjetId());
 				sommeMontant = montantD;
-				entity.setMontant(sommeMontant);
-				entity.setLibelle(detail.getLibelleMateriaux());
-				entity.setQuantite(detail.getQuantite());
+				 entity.setTotal(sommeMontant);
+				//entity.setLibelle(detail.getLibelleMateriaux());
+				//entity.setQuantite(detail.getQuantite());
 
 				autreAchat = autreAchatTravauxRepository.save(entity);
 				Projet projet = projetRepository.findById(autreAchat.getProjetId()).get();
@@ -61,8 +61,39 @@ private ProjetRepository projetRepository;
 
 	@Override
 	public AutreAchatTravaux modifier(AutreAchatTravaux entity) throws InvalideOryzException {
-		// TODO Auto-generated method stub
-		return autreAchatTravauxRepository.save(entity);
+		AutreAchatTravaux autreAchat = null;
+		double montantD = 0;
+		double montantTravaux = 0;
+		double montantT = 0;
+		double sommeMontant = 0;
+		double reste = 0;
+		List<DetailAutreAchatTravaux> detaiAutrelAchats = entity.getDetailAutreAchatTravaux();
+		for (DetailAutreAchatTravaux detail : detaiAutrelAchats) {
+		      
+			montantD = ((detail.getPrixUnitaire() * detail.getQuantite())+ detail.getFrais());
+				detail.setMontant(montantD);
+				detail.setProjetId(entity.getProjetId());
+				sommeMontant = montantD;
+				 entity.setTotal(sommeMontant);
+				//entity.setLibelle(detail.getLibelleMateriaux());
+				//entity.setQuantite(detail.getQuantite());
+
+				autreAchat = autreAchatTravauxRepository.save(entity);
+				Projet projet = projetRepository.findById(autreAchat.getProjetId()).get();
+				montantTravaux = projet.getTotal();
+				montantT = montantTravaux + autreAchat.getTotal();
+				projet.setTotal(montantT);
+				Projet pr =projetRepository.save(projet);
+				reste = (pr.getDebousserSec())-(pr.getTotal());
+				pr.setReste(reste);
+				double percent = 100*(pr.getTotal()/pr.getDebousserSec());
+				pr.setPercent(percent);
+				projetRepository.save(pr);
+			
+
+		}
+
+		return autreAchat;
 	}
 
 	@Override
@@ -142,5 +173,33 @@ private ProjetRepository projetRepository;
 		  
 		  return detailAutreAchatTravaux;
 	}
+
+	@Override
+	public AutreAchatTravaux chercherAutreAchatTravauxParMc(String numeroFacture, long projetId) {
+		// TODO Auto-generated method stub
+		return autreAchatTravauxRepository.chercherAutreAchatTravauxParMc(numeroFacture,  projetId);
+	}
+
+	@Override
+	public Double findAutreAchatTravauxMontantByIdProjet(long id) {
+		Double somme = 0d;
+		List<AutreAchatTravaux> autreAchatTravauxs = autreAchatTravauxRepository.getAutreAchatTravauxTravauxByIdProjet(id);
+		for (AutreAchatTravaux autreAchatTravaux : autreAchatTravauxs) {
+			somme += autreAchatTravaux.getMontant();
+		}
+		System.out.println("voir la somme autre achat ++++++"+ somme);
+		// TODO Auto-generated method stub
+		return somme;
+	}
+
+	@Override
+	public List<AutreAchatTravaux> getAutreAchatTravauxBydate(long projetId, LocalDate startDate, LocalDate endDate) {
+		List<AutreAchatTravaux>  autreAchatTravaux = autreAchatTravauxRepository.findAutreAchatTravauxByDateBetweenAndProjetId( startDate, endDate, projetId);
+		  
+		  
+		  return autreAchatTravaux;
+	}
+
+	
 	
 }
