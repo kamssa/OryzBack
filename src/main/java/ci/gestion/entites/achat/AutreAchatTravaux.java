@@ -3,6 +3,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,7 @@ import lombok.NoArgsConstructor;
 public class AutreAchatTravaux extends AbstractEntity{
 	
 	private static final long serialVersionUID = 1L;
+	@Column(unique=true)
 	private String numeroFacture;
     private String libelle;
 	private double montant=0d;
