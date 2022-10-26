@@ -28,8 +28,8 @@ private String nomChauffeur;
 private Double prixUnitaire;
 private Double quantite;
 private Double total;
-
-private Long idVehicule;
+@ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
+private Vehicule vehicule;
 @ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
 private StationEssence stationEssence;
 @ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)

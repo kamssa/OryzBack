@@ -47,7 +47,17 @@ public class PersonneMetierImpl implements IPersonneMetier{
 		return personneReposiory.save(modif);
 
 	}
+	@Override
+	public Personne modifierInfo(Personne modif) throws InvalideOryzException  {
+		if ((modif.getEmail().equals(null)) || (modif.getEmail() == "")) {
+			Personne pers =personneReposiory.findById(modif.getId()).get();
+			modif.setPassword(pers.getPassword());
+		}else {
+			modif.setPassword(passwordEncoder.encode(modif.getPassword()));
+		}
+		return personneReposiory.save(modif);
 
+	}
 	@Override
 	public List<Personne> findAll() {
 		// TODO Auto-generated method stub

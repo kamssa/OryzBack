@@ -22,12 +22,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.retraitStock.DetailAchatTravaux;
 import ci.gestion.entites.vehicule.Carburant;
-import ci.gestion.entites.vehicule.Vehicule;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;
 import ci.gestion.metier.vehicule.CarburantMetier;
-import ci.gestion.metier.vehicule.VehiculeMetier;
 
 @RestController
 @CrossOrigin
@@ -165,43 +163,60 @@ public class CarburantController {
 		 
 					return jsonMapper.writeValueAsString(reponse);
 				}
+				// recuperer Detail MainOeuvre par id travaux
+				@GetMapping("/carburantDateParVehicule")
+				public String getcarburantDateParVehicule(
+						@RequestParam(value = "vehiculeId") long vehiculeId,
+						@RequestParam(value = "dateDebut") String dateDebut,
+						@RequestParam(value = "dateFin") String dateFin) throws JsonProcessingException {
+					Reponse<List<Carburant>> reponse;
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					LocalDate dateTime = LocalDate.parse(dateDebut, formatter);
+					LocalDate dateTime1 = LocalDate.parse(dateFin, formatter);
+					try { 
+						List<Carburant> carburants = carburantMetier.getCarburantVehiculeParDate(vehiculeId,dateTime,dateTime1); 
+					  if (!carburants.isEmpty()) { 
+						  reponse = new Reponse<List<Carburant>>(0, null, carburants); } else {
+					  List<String> messages = new ArrayList<>();
+					  messages.add("Pas d'achat de carburant enregistré"); reponse = new
+					  Reponse<List<Carburant>>(1, messages, new ArrayList<>()); }
+					  
+					  } catch (Exception e) {
+					  
+					  reponse = new Reponse<>(1, Static.getErreursForException(e), null); }
+					 
+					return jsonMapper.writeValueAsString(null);
+				}
 				
-				@GetMapping("/getCarburantByVehicule/{id}")
-				public String getDepByEntreprise(@PathVariable Long id) throws JsonProcessingException {
-					Reponse<List<Carburant>> reponse;
-					try {
-						List<Carburant> pers = carburantMetier.getCarburantVehicule(id);
-						if (!pers.isEmpty()) {
-							reponse = new Reponse<List<Carburant>>(0, null, pers);
-						} else {
-							List<String> messages = new ArrayList<>();
-							messages.add("Pas de véhicule(s) enregistré(s)");
-							reponse = new Reponse<List<Carburant>>(1, messages, new ArrayList<>());
-						}
-
-					} catch (Exception e) {
-						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
-					}
-					return jsonMapper.writeValueAsString(reponse);
-
-				}
-				@GetMapping("/getCarburantByEntreprise/{id}")
-				public String getCarburantByEntreprise(@PathVariable Long id) throws JsonProcessingException {
-					Reponse<List<Carburant>> reponse;
-					try {
-						List<Carburant> pers = carburantMetier.getCarburantByEntreprise(id);
-						if (!pers.isEmpty()) {
-							reponse = new Reponse<List<Carburant>>(0, null, pers);
-						} else {
-							List<String> messages = new ArrayList<>();
-							messages.add("Pas de carburant(s) enregistré(s)");
-							reponse = new Reponse<List<Carburant>>(1, messages, new ArrayList<>());
-						}
-
-					} catch (Exception e) {
-						reponse = new Reponse<>(1, Static.getErreursForException(e), null);
-					}
-					return jsonMapper.writeValueAsString(reponse);
-
-				}
+				/*
+				 * @GetMapping("/getCarburantByVehicule/{id}") public String
+				 * getDepByEntreprise(@PathVariable Long id) throws JsonProcessingException {
+				 * Reponse<List<Carburant>> reponse; try { List<Carburant> pers =
+				 * carburantMetier.getCarburantVehicule(id); if (!pers.isEmpty()) { reponse =
+				 * new Reponse<List<Carburant>>(0, null, pers); } else { List<String> messages =
+				 * new ArrayList<>(); messages.add("Pas de véhicule(s) enregistré(s)"); reponse
+				 * = new Reponse<List<Carburant>>(1, messages, new ArrayList<>()); }
+				 * 
+				 * } catch (Exception e) { reponse = new Reponse<>(1,
+				 * Static.getErreursForException(e), null); } return
+				 * jsonMapper.writeValueAsString(reponse);
+				 * 
+				 * }
+				 */
+				
+				  @GetMapping("/getCarburantByEntreprise/{id}") public String
+				  getCarburantByEntreprise(@PathVariable Long id) throws
+				  JsonProcessingException { Reponse<List<Carburant>> reponse; try {
+				  List<Carburant> pers = carburantMetier.getCarburantByEntreprise(id); if
+				  (!pers.isEmpty()) { reponse = new Reponse<List<Carburant>>(0, null, pers); }
+				  else { List<String> messages = new ArrayList<>();
+				  messages.add("Pas de carburant(s) enregistré(s)"); reponse = new
+				  Reponse<List<Carburant>>(1, messages, new ArrayList<>()); }
+				  
+				  } catch (Exception e) { reponse = new Reponse<>(1,
+				  Static.getErreursForException(e), null); } return
+				  jsonMapper.writeValueAsString(reponse);
+				  
+				  }
+				 
 }

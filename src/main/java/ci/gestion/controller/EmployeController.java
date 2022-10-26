@@ -28,9 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ci.gestion.entites.article.Materiaux;
 import ci.gestion.entites.entreprise.Employe;
-import ci.gestion.entites.projet.Projet;
 import ci.gestion.entites.shared.Personne;
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
@@ -143,6 +141,33 @@ public class EmployeController {
 		} else {
 			List<String> messages = new ArrayList<>();
 			messages.add(String.format("Employe n'existe pas"));
+			reponse = new Reponse<Employe>(0, messages, null);
+		}
+
+		return jsonMapper.writeValueAsString(reponse);
+
+	}
+	@PutMapping("/updateInfoEmploye")
+	public String updateInformationEmploye(@RequestBody Employe  modif) throws JsonProcessingException {
+		System.out.println("modif recupere1:"+ modif);
+		Reponse<Employe> reponse = null;
+		Employe p = employeMetier.findById(modif.getId());
+		if (p != null) {
+			try {
+				System.out.println("modif recupere2:"+ modif);
+				
+				Employe empl = employeMetier.modifierInfoEmploye(modif);
+				List<String> messages = new ArrayList<>();
+				messages.add(String.format("%s a modifier avec succes", empl.getId()));
+				reponse = new Reponse<Employe>(0, messages, empl);
+			} catch (InvalideOryzException e) {
+
+				reponse = new Reponse<Employe>(1, Static.getErreursForException(e), null);
+			}
+
+		} else {
+			List<String> messages = new ArrayList<>();
+			messages.add(String.format("l'employé ou l'entreprise n'existe pas"));
 			reponse = new Reponse<Employe>(0, messages, null);
 		}
 

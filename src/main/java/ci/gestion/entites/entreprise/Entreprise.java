@@ -24,7 +24,8 @@ import lombok.NoArgsConstructor;
 public class Entreprise extends Personne{
 	
 	private static final long serialVersionUID = 1L;
-	
+	@Column(name = "Nom_Commercial", unique=true)
+	private String libelle;
 	private String description;
 	private String logo;
 	

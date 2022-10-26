@@ -60,13 +60,10 @@ public class CarburantMetierImpl implements CarburantMetier{
 		return false;
 	}
 
-	
-	
-
 	@Override
-	public List<Carburant> getCarburantVehicule(long id) {
-		// TODO Auto-generated method stub
-		return carburantRepository.getCarburantVehicule(id);
+	public List<Carburant> getCarburantVehiculeParDate(long vehiculeId, LocalDate startDate, LocalDate endDate) {
+		
+		return carburantRepository.findCarburantByDateBetweenAndVehicule(endDate, startDate, vehiculeId);
 	}
 
 	@Override
@@ -74,5 +71,7 @@ public class CarburantMetierImpl implements CarburantMetier{
 		// TODO Auto-generated method stub
 		return carburantRepository.getCarburantByEntreprise(id);
 	}
+
+	
 
 }

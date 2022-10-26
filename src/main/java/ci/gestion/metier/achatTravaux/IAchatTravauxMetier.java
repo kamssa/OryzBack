@@ -10,7 +10,7 @@ import ci.gestion.metier.utilitaire.Imetier;
 
 public interface IAchatTravauxMetier extends Imetier<AchatTravaux, Long>{
 	List<AchatTravaux> findAchatByIdProjet(long id);
-    boolean supprimerDetailAchat(Long idAchat, Long idDetail);
+	boolean supprimerDetailAchat(Long idAchat, Long idDetail);
     List<DetailAchatTravaux> findDetailAchatTravauxByIdProjet(long id);
 	Double findDetailAchatTravauxMontantByIdProjet(long id);
 	List<DetailAchatTravaux> findDetailAchatTravauxByDateIdProjet(long id, LocalDate dateDebut, LocalDate dateFin);

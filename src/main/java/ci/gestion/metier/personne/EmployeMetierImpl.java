@@ -10,12 +10,14 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import ci.gestion.dao.personne.DepartementRepository;
 import ci.gestion.dao.personne.EmployeRepository;
 import ci.gestion.dao.personne.RoleRepository;
 import ci.gestion.entites.entreprise.Departement;
 import ci.gestion.entites.entreprise.Employe;
+import ci.gestion.entites.shared.Personne;
 import ci.gestion.entites.shared.Role;
 import ci.gestion.entites.shared.RoleName;
 
@@ -66,6 +68,20 @@ PasswordEncoder passwordEncoder;
          modif.setRoles(Collections.singleton(userRole));
          return employeRepository.save(modif);
 }
+	@Override
+	public Employe modifierInfoEmploye(Employe modif) throws InvalideOryzException  {
+		System.out.println("modif 3 recuperer" + ":" + modif);
+		if ((modif.getEmail().equals(null)) || (modif.getEmail() == "")) {
+			Employe pers = employeRepository.findById(modif.getId()).get();
+			modif.setPassword(pers.getPassword());
+		    
+		}else {
+			
+			modif.setPassword(passwordEncoder.encode(modif.getPassword()));
+		}
+		 return employeRepository.save(modif);
+
+	}
 
 	@Override
 	public List<Employe> findAll() {
