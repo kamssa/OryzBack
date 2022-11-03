@@ -50,8 +50,8 @@ public class CarburantMetierImpl implements CarburantMetier{
 
 	@Override
 	public boolean supprimer(List<Carburant> entites) {
-		// TODO Auto-generated method stub
-		return false;
+		carburantRepository.deleteAll(entites);
+		return true;
 	}
 
 	@Override

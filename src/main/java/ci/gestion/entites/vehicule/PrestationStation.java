@@ -1,5 +1,7 @@
 package ci.gestion.entites.vehicule;
 
+import java.time.LocalDate;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,19 +16,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Data
-public class StationEssence extends AbstractEntity{
-	
-	
-	private static final long serialVersionUID = 1L;
+public class PrestationStation extends AbstractEntity{
 
-	private String nom;
-	private Double vidange;
-	private Double prixSuper;
-	private Double prixGazoil;
-	private Double prixHuileMoteur;
+	private static final long serialVersionUID = 1L;
+	private LocalDate date;
+	private String nomChauffeur;
+	private Double prixUnitaire;
+	private Double quantite;
+	private Double total;
 	@ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
-	private PrestationStation prestationStation;
+	private Vehicule vehicule;
+	@ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
+	private StationEssence stationEssence;
 	@ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
 	private Entreprise entreprise;
-	
 }

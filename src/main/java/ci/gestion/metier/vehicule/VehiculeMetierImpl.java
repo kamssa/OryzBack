@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ci.gestion.dao.vehicule.CarburantRepository;
 import ci.gestion.dao.vehicule.VehiculeRepository;
+import ci.gestion.entites.vehicule.Carburant;
 import ci.gestion.entites.vehicule.Vehicule;
 import ci.gestion.metier.exception.InvalideOryzException;
 
@@ -13,7 +15,8 @@ import ci.gestion.metier.exception.InvalideOryzException;
 public class VehiculeMetierImpl implements VehiculeMetier {
 	@Autowired
 	private VehiculeRepository vehiculeRepository;
-
+	@Autowired
+	private CarburantRepository carburantRepository;
 	@Override
 	public Vehicule creer(Vehicule entity) throws InvalideOryzException {
 		return vehiculeRepository.save(entity);
@@ -38,6 +41,8 @@ public class VehiculeMetierImpl implements VehiculeMetier {
 
 	@Override
 	public boolean supprimer(Long id) {
+		List<Carburant> carburants = carburantRepository.getCarburantVehicule(id);
+		carburantRepository.deleteAll(carburants);
 		vehiculeRepository.deleteById(id);
 		return true;
 	}

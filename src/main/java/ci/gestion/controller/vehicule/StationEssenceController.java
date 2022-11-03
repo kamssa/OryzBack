@@ -59,6 +59,7 @@ public class StationEssenceController {
 
 		@PostMapping("/stationEssence")
 		public String creer(@RequestBody StationEssence stationEssence) throws JsonProcessingException {
+			System.out.println("Voir Station:"+ stationEssence);
 			Reponse<StationEssence> reponse;
 
 			try {
