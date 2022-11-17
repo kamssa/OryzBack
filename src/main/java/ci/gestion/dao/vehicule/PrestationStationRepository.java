@@ -6,5 +6,5 @@ import ci.gestion.entites.vehicule.PrestationStation;
 
 
 public interface PrestationStationRepository extends JpaRepository<PrestationStation, Long>{
-
+	PrestationStation findByLibelle(String libelle);
 }

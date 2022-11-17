@@ -21,7 +21,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import ci.gestion.entites.retraitStock.DetailAchatTravaux;
-import ci.gestion.entites.vehicule.Carburant;
+import ci.gestion.entites.vehicule.Prestation;
 import ci.gestion.metier.exception.InvalideOryzException;
 import ci.gestion.metier.model.Reponse;
 import ci.gestion.metier.utilitaire.Static;
@@ -38,22 +38,22 @@ public class CarburantController {
 	
 	
 	// recuper vehiculeMetier par identifiant
-		private Reponse<Carburant> getCarburantById(Long id) {
-			Carburant carburant = null;
+		private Reponse<Prestation> getCarburantById(Long id) {
+			Prestation carburant = null;
 
 			try {
 				carburant = carburantMetier.findById(id);
 				if (carburant == null) {
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format("l'élément n'existe pas", id));
-					new Reponse<Carburant>(2, messages, null);
+					new Reponse<Prestation>(2, messages, null);
 
 				}
 			} catch (RuntimeException e) {
-				new Reponse<Carburant>(1, Static.getErreursForException(e), null);
+				new Reponse<Prestation>(1, Static.getErreursForException(e), null);
 			}
 
-			return new Reponse<Carburant>(0, null, carburant);
+			return new Reponse<Prestation>(0, null, carburant);
 		}
 
 	//////////////////////////////////////////////////////////////////////////////////////////////
@@ -61,18 +61,18 @@ public class CarburantController {
 	////////////////////////////////////////////////////////////////////////////////////////////// donnee////////////////////////////////
 
 		@PostMapping("/carburant")
-		public String creer(@RequestBody Carburant carburant) throws JsonProcessingException {
-			Reponse<Carburant> reponse;
+		public String creer(@RequestBody Prestation carburant) throws JsonProcessingException {
+			Reponse<Prestation> reponse;
 
 			try {
-				Carburant v = carburantMetier.creer(carburant);
+				Prestation v = carburantMetier.creer(carburant);
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("%s  à été créer avec succes", v.getId()));
-				reponse = new Reponse<Carburant>(0, messages, v);
+				reponse = new Reponse<Prestation>(0, messages, v);
 
 			} catch (InvalideOryzException e) {
 
-				reponse = new Reponse<Carburant>(1, Static.getErreursForException(e), null);
+				reponse = new Reponse<Prestation>(1, Static.getErreursForException(e), null);
 			}
 			return jsonMapper.writeValueAsString(reponse);
 		}
@@ -82,27 +82,27 @@ public class CarburantController {
 	///////////////////////////////////////////////////////////////////////////////////////// ///////////////////////////////////////////
 
 		@PutMapping("/carburant")
-		public String modifier(@RequestBody Carburant modif) throws JsonProcessingException {
-			Reponse<Carburant> reponsePersModif = null;
-			Reponse<Carburant> reponse = null;
+		public String modifier(@RequestBody Prestation modif) throws JsonProcessingException {
+			Reponse<Prestation> reponsePersModif = null;
+			Reponse<Prestation> reponse = null;
 
 			// on recupere le flash info a modifier
 			reponsePersModif = getCarburantById(modif.getId());
 			if (reponsePersModif.getBody() != null) {
 				try {
-					Carburant t2 = carburantMetier.modifier(modif);
+					Prestation t2 = carburantMetier.modifier(modif);
 					List<String> messages = new ArrayList<>();
 					messages.add(String.format("%s a modifier avec succes", t2.getId()));
-					reponse = new Reponse<Carburant>(0, messages, t2);
+					reponse = new Reponse<Prestation>(0, messages, t2);
 				} catch (InvalideOryzException e) {
 
-					reponse = new Reponse<Carburant>(1, Static.getErreursForException(e), null);
+					reponse = new Reponse<Prestation>(1, Static.getErreursForException(e), null);
 				}
 
 			} else {
 				List<String> messages = new ArrayList<>();
 				messages.add(String.format("Le vehicule n'existe pas"));
-				reponse = new Reponse<Carburant>(0, messages, null);
+				reponse = new Reponse<Prestation>(0, messages, null);
 			}
 
 			return jsonMapper.writeValueAsString(reponse);
@@ -114,20 +114,20 @@ public class CarburantController {
 	/////////////////////////////////////////////////////////////////////////////////////////////// donnee/////////////////////////////////////////
 		@GetMapping("/carburant")
 		public String findAllCarburant() throws JsonProcessingException, InvalideOryzException {
-			Reponse<List<Carburant>> reponse;
+			Reponse<List<Prestation>> reponse;
 			try {
-				List<Carburant> flashs = carburantMetier.findAll();
+				List<Prestation> flashs = carburantMetier.findAll();
 
 				if (!flashs.isEmpty()) {
-					reponse = new Reponse<List<Carburant>>(0, null, flashs);
+					reponse = new Reponse<List<Prestation>>(0, null, flashs);
 				} else {
 					List<String> messages = new ArrayList<>();
 					messages.add("Pas de vehicule info enregistrées");
-					reponse = new Reponse<List<Carburant>>(1, messages, new ArrayList<>());
+					reponse = new Reponse<List<Prestation>>(1, messages, new ArrayList<>());
 				}
 
 			} catch (Exception e) {
-				reponse = new Reponse<List<Carburant>>(1, Static.getErreursForException(e), new ArrayList<>());
+				reponse = new Reponse<List<Prestation>>(1, Static.getErreursForException(e), new ArrayList<>());
 			}
 			return jsonMapper.writeValueAsString(reponse);
 
@@ -137,7 +137,7 @@ public class CarburantController {
 		@GetMapping("/carburant/{id}")
 		public String chercherBanqueById(@PathVariable Long id) throws JsonProcessingException {
 			// Annotation @PathVariable permet de recuperer le paremettre dans URI
-			Reponse<Carburant> reponse = null;
+			Reponse<Prestation> reponse = null;
 
 			reponse = getCarburantById(id);
 			if (reponse.getBody() == null) {
@@ -169,17 +169,17 @@ public class CarburantController {
 						@RequestParam(value = "vehiculeId") long vehiculeId,
 						@RequestParam(value = "dateDebut") String dateDebut,
 						@RequestParam(value = "dateFin") String dateFin) throws JsonProcessingException {
-					Reponse<List<Carburant>> reponse;
+					Reponse<List<Prestation>> reponse;
 					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					LocalDate dateTime = LocalDate.parse(dateDebut, formatter);
 					LocalDate dateTime1 = LocalDate.parse(dateFin, formatter);
 					try { 
-						List<Carburant> carburants = carburantMetier.getCarburantVehiculeParDate(vehiculeId,dateTime,dateTime1); 
+						List<Prestation> carburants = carburantMetier.getCarburantVehiculeParDate(vehiculeId,dateTime,dateTime1); 
 					  if (!carburants.isEmpty()) { 
-						  reponse = new Reponse<List<Carburant>>(0, null, carburants); } else {
+						  reponse = new Reponse<List<Prestation>>(0, null, carburants); } else {
 					  List<String> messages = new ArrayList<>();
 					  messages.add("Pas d'achat de carburant enregistré"); reponse = new
-					  Reponse<List<Carburant>>(1, messages, new ArrayList<>()); }
+					  Reponse<List<Prestation>>(1, messages, new ArrayList<>()); }
 					  
 					  } catch (Exception e) {
 					  
@@ -206,12 +206,12 @@ public class CarburantController {
 				
 				  @GetMapping("/getCarburantByEntreprise/{id}") public String
 				  getCarburantByEntreprise(@PathVariable Long id) throws
-				  JsonProcessingException { Reponse<List<Carburant>> reponse; try {
-				  List<Carburant> pers = carburantMetier.getCarburantByEntreprise(id); if
-				  (!pers.isEmpty()) { reponse = new Reponse<List<Carburant>>(0, null, pers); }
+				  JsonProcessingException { Reponse<List<Prestation>> reponse; try {
+				  List<Prestation> pers = carburantMetier.getCarburantByEntreprise(id); if
+				  (!pers.isEmpty()) { reponse = new Reponse<List<Prestation>>(0, null, pers); }
 				  else { List<String> messages = new ArrayList<>();
 				  messages.add("Pas de carburant(s) enregistré(s)"); reponse = new
-				  Reponse<List<Carburant>>(1, messages, new ArrayList<>()); }
+				  Reponse<List<Prestation>>(1, messages, new ArrayList<>()); }
 				  
 				  } catch (Exception e) { reponse = new Reponse<>(1,
 				  Static.getErreursForException(e), null); } return

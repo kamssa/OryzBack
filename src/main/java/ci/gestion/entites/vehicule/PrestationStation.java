@@ -20,14 +20,9 @@ public class PrestationStation extends AbstractEntity{
 
 	private static final long serialVersionUID = 1L;
 	private LocalDate date;
-	private String nomChauffeur;
-	private Double prixUnitaire;
-	private Double quantite;
-	private Double total;
-	@ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
-	private Vehicule vehicule;
-	@ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
-	private StationEssence stationEssence;
-	@ManyToOne(cascade= CascadeType.MERGE, fetch= FetchType.EAGER)
-	private Entreprise entreprise;
+	private String libelle;
+	private Double prixSuper;
+	private Double prixGazoil;
+	private Double prixVidange;
+	private Double prixHuileMoteur;
 }

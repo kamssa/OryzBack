@@ -55,4 +55,10 @@ public class PrestationMetierImpl implements PrestationStatioMetier{
 		return false;
 	}
 
+	@Override
+	public PrestationStation findByLibelle(String libelle) {
+		// TODO Auto-generated method stub
+		return prestationStationRepository.findByLibelle(libelle);
+	}
+
 }

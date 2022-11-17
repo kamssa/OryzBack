@@ -12,18 +12,15 @@ import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.persistence.JoinColumn;
-import javax.persistence.Column;
 
 @Entity
 @NoArgsConstructor @AllArgsConstructor
 @Data
-public class Carburant extends AbstractEntity{
-/**
-	 * 
-	 */
+public class Prestation extends AbstractEntity{
+
 private static final long serialVersionUID = 1L;
 private LocalDate date;
+private String libelle;
 private String nomChauffeur;
 private Double prixUnitaire;
 private Double quantite;

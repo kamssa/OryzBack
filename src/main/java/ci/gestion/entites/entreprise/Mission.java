@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import javax.persistence.Entity;
 
 import ci.gestion.entites.shared.AbstractEntity;
-import ci.gestion.entites.vehicule.Carburant;
+import ci.gestion.entites.vehicule.Prestation;
 import ci.gestion.entites.vehicule.StationEssence;
 import ci.gestion.entites.vehicule.Vehicule;
 import lombok.AllArgsConstructor;
