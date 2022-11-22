@@ -62,27 +62,31 @@ private ProjetRepository projetRepository;
 	@Override
 	public AutreAchatTravaux modifier(AutreAchatTravaux entity) throws InvalideOryzException {
 		AutreAchatTravaux autreAchat = null;
+		AutreAchatTravaux ancienAutreAchat = null;
 		double montantD = 0;
 		double montantTravaux = 0;
+		double ancienMontantTravaux = 0;
 		double montantT = 0;
 		double sommeMontant = 0;
 		double reste = 0;
+		double ancienMontant = 0;
 		List<DetailAutreAchatTravaux> detaiAutrelAchats = entity.getDetailAutreAchatTravaux();
-		for (DetailAutreAchatTravaux detail : detaiAutrelAchats) {
-		      
-			montantD = ((detail.getPrixUnitaire() * detail.getQuantite())+ detail.getFrais());
-				detail.setMontant(montantD);
-				detail.setProjetId(entity.getProjetId());
-				sommeMontant = montantD;
-				 entity.setTotal(sommeMontant);
-				//entity.setLibelle(detail.getLibelleMateriaux());
+		/*
+		 * for (DetailAutreAchatTravaux detail : detaiAutrelAchats) {
+		 * 
+		 * montantD = ((detail.getPrixUnitaire() * detail.getQuantite())+
+		 * detail.getFrais()); detail.setMontant(montantD);
+		 * detail.setProjetId(entity.getProjetId()); sommeMontant = montantD;
+		 * entity.setTotal(sommeMontant);
+		 */				//entity.setLibelle(detail.getLibelleMateriaux());
 				//entity.setQuantite(detail.getQuantite());
-
+		        ancienAutreAchat = autreAchatTravauxRepository.findById(entity.getId()).get();
 				autreAchat = autreAchatTravauxRepository.save(entity);
 				Projet projet = projetRepository.findById(autreAchat.getProjetId()).get();
 				montantTravaux = projet.getTotal();
-				montantT = montantTravaux + autreAchat.getTotal();
-				projet.setTotal(montantT);
+				//ancienMontantTravaux = montantTravaux - ancienAutreAchat.getMontant();
+				//montantT = ancienMontantTravaux + autreAchat.getMontant();
+				projet.setTotal(montantTravaux);
 				Projet pr =projetRepository.save(projet);
 				reste = (pr.getDebousserSec())-(pr.getTotal());
 				pr.setReste(reste);
@@ -91,7 +95,7 @@ private ProjetRepository projetRepository;
 				projetRepository.save(pr);
 			
 
-		}
+		//}
 
 		return autreAchat;
 	}

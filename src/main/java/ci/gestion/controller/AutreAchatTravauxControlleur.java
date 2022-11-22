@@ -82,15 +82,15 @@ public class AutreAchatTravauxControlleur {
 		Reponse<AutreAchatTravaux> reponse = null;
 		Reponse<AutreAchatTravaux> reponsePersModif = null;
 		// on recupere autre a modifier
-		System.out.println("modif recupere1:" + modif);
+		System.out.println("modif recupere1:" + modif.getId());
 		reponsePersModif = getAutresTravauxById(modif.getId());
 		if (reponsePersModif.getBody() != null) {
 			try {
 				System.out.println("modif recupere2:" + modif);
-				AutreAchatTravaux achatTravaux = autreAchatTravauxMetier.modifier(modif);
+				AutreAchatTravaux autreAchatTravaux = autreAchatTravauxMetier.modifier(modif);
 				List<String> messages = new ArrayList<>();
-				messages.add(String.format("%s a modifier avec succes", achatTravaux.getId()));
-				reponse = new Reponse<AutreAchatTravaux>(0, messages, achatTravaux);
+				messages.add(String.format("%s a modifier avec succes", autreAchatTravaux.getId()));
+				reponse = new Reponse<AutreAchatTravaux>(0, messages, autreAchatTravaux);
 			} catch (InvalideOryzException e) {
 
 				reponse = new Reponse<AutreAchatTravaux>(1, Static.getErreursForException(e), null);

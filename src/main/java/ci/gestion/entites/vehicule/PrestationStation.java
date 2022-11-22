@@ -2,12 +2,8 @@ package ci.gestion.entites.vehicule;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 
-import ci.gestion.entites.entreprise.Entreprise;
 import ci.gestion.entites.shared.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
