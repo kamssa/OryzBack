@@ -23,12 +23,14 @@ public class CarburantMetierImpl implements CarburantMetier{
 		
 		PrestationStation prestationStation = null;
 		double quantite = 0;
+		double quantiteArrondi = 0;
 		double total = 0;
 		String libelle = entity.getLibelle();
 		if(libelle.equals("super")) {
 			prestationStation =	prestationStationRepository.findByLibelle(libelle);
-			 quantite = entity.getTotal() / prestationStation.getPrixSuper();
-			 entity.setQuantite(quantite);
+			 quantite =  entity.getTotal() / prestationStation.getPrixSuper();
+			 quantiteArrondi = Math.round(quantite * 100.0) / 100.0;
+			 entity.setQuantite(quantiteArrondi);
 		        entity.setPrixUnitaire(prestationStation.getPrixSuper());
 		        
 			
